@@ -1,5 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Bookings Page</h1>
+
+{% load crispy_forms_tags %}
+
+
+    {% if user.is_authenticated %}
+        <h3>Make a booking:</h3>
+        <form method="POST">
+        <label for="username" class="form-label">User:</label>
+        <input class="form-control" type="text" value="{{ user.username }}" id="username" aria-label="Disabled input example" disabled readonly>
+            {{ booking_form | crispy }}
+            {% csrf_token %}
+        </form>
+    {% else %}
+        <h3>Please Sign in or Register to make a booking</h3>
+
+    {% endif %}
+
+
 {% endblock %}
