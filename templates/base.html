@@ -18,6 +18,9 @@
           <a class="navbar-brand" href="{% url 'account_signup' %}">Register</a>
           {% endif %}
           <a class="navbar-brand" href="{% url 'bookings_home' %}">Make a Booking</a>
+          {% if user.is_staff %}
+          <a class="navbar-brand" href="/admin">Admin</a>
+          {% endif %}
         </div>
     </nav>
     {% block content %}
