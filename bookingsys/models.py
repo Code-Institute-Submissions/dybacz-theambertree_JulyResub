@@ -11,15 +11,15 @@ D_STATUS = ((0, "Closed"), (1, "Open"))
 
 class Table(models.Model):
     ''' Model for tables at restaurant'''
-    table_name = models.CharField(max_length=15, unique=True)
-    table_capacity = models.IntegerField(default=0)
+    table_id = models.IntegerField(default=1)
+    table_capacity = models.IntegerField(default=1)
 
     class Meta:
         ''' Method for ordering data '''
-        ordering = ['-table_name']
+        ordering = ['-table_id']
 
     def __str__(self):
-        return f"Table: {self.table_name} | Capacity: {self.table_capacity}"
+        return f"Table: {self.table_id} | Capacity: {self.table_capacity}"
 
 
 class TimeSlot(models.Model):
@@ -50,9 +50,7 @@ class BookingSlot (models.Model):
         on_delete=models.CASCADE,
         limit_choices_to={
             'status': 1},
-        related_name="bookingslot",
-        blank=True,
-        null=True)
+        related_name="bookingslot", default='')
     status = models.IntegerField(choices=A_STATUS, default=0)
     booking_status = models.IntegerField(choices=B_STATUS, default=1)
 
@@ -93,14 +91,14 @@ class Booking(models.Model):
     number_of_guests = models.IntegerField()
     date_of_booking = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=C_STATUS, default=0)
-    comments = models.CharField(max_length=200)
+    comments = models.CharField(max_length=200, blank=True)
     timeslot = models.ManyToManyField(
         BookingSlot,
         related_name="booking_table_slot",
         limit_choices_to={
             'status': 1,
             'booking_status': 1},
-        blank=True)
+        default='')
 
     class Meta:
         ''' Method for ordering data '''
