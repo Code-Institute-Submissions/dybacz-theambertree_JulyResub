@@ -5,7 +5,7 @@ from django.contrib import admin
 
 A_STATUS = ((0, "Draft"), (1, "Published"))
 B_STATUS = ((0, "Booked"), (1, "Availble"))
-C_STATUS = ((0, "Booked"), (1, "Cancelled"), (2, "Redeemed"))
+C_STATUS = ((0, "Booked"), (1, "Cancelled"), (2, "Attended"))
 D_STATUS = ((0, "Closed"), (1, "Open"))
 
 
@@ -26,7 +26,7 @@ class TimeSlot(models.Model):
     ''' Model for Timeslots '''
     startTime = models.TimeField()
     endTime = models.TimeField()
-    closed = models.IntegerField(choices=D_STATUS, default=0)
+    status = models.IntegerField(choices=D_STATUS, default=0)
 
     class Meta:
         ''' Method for ordering data '''
@@ -49,7 +49,7 @@ class BookingSlot (models.Model):
         TimeSlot,
         on_delete=models.CASCADE,
         limit_choices_to={
-            'closed': 1},
+            'status': 1},
         related_name="bookingslot",
         blank=True,
         null=True)

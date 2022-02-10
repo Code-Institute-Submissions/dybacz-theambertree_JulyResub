@@ -20,6 +20,13 @@ class BookingSlotAdmin(admin.ModelAdmin):
         'booking_status')
     search_fields = ['table', 'date', 'time_slot', 'status', 'booking_status']
     list_filter = ('date', 'status', 'booking_status')
+    actions = ['open_booking_slot', 'close_booking_slot']
+
+    def open_booking_slot(self, request, queryset):
+        queryset.update(status=1)
+    
+    def close_booking_slot(self, request, queryset):
+        queryset.update(status=0)
 
 
 @admin.register(models.Booking)
@@ -41,6 +48,13 @@ class BookingAdmin(admin.ModelAdmin):
 
 @admin.register(models.TimeSlot)
 class TimeSlotAdmin(admin.ModelAdmin):
-    list_display = ('startTime', 'endTime', 'closed')
+    list_display = ('startTime', 'endTime', 'status')
     search_fields = ['startTime']
-    list_filter = ('closed',)
+    list_filter = ('status',)
+    actions = ['open_slots', 'close_slots']
+
+    def open_slots(self, request, queryset):
+        queryset.update(status=1)
+    
+    def close_slots(self, request, queryset):
+        queryset.update(status=0)
