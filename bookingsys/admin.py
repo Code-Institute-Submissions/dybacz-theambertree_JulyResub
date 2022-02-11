@@ -33,7 +33,6 @@ class BookingSlotAdmin(admin.ModelAdmin):
 @admin.register(models.Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = (
-        'booking_id',
         'booking_name',
         'number_of_guests',
         'booking_table',

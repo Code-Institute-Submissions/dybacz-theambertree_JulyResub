@@ -30,7 +30,7 @@ class TimeSlot(models.Model):
 
     class Meta:
         ''' Method for ordering data '''
-        ordering = ['-startTime']
+        ordering = ['startTime']
 
     def __str__(self):
         return f"{self.startTime} - {self.endTime}"
@@ -81,7 +81,7 @@ class BookingSlot (models.Model):
 
 class Booking(models.Model):
     '''  Model for Active Bookings '''
-    booking_id = models.IntegerField()
+    booking_id = models.IntegerField(blank=True, default=0)
     first_name = models.CharField(max_length=15, default='first name')
     last_name = models.CharField(max_length=20, default='last name')
     email = models.EmailField(default='guest@email.com')
