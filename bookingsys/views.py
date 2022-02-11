@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404
 from django.views import generic, View
 from . import models
-from .forms import BookingForm
+# from .forms import BookingForm
 
 
 class BookingSlotList(generic.ListView):
@@ -14,11 +14,25 @@ class BookingSlotList(generic.ListView):
 class BookingSlot(View):
 
     def get(self, request, *args, **kwargs):
+        timeslots = get_list_or_404(models.TimeSlot)
+        bookingslots = get_list_or_404(models.BookingSlot)
 
         return render(
             request,
             "bookings.html",
             {
-                "booking_form": BookingForm()
+                # 'booking_form': BookingForm(),
+                'timeslots': timeslots,
+                'bookingslots': bookingslots
             }
         )
+
+    # def get(self, request, *args, **kwargs):
+
+    #     return render(
+    #         request,
+    #         "bookings.html",
+    #         {
+    #             "booking_form": BookingForm()
+    #         }
+    #     )

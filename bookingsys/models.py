@@ -57,31 +57,35 @@ class BookingSlot (models.Model):
     class Meta:
         ''' Method for ordering data '''
         ordering = ['-date']
+        unique_together = [['table', 'date', 'time_slot']]
 
     def __str__(self):
         return f"{self.table} | {self.date} | {self.time_slot}"
 
-    @admin.display
-    def table_capacity(self):
-        ''' Loop for displaying table capcity on admin booking slot panel '''
-        capacity = 0
-        # for i in self.time_slot.all():
-        x_string = str(self.table).split("| ")
-        z_string = x_string[1].split(" ")
-        capacity += int(z_string[1])
-        #     concat += x_list[1]
-        return capacity
+    # @admin.display
+    # def table_capacity(self):
+    #     ''' Loop for displaying table capcity on admin booking slot panel '''
+    #     capacity = 0
+    #     # for i in self.time_slot.all():
+    #     x_string = str(self.table).split("| ")
+    #     z_string = x_string[1].split(" ")
+    #     capacity += int(z_string[1])
+    #     #     concat += x_list[1]
+    #     return capacity
 
-    def table_number(self):
-        ''' Loop for displaying table number on admin booking slot panel '''
-        x_string = str(self.table).split(" ")
-        return x_string[1]
+    # def table_number(self):
+    #     ''' Loop for displaying table number on admin booking slot panel '''
+    #     x_string = str(self.table).split(" ")
+    #     return x_string[1]
 
 
 class Booking(models.Model):
     '''  Model for Active Bookings '''
     booking_id = models.IntegerField()
-    guest = models.ForeignKey(
+    first_name = models.CharField(max_length=15, default='first name')
+    last_name = models.CharField(max_length=20, default='last name')
+    email = models.EmailField(default='guest@email.com')
+    account = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="booking",
@@ -89,7 +93,7 @@ class Booking(models.Model):
         null=True)
     update_on = models.DateTimeField(auto_now=True)
     number_of_guests = models.IntegerField()
-    date_of_booking = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=C_STATUS, default=0)
     comments = models.CharField(max_length=200, blank=True)
     timeslot = models.ManyToManyField(
@@ -102,12 +106,16 @@ class Booking(models.Model):
 
     class Meta:
         ''' Method for ordering data '''
-        ordering = ['-date_of_booking']
+        ordering = ['-date_created']
 
     def __str__(self):
         return f"{self.booking_id}"
 
     @admin.display
+    def booking_name(self):
+        '''Returns Fullname'''
+        return f"{self.last_name}, {self.first_name}"
+
     def booking_table(self):
         ''' Loop for displaying table number on admin booking panel '''
         concat = []

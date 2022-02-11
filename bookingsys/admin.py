@@ -12,8 +12,9 @@ class TableAdmin(admin.ModelAdmin):
 @admin.register(models.BookingSlot)
 class BookingSlotAdmin(admin.ModelAdmin):
     list_display = (
-        'table_number',
-        'table_capacity',
+        # 'table_number',
+        # 'table_capacity',
+        'table',
         'date',
         'time_slot',
         'status',
@@ -33,14 +34,14 @@ class BookingSlotAdmin(admin.ModelAdmin):
 class BookingAdmin(admin.ModelAdmin):
     list_display = (
         'booking_id',
-        'guest',
-        'booking_table',
+        'booking_name',
         'number_of_guests',
+        'booking_table',
         'total_capacity',
         'reservation_date',
         'reservation_time',
         'status',
-        'date_of_booking',
+        'date_created',
         'comments')
     search_fields = ()
     list_filter = ('status',)

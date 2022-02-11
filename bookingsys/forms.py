@@ -7,5 +7,11 @@ class BookingForm(forms.ModelForm):
         model = models.Booking
         fields = (
             'number_of_guests',
-            'comments',
-            'timeslot',)
+            'timeslot',
+            'comments',)
+        labels = {
+            'comments': ('Additional Information'),
+        }
+        widgets = {
+            'timeslot': forms.CheckboxSelectMultiple(),
+        }
