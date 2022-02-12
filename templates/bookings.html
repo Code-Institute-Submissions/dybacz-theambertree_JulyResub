@@ -5,51 +5,72 @@
 {% load crispy_forms_tags %}
 
 
-    {% if user.is_authenticated %}
-    <div class="container">
-        <div class="row">
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row">
+        <div class="col-10 offset-1 mt-5">
             <h3>Make a booking:</h3>
             <h3>Choose a Date:</h3>
-            <input type="date" name="date" id="date">
-            <h3>Select a timeslot:</h3>
-            <div>
-                {% for timeslot in timeslots %}
-                <input type="radio" id="{{ timeslot }}" name="timeslot" value="{{ timeslot }}">
-                <label for="{{ timeslot }}" class="btn btn-primary">{{ timeslot.startTime }}</label>
-                {% endfor %}
+            <input type="date" name="date" id="date"\>
+            <div class="row justify-content-md-center">
+                <h3>Choose a timeslot:</h3>
+                <div class="form-check form-check-inline">
+                    {% for timeslot in timeslots %}
+                    <input type="radio" id="btn-check-{{ timeslot }}" name="timeslot" value="{{ timeslot }}"
+                        class="btn-check form-check-input" required>
+                    <label for="btn-check-{{ timeslot }}" class="btn btn-primary form-check-label time-slot"><b>{{ timeslot.startTime }}</b></label>
+                    {%if forloop.counter|divisibleby:4 %}
+                </div>
+                <div class="form-check form-check-inline">
+                    {% endif %}
+                    {% endfor %} 
+                </div>
             </div>
             <form method="POST">
                 {% csrf_token %}
                 <label for="firstname" class="form-label">First Name:</label>
-                <input class="form-control" type="text" value="{{ user.first_name }}" id="firstname"
-                    name="firstname" aria-label="Input First Name">
+                <input class="form-control" type="text" value="{{ user.first_name }}" id="firstname" name="firstname"
+                    aria-label="Input First Name" required>
                 <label for="lasttname" class="form-label">Last Name:</label>
-                <input class="form-control" type="text" value="{{ user.last_name }}" id="lastname"
-                    name="lastname" aria-label="Input Last Name">
+                <input class="form-control" type="text" value="{{ user.last_name }}" id="lastname" name="lastname"
+                    aria-label="Input Last Name" required>
                 <label for="email" class="form-label">Email:</label>
-                <input class="form-control" type="email" name="email" value="{{ user.email }}" id="email" aria-label="Input Email">
+                <input class="form-control" type="email" name="email" value="{{ user.email }}" id="email"
+                    aria-label="Input Email" required>
                 <label for="guestnumber" class="form-label">Number of Guests:</label>
                 <input class="form-control" type="number" value="1" name="guestnumber" id="guestnumber" min="1" max="12"
                     aria-label="Input Number of Guests">
                 <label for="comments" class="form-label">Additional Comments:</label>
                 <textarea class="form-control" id="comments" name="comments" aria-label="additional comments" rows="4"
                     cols="50"></textarea>
-                <h3>Select a table:</h3>
-                <div>
-                    {% for bookingslot in bookingslots %}
-                    <input type="radio" id="{{ bookingslot.id }}" name="bookingslot" value="{{ bookingslot.id }}">
-                    <label for="{{ bookingslot.id }}" class="btn btn-success">{{ bookingslot.table }}</label>
-                    {% endfor %}
+                <div class="row justify-content-md-center">
+                    <h3 class="text-center">Select a table:</h3>
+                    <div class="form-check form-check-inline text-center">
+                        {% for bookingslot in bookingslots %}
+                        <input type="radio" id="btn-check-{{ bookingslot.id }}" name="bookingslot" value="{{ bookingslot.id }}"
+                            class="btn-check form-check-input" required>
+                        <label for="btn-check-{{ bookingslot.id }}" class="btn btn-success form-check-label booking-slot">{{ bookingslot.table }}</label>
+                        {%if forloop.counter|divisibleby:4 %}
+                    </div>
+                    <div class="form-check form-check-inline text-center">
+                        {% endif %}
+                        {% endfor %} 
+                    </div>
                 </div>
-                <input type="submit" class="btn btn-danger" value="Book Now">
+                <div class="row justify-content-md-center mt-3">
+                    <div class="col-auto">          
+                        <input type="submit" class="btn btn-danger" value="Book Now">
+                    </div>  
+                </div>
                 {{ booking_form | crispy }}
             </form>
             {% else %}
             <h3>Please Sign in or Register to make a booking</h3>
         </div>
     </div>
+</div>
 
 
-    {% endif %}
+{% endif %}
 
 {% endblock %}

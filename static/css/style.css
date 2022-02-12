@@ -1,11 +1,21 @@
 input[type="radio"]{
-    visibility:hidden;
-    padding: 0;
-    margin: 0;
-    height: 0;
-    width: 0;
+    position: absolute;
+    z-index: -99;
+}
+
+input[type="radio"] + label{
+    position: relative;
 }
 
 input[type="radio"]:checked + label{
     color: rgb(255, 0, 0);
+}
+
+.booking-slot {
+    min-width: 19%;
+}
+
+.time-slot {
+    min-width: 10%;
+    border-radius: 50px;
 }

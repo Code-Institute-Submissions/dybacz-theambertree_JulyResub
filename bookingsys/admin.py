@@ -21,13 +21,24 @@ class BookingSlotAdmin(admin.ModelAdmin):
         'booking_status')
     search_fields = ['table', 'date', 'time_slot', 'status', 'booking_status']
     list_filter = ('date', 'status', 'booking_status')
-    actions = ['open_booking_slots', 'close_booking_slots']
+    actions = [
+        'open_booking_slots',
+        'close_booking_slots',
+        'make_booking_available',
+        'change_booking_to_booked']
 
     def open_booking_slots(self, request, queryset):
         queryset.update(status=1)
 
     def close_booking_slots(self, request, queryset):
         queryset.update(status=0)
+
+    def make_booking_available(self, request, queryset):
+        queryset.update(booking_status=1)
+
+    def change_booking_to_booked(self, request, queryset):
+        queryset.update(booking_status=0)
+
 
 
 @admin.register(models.Booking)

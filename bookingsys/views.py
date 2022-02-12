@@ -1,4 +1,6 @@
-from django.shortcuts import render, get_list_or_404, redirect
+# from django.shortcuts import render, get_list_or_404, redirect,
+#  get_object_or_404
+from django import shortcuts
 from django.views import generic, View
 from . import models
 # from .forms import BookingForm
@@ -14,11 +16,13 @@ class BookingSlotList(generic.ListView):
 class BookingSlot(View):
 
     def get(self, request, *args, **kwargs):
-        timeslots = get_list_or_404(models.TimeSlot.objects.filter(status=1))
-        bookingslots = get_list_or_404(
-            models.BookingSlot.objects.filter(status=1))
-
-        return render(
+        timeslots = shortcuts.get_list_or_404(
+            models.TimeSlot.objects.filter(status=1)
+            )
+        bookingslots = shortcuts.get_list_or_404(
+            models.BookingSlot.objects.filter(status=1, booking_status=1)
+            )
+        return shortcuts.render(
             request,
             "bookings.html",
             {
@@ -38,7 +42,7 @@ class BookingSlot(View):
         # bookingslotid = 'bookingslot' in request.POST
         idd = request.POST.get('bookingslot')
         print(idd)
-        p1 = models.BookingSlot.objects.get(id=idd)
+        p1 = shortcuts.get_object_or_404(models.BookingSlot, id=idd)
         a1 = models.Booking.objects.create(
             first_name=first_name,
             last_name=last_name,
@@ -50,8 +54,14 @@ class BookingSlot(View):
         )
         # a1
         a1.timeslot.add(p1)
-        # print(p1)
-        return redirect('index')
+        # p1.booking_status(
+        #     booking_status=booked,
+        # )
+        print(p1.booking_status)
+        p1.booking_status = 0
+        print(p1.booking_status)
+        p1.save()
+        return shortcuts.redirect('index')
 
     # def get(self, request, *args, **kwargs):
 
