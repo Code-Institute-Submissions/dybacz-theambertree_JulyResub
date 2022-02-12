@@ -40,7 +40,6 @@ class BookingSlotAdmin(admin.ModelAdmin):
         queryset.update(booking_status=0)
 
 
-
 @admin.register(models.Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = (

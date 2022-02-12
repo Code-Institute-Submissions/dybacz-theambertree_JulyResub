@@ -53,6 +53,7 @@ class BookingSlot(View):
             comments=comments,
         )
         # a1
+        ## need a to check to see if booking has already been made then if so need to re render page with an error message.
         a1.timeslot.add(p1)
         # p1.booking_status(
         #     booking_status=booked,

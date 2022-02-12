@@ -1,3 +1,114 @@
+/*************** IMPORTS ***************/
+
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+/*************** VARIABLES ***************/
+:root{
+--color1: #35524a;
+--color2: #b9e3c3;
+--coloramber: #ffb300;
+--color3: #824c71;
+--color4: #30414a;
+
+--logofont: Parisienne;
+--logofont2: Great Vibes;
+
+}
+.ambertree {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 15px;
+    background-color: var(--color3);
+    border: 1px solid var(--coloramber);
+    border-radius: 50%;
+    padding-top: 10px;
+    
+}
+
+#amber{
+    color: var(--coloramber);
+}
+
+#logo {
+    margin: 20px 0 0 0;
+
+}
+
+#logo p{
+    font-family: var(--logofont2), cursive;
+    font-size: 44px;
+    line-height: 44px;
+}
+
+#side-nav {
+    height: 100vh;
+    background-color: var(--color1);
+    border-top: 0;
+    border-bottom: 0;
+    border-left: 7px;
+    border-right: 7px;
+    border-style: double;
+    border-color: var(--color2);
+}
+
+#fixed-nav {
+    position: fixed;
+}
+
+#side-nav nav a {
+    text-align: center;
+}
+
+#side-nav nav a:link {
+    color: whitesmoke;
+}
+
+#side-nav nav a:visited {
+    color: whitesmoke;
+}
+
+#side-nav nav a:hover {
+    color: whitesmoke;
+}
+
+#toolbar-nav {
+    position: fixed;
+    right: 0;
+    border-radius: 0 0 0 20px;
+    height: 35px;
+    background-color: azure;
+    padding-top: 0;
+}
+
+#toolbar-nav a{
+    padding-top: 0;
+    margin-right: 0;
+    margin-left: 1rem;
+}
+
+
+
+#home {
+    background: url("https://res.cloudinary.com/dfied78uu/image/upload/v1644702342/TheAmberTree/pexels-pierre-blach%C3%A9-3073666_hocgni.jpg") no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height: 100vh;
+    background-color: black;
+  }
+
+  #about {
+    background: url("https://res.cloudinary.com/dfied78uu/image/upload/v1644702113/TheAmberTree/pexels-pierre-blach%C3%A9-2901215_acdkqc.jpg") no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height: 100vh;
+    background-color: red;
+  }
+
 input[type="radio"]{
     position: absolute;
     z-index: -99;
