@@ -1,29 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row" id="home">
-        <div class="col-3" id="fixed-nav">
-            <div class="row justify-content-center">
-                <div class="col-10" id="side-nav">
-                    <nav class="nav flex-column">
-                        <a class="navbar-brand" href="#home" id="logo">
-                            <img src="/static/img/tree.svg" alt=""  class="mx-auto d-block ambertree">
-                            <p>The <span id="amber">Amber</span> Tree <br>
-                                Restaurant</p>
-                        </a>
-                        <a class="nav-link active" aria-current="page" href="#home">Home</a>
-                        <a class="nav-link" href="#about">About</a>
-                        <a class="nav-link" href="#">Menu</a>
-                        <a class="nav-link" href="#">Drinks</a>
-                        <a class="nav-link" href="#">Contact</a>
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Make a Booking</a>
-                    </nav>
-                </div>
-            </div>
-        </div>
         <div class="col-9 offset-3">
+            <div class="row">
             <h3>Homepage</h3>
+            </div>
         </div>
     </div>
     <div class="row" id="about">
@@ -33,5 +14,4 @@
             <h3>About Page</h3>
         </div>
     </div>
-</div>
 {% endblock %}

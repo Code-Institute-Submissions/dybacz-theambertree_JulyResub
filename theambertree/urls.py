@@ -19,7 +19,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
+    path('', views.Index.as_view(), name='index'),
     path('bookings/', include('bookingsys.urls'), name="bookingsys"),
     path('accounts/', include('allauth.urls')),
 ]

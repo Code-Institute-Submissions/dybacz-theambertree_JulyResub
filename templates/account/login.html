@@ -6,19 +6,22 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
+        <div class="col-9 offset-3">
+          <div class="row">
+            <h1>{% trans "Sign In" %}</h1>
 
-<h1>{% trans "Sign In" %}</h1>
+            <p>{% blocktrans %}If you have not created an account yet, then please
+              <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
 
-<p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-</form>
-
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+              {% csrf_token %}
+              {{ form.as_p }}
+              {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+              {% endif %}
+              <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+            </form>
+          </div>
+        </div>
+      </div>
 {% endblock %}

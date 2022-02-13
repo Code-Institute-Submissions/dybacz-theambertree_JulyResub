@@ -22,13 +22,15 @@ class BookingSlot(View):
         bookingslots = shortcuts.get_list_or_404(
             models.BookingSlot.objects.filter(status=1, booking_status=1)
             )
+        page_type = 'bookingform'
         return shortcuts.render(
             request,
             "bookings.html",
             {
                 # 'booking_form': BookingForm(),
                 'timeslots': timeslots,
-                'bookingslots': bookingslots
+                'bookingslots': bookingslots,
+                'page_type': page_type,
             }
         )
 
@@ -53,7 +55,7 @@ class BookingSlot(View):
             comments=comments,
         )
         # a1
-        ## need a to check to see if booking has already been made then if so need to re render page with an error message.
+        # need a to check to see if booking has already been made then if so need to re render page with an error message.
         a1.timeslot.add(p1)
         # p1.booking_status(
         #     booking_status=booked,
