@@ -38,11 +38,13 @@
 }
 
 #logo p{
-    font-family: var(--logofont2), cursive;
-    font-size: 44px;
-    line-height: 44px;
+    font-family: var(--logofont), cursive;
+    font-size: 42px;
+    line-height: 50px;
     font-weight: 400;
 }
+
+
 
 #side-nav {
     height: 100vh;
@@ -57,6 +59,7 @@
 
 #fixed-nav {
     position: fixed;
+    top: 0;
 }
 
 #side-nav nav a {
@@ -100,37 +103,45 @@
 
 
 
-#home {
-    background: url("https://res.cloudinary.com/dfied78uu/image/upload/c_scale,w_1920/v1644702342/TheAmberTree/pexels-pierre-blach%C3%A9-3073666_hocgni.jpg") no-repeat center center;
+body {
+    background: url("https://res.cloudinary.com/dfied78uu/image/upload/c_scale,w_1920/v1644702342/TheAmberTree/pexels-pierre-blach%C3%A9-3073666_hocgni.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    height: 100vh;
     background-color: black;
   }
 
 #about {
-    background: url("https://res.cloudinary.com/dfied78uu/image/upload/c_scale,w_1920/v1644702113/TheAmberTree/pexels-pierre-blach%C3%A9-2901215_acdkqc.jpg") no-repeat center center;
+    background: url("https://res.cloudinary.com/dfied78uu/image/upload/c_scale,w_1920/v1644702113/TheAmberTree/pexels-pierre-blach%C3%A9-2901215_acdkqc.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    height: 100vh;
     background-color: red;
 }
 
 #bookingform {
-    background: url("https://res.cloudinary.com/dfied78uu/image/upload/c_scale,w_1920/v1644714703/TheAmberTree/pexels-valeria-boltneva-1484516_bpxb8o.jpg") no-repeat center center;
+    background: url("https://res.cloudinary.com/dfied78uu/image/upload/c_scale,w_1920/v1644714703/TheAmberTree/pexels-valeria-boltneva-1484516_bpxb8o.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    height: 100vh;
     background-color: red;
 }
 
-#form-container{
+.container-border {
+    height: 100vh;
+    border-top: 15px;
+    border-bottom: 10px;
+    border-left: 0;
+    border-right: 0;
+    border-style: solid;
+    border-color: rgba(48, 65, 74, 0.85);
+}
+
+
+#form-container, #about-containter{
     background-color: rgb(255, 255, 255, 0.6);
     margin-top: 55px;
     border-radius: 3%;

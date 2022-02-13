@@ -27,7 +27,7 @@
     </nav>
 
     <div class="container-fluid">
-        <div class="row" id="{{ page_type }}">
+        <div class="row container-border" id="{{ page_type }}">
             <div class="col-3" id="fixed-nav">
                 <div class="row justify-content-center">
                     <div class="col-10" id="side-nav">
@@ -35,7 +35,7 @@
                             <a class="navbar-brand" href="{% url 'index' %}#home" id="logo">
                                 <img src="/static/img/tree.svg" alt=""  class="mx-auto d-block ambertree">
                                 <p>The <span id="amber">Amber</span> Tree <br>
-                                    Restaurant</p>
+                                    <sup>Restaurant</sup></p>
                             </a>
                             <a class="nav-link active" aria-current="page" href="{% url 'index' %}#home">Home</a>
                             <a class="nav-link" href="{% url 'index' %}#about">About</a>
