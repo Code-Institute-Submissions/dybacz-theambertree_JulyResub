@@ -23,6 +23,7 @@ class BookingSlot(View):
             models.BookingSlot.objects.filter(status=1, booking_status=1)
             )
         page_type = 'bookingform'
+        page_title = 'Make a Booking | The Amber Tree'
         return shortcuts.render(
             request,
             "bookings.html",
@@ -31,6 +32,7 @@ class BookingSlot(View):
                 'timeslots': timeslots,
                 'bookingslots': bookingslots,
                 'page_type': page_type,
+                'page_title': page_title,
             }
         )
 
@@ -55,7 +57,8 @@ class BookingSlot(View):
             comments=comments,
         )
         # a1
-        # need a to check to see if booking has already been made then if so need to re render page with an error message.
+        # need a to check to see if booking has already been made then if so 
+        # need to re render page with an error message.
         a1.timeslot.add(p1)
         # p1.booking_status(
         #     booking_status=booked,

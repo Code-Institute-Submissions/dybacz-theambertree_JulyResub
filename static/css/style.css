@@ -55,6 +55,7 @@
     border-right: 7px;
     border-style: double;
     border-color: var(--color2);
+    padding: 0;
 }
 
 #fixed-nav {
@@ -77,10 +78,22 @@
     color: whitesmoke;
 }
 
-#side-nav nav a:hover {
+#side-nav nav .nav-link:hover {
     color: whitesmoke;
-    background-color: var(--color4);
+    background-color: var(--color3);
 }
+
+#side-nav nav .nav-link:active {
+    color: whitesmoke;
+    background-color: var(--color3);
+}
+
+#side-nav nav .active {
+    color: whitesmoke;
+    background-color: var(--color3);
+    border: 3px double var(--coloramber);
+}
+
 #side-nav nav #logo:hover {
     color: whitesmoke;
     background-color: var(--color1);
@@ -112,7 +125,25 @@ body {
     background-color: black;
   }
 
-#about {
+#menu {
+    background: url("https://res.cloudinary.com/dfied78uu/image/upload/c_scale,w_1920/v1644714727/TheAmberTree/pexels-jonathan-borba-2878708_cb0itm.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-color: red;
+}
+
+#drinks {
+    background: url("https://res.cloudinary.com/dfied78uu/image/upload/c_scale,w_1920/v1644702106/TheAmberTree/pexels-picjumbocom-225228_q10c9p.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-color: red;
+}
+
+#contact {
     background: url("https://res.cloudinary.com/dfied78uu/image/upload/c_scale,w_1920/v1644702113/TheAmberTree/pexels-pierre-blach%C3%A9-2901215_acdkqc.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -130,12 +161,59 @@ body {
     background-color: red;
 }
 
+#social ul {
+    list-style-type: none;
+    text-align: center;
+    display: inline-flex;
+    color:whitesmoke;
+}
+
+#social ul li{
+    padding: 0;
+    height: 48px;
+    width: 48px;
+    border: 0px;
+    margin: 8px;
+    border-radius: 8px;
+
+}
+
+#social ul li a{
+    color:whitesmoke;
+    font-size: 35px;
+    line-height: 47px;
+}
+
+#fb {
+    background-color: #4267B2;
+}
+
+#ig {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+}
+
+#tw{
+    background-color: #1DA1F2;
+
+}
+
+#sc {
+    background-color: #FFFC00;
+}
+#sc a i{
+    color: black;
+}
+
+#yt {
+    background-color: #FF0000;
+}
+
 .container-border {
     height: 100vh;
     border-top: 15px;
     border-bottom: 10px;
-    border-left: 0;
-    border-right: 0;
+    border-left: 10px;
+    border-right:10px;
     border-style: solid;
     border-color: rgba(48, 65, 74, 0.85);
 }
@@ -167,4 +245,12 @@ input[type="radio"]:checked + label{
 .time-slot {
     min-width: 10%;
     border-radius: 50px;
+}
+
+.flex-column {
+    padding: 0;
+}
+
+#side-nav .container{
+    padding: 12px;
 }
