@@ -42,6 +42,8 @@
     font-size: 42px;
     line-height: 50px;
     font-weight: 400;
+    border-bottom: 1px solid var(--color2);
+    margin: 0 10px 4px 10px;
 }
 
 
@@ -68,6 +70,7 @@
     font-size: 24px;
     font-weight: 400;
     font-family: var(--font1), sans-serif;
+    margin: 0 0 5px 0;
 }
 
 #side-nav nav a:link {
@@ -170,10 +173,10 @@ body {
 
 #social ul li{
     padding: 0;
-    height: 48px;
-    width: 48px;
+    height: 42px;
+    width: 42px;
     border: 0px;
-    margin: 8px;
+    margin: 6px;
     border-radius: 8px;
 
 }
@@ -181,7 +184,7 @@ body {
 #social ul li a{
     color:whitesmoke;
     font-size: 35px;
-    line-height: 47px;
+    line-height: 42px;
 }
 
 #fb {
@@ -207,6 +210,12 @@ body {
 #yt {
     background-color: #FF0000;
 }
+
+#yt i {
+    font-size: 32px;
+}
+
+
 
 .container-border {
     height: 100vh;
@@ -251,6 +260,36 @@ input[type="radio"]:checked + label{
     padding: 0;
 }
 
+span.divider {
+    border-bottom: 1px solid var(--color2);
+    width: 18vw;
+    padding-top: 1vh;
+}
+
 #side-nav .container{
-    padding: 12px;
+    padding: 5px 12px 0 12px;
+}
+
+.footer, #social p {
+    color: whitesmoke;
+    font-weight: 600;
+}
+
+.footer p {
+    margin: 0;
+    color: rgba(185, 227, 195, 0.2);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.footer p, #logo {
+    -webkit-user-select: none;  
+    -moz-user-select: none;     
+    -ms-user-select: none;      
+    user-select: none;
+}
+
+footer {
+    padding: 0;
 }
