@@ -2,7 +2,7 @@
 
 {% block content %}
 
-{% load crispy_forms_tags %}
+<!-- {% load crispy_forms_tags %} -->
     <div class="col-6 offset-4">
         <div class="container mt-5" id="form-container">
             <div class="row">
@@ -10,12 +10,16 @@
                     <h2 class="mx-auto mt-2">Make a booking</h2>
                     <div class="row pt-5" id="form-row-top">
                         <div class="col-5">
-                            <h3 class="mb-3 fancy-font">1. Select date</h3>
+                            <h3 class="mb-3 fancy-font">1. Select date
+                                <i class="fa-regular fa-calendar-days ms-1"></i>
+                            </h3>
                             <input type="date" class="ms-4" name="date" id="date" value="2017-06-01" min="2018-01-01" max="2018-12-31">
                         </div>
                         <div class="col-7">
                             <div class="row justify-content-md-center">
-                                <h3 class="mb-2 fancy-font">2. Select start time</h3>
+                                <h3 class="mb-2 fancy-font">2. Select start time
+                                    <i class="fa-regular fa-clock ms-1"></i>
+                                </h3>
                                 <div class="form-check form-check-inline ms-4">
                                     {% for timeslot in timeslots %}
                                     <input type="radio" id="btn-check-{{ timeslot }}" name="timeslot" value="{{ timeslot }}"
@@ -34,7 +38,9 @@
                     <form method="POST">
                         {% csrf_token %}
                         <div class="row mt-4">
-                            <h3 class="fancy-font">3. Details</h3>
+                            <h3 class="fancy-font">3. Details
+                                <i class="fa-regular fa-address-card"></i>
+                            </h3>
                             <div class="col ms-4">
                                 <div class="form-floating">
                                     <input class="form-control mt-3" type="text" value="{{ user.first_name }}" id="firstname" name="firstname"
@@ -60,27 +66,41 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row justify-content-md-center mt-4 pb-4" id="form-row-bot">
-                            <h3 class="fancy-font">4. Select table</h3>
-                            <div class="form-check form-check-inline ms-5">
-                                {% for bookingslot in bookingslots %}
-                                <input type="radio" id="btn-check-{{ bookingslot.id }}" name="bookingslot"
-                                    value="{{ bookingslot.id }}" class="btn-check form-check-input" required>
-                                <label for="btn-check-{{ bookingslot.id }}"
-                                    class="btn btn-success form-check-label booking-slot">{{ bookingslot.table }}</label>
-                                {%if forloop.counter|divisibleby:4 %}
-                            </div>
-                            <div class="form-check form-check-inline ms-5">
-                                {% endif %}
-                                {% endfor %}
+                        <div class="container">
+                            <div class="row justify-content-md-center mt-4 pb-4" id="form-row-bot">
+                                <h3 class="fancy-font">4. Select table
+                                    <i class="fa-solid fa-utensils ms-1"></i>
+                                </h3>
+                                <div class="form-check form-check-inline mt-1 mx-5">
+                                    <div class="row">
+                                        {% for bookingslot in bookingslots %}
+                                        <div class="col-3 px-1">
+                                            <input type="radio" id="btn-check-{{ bookingslot.id }}" name="bookingslot"
+                                                value="{{ bookingslot.id }}" class="btn-check form-check-input" required>
+                                            <label for="btn-check-{{ bookingslot.id }}"
+                                                class="btn btn-booking-slot form-check-label booking-slot"><b>
+                                                    {{bookingslot.table }}</b></label>
+                                        </div>
+                                        {%if forloop.counter|divisibleby:4 %}
+                                    </div>
+                                </div>
+                                <div class="form-check form-check-inline mt-1 mx-5">
+                                    <div class="row">
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row justify-content-md-center mt-3">
                             <div class="col-auto mt-2 mb-4">
-                                <input type="submit" class="btn btn-danger" value="Book Now">
+                                <button type="submit" class="btn btn-submit" value="Book Now">
+                                    <i class="fa-regular fa-calendar-plus ms-1"></i>
+                                    Book Now
+                                </button>
                             </div>
                         </div>
-                        {{ booking_form | crispy }}
+                        <!-- {{ booking_form | crispy }} -->
                     </form>
                 </div>
             </div>
