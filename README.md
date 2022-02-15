@@ -116,6 +116,9 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 
     - This feature will then allow the booking form to dynamically update the available tables based on the user input for the time
 
+* __Django Messages__ 
+    - This feature will allow the user to recieve messages from Django such as error or success.
+
 * __Mobile Version of Site / Site Dynamics__ (CSS media queries/set bootstrap classes)
     - This feature would allow users to access the webapp via medium and small devices and have a pleasant experience with the UI
 
@@ -361,6 +364,7 @@ A form allowing the user to make a future booking at the restaurant. This form s
 
 **Fonts**
 - Some of the fonts used in this webapp were sourced from [Google Fonts](https://fonts.google.com/)
+
 
 
 
