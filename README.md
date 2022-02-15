@@ -119,6 +119,9 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 * __Mobile Version of Site / Site Dynamics__ (CSS media queries/set bootstrap classes)
     - This feature would allow users to access the webapp via medium and small devices and have a pleasant experience with the UI
 
+* __Multiple Table Booking__
+    - This feature will allow the user to add more than one table to the booking form before submission
+
 * __Unique Booking reference numbers__
     - This Feature will allow for each booking to be assigned a unique booking reference number.
 
