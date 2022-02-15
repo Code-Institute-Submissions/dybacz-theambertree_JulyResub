@@ -1,6 +1,6 @@
 # The Amber Tree Booking System & Site WebApp
 
-![AT logo](/static/img/readme/logo.png)
+![AT logo](/static/images/readme/logo.png)
 
 This WebApp is a booking system and general website for the mock restaurant The Amber Tree.
 
@@ -23,7 +23,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on cloudina
     * Contact
     * Make a Booking 
     
-    ![Navigation](/static/img/readme/nav-large.png)
+    ![Navigation](/static/images/readme/nav-large.png)
 
 <!-- ![Navigation Mobile](assets/images/readme/multiplayer.png) -->
 
@@ -283,8 +283,8 @@ The live link can be found here - [TheAmberTree](https://theambertree.herokuapp.
 
 **Initial Models:**
 
-![Initial Slot Model](/static/img/readme/InitialSlotModel.png)
-![Initial Booking Model](/static/img/readme/InitialBookingModel.png)
+![Initial Slot Model](/static/images/readme/InitialSlotModel.png)
+![Initial Booking Model](/static/images/readme/InitialBookingModel.png)
 
 **Current Models:**
 
