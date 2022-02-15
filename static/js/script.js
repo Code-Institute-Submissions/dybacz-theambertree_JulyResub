@@ -4,11 +4,13 @@ $(document).ready(function() {
             $(this).addClass("active");
         } 
     });
+
     if ($("#booking-link").hasClass("active") === true){
         getDates()
-    }  
+    } else {
+        sideNavCheck();
+    };
 
-    
     document.addEventListener("scroll", sideNavCheck, { passive: true });
     
  

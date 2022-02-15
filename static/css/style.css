@@ -264,7 +264,8 @@ span.divider {
 
 .footer, #social p {
     color: whitesmoke;
-    font-weight: 600;
+    font-weight: 500;
+    margin-bottom: 0;
 }
 
 .footer p {
@@ -325,12 +326,15 @@ h2 {
 #form-block, .general-block {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    min-height: 80vh;
 }
 
 #form-container, .general-container{
     background-color: rgba(48, 65, 74, 0.3);
     border-radius: 12px;
-    height: 88vh;
+    min-height: 80vh;
+    border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .booking-slot {
