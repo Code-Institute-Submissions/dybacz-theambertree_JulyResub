@@ -146,7 +146,7 @@ Upon initialisation, It is recommended you create objects in this order:
 
     Each Table represents a table available to have bookings made for it. 
 
-    ![Django Admin](/static/images/readme/add_table.png)
+    ![Creat a Table](/static/images/readme/add_table.png)
 
     Repeat for each table at the establishment:
     - Create a new Table
@@ -158,7 +158,7 @@ Upon initialisation, It is recommended you create objects in this order:
     Each Time Slot represents a defined segment of time for a booking e.g., 6:00 PM - 7:30 PM is a 90 min slot.
     Restaurant can customise start & end times for these slots.
 
-    ![Django Admin](/static/images/readme/add_timeslot.png)
+    ![Create a Time Slot](/static/images/readme/add_timeslot.png)
 
     Repeat for each time slot:
     - Create a new Time Slot
@@ -174,7 +174,7 @@ Upon initialisation, It is recommended you create objects in this order:
 
     Each booking slot represents an empty booking for a single table with a defined time slot with a start time and end time and defined date
 
-    ![Django Admin](/static/images/readme/add_bookinglot.png)
+    ![Create a Booking Slot](/static/images/readme/add_bookingslot.png)
 
     Repeat for each Booking Slot:
     - Create a new Booking Slot
@@ -196,7 +196,7 @@ Upon initialisation, It is recommended you create objects in this order:
 
     Bookings can be updated and deleted here.
 
-    ![Django Admin](/static/images/readme/django_admin_page2.png)
+    ![Manage Bookings](/static/images/readme/django_admin_page2.png)
     
     ***Booking Attended:***
 
