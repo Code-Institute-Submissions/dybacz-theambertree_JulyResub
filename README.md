@@ -219,7 +219,6 @@ Upon initialisation, It is recommended you create objects in this order:
     *It doesn't matter which order these two are completed as long as both are completed after each cancellation so the Booking Slot is visible to other guests* 
     
     <br />
-    <br />
 
     If creating a booking manually this can be done via Bookings on the Django admin. 
     
