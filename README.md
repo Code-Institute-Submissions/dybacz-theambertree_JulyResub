@@ -23,7 +23,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on cloudina
     * Contact
     * Make a Booking 
     
-    ![Navigation](/static/images/readme/nav-large.png)
+    ![Navigation](/static/images/readme/nav_large.png)
 
 <!-- ![Navigation Mobile](assets/images/readme/multiplayer.png) -->
 
@@ -34,7 +34,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on cloudina
     * User then submits form and is redirected to a booking complete page with the booking details
     * If the form is incorrect or booking unavailable the user is redirected to a booking failed page with the reason for failure 
 
-    ![Booking Form]()
+    ![Booking Form](/static/images/readme/booking_form.png)
 
 
 **Staff Features**
