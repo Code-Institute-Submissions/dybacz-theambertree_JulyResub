@@ -12,14 +12,14 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-light bg-light" id="toolbar-nav">
+    <!-- <nav class="navbar navbar-light bg-light" id="toolbar-nav">
         {% if user.is_authenticated %}    
         <div class="container-fluid">
           <a class="navbar-brand" href="{% url 'index' %}">Home</a>
           
           <a class="navbar-brand" href="{% url 'account_logout' %}">Logout</a>
-          <!-- <a class="navbar-brand" href="{% url 'account_login' %}">Login</a>
-          <a class="navbar-brand" href="{% url 'account_signup' %}">Register</a> -->
+          <a class="navbar-brand" href="{% url 'account_login' %}">Login</a>
+          <a class="navbar-brand" href="{% url 'account_signup' %}">Register</a>
           
           <a class="navbar-brand" href="{% url 'bookings_home' %}">Make a Booking</a>
           {% if user.is_staff %}
@@ -30,7 +30,7 @@
           {% endif %}
         </div>
         {% endif %}
-    </nav>
+    </nav> -->
 
 
     <div class="container-fluid" id="{{ page_type }}">
