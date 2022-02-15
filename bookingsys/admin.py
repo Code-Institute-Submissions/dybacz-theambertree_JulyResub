@@ -44,7 +44,6 @@ class BookingSlotAdmin(admin.ModelAdmin):
 class BookingAdmin(admin.ModelAdmin):
     list_display = (
         'booking_name',
-        'number_of_guests',
         'booking_table',
         'total_capacity',
         'reservation_date',

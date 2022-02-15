@@ -7,6 +7,8 @@ $(document).ready(function() {
     if ($("#booking-link").hasClass("active") === false){
         $("#about-link").addClass("active")
         console.log("err")
+    }   else {
+        getDates()
     }
     
     let windowHeight = window.innerHeight
@@ -33,4 +35,18 @@ $(document).ready(function() {
             $("#contact-link").addClass("active")
         }
     }, { passive: true });
+
+    function getDates() {
+    let dateControl = document.querySelector('input[type="date"]');
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); 
+    let mmPlusone = String(today.getMonth() + 2).padStart(2, '0');
+    let yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd
+    todayPlusMonth = yyyy + '-' + mmPlusone + '-' + dd
+    dateControl.value = today;
+    dateControl.min = today;
+    dateControl.max = todayPlusMonth;
+    }
 });

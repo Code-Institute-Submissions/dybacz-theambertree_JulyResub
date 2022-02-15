@@ -92,7 +92,6 @@ class Booking(models.Model):
         blank=True,
         null=True)
     update_on = models.DateTimeField(auto_now=True)
-    number_of_guests = models.IntegerField()
     date_created = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=C_STATUS, default=0)
     comments = models.CharField(max_length=200, blank=True)

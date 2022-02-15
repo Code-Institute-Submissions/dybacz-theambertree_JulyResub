@@ -41,7 +41,6 @@ class BookingSlot(View):
         first_name = request.POST.get('firstname')
         last_name = request.POST.get('lastname')
         email = request.POST.get('email')
-        number_of_guests = request.POST.get('guestnumber')
         comments = request.POST.get('comments')
         # bookingslotid = 'bookingslot' in request.POST
         idd = request.POST.get('bookingslot')
@@ -52,7 +51,6 @@ class BookingSlot(View):
             last_name=last_name,
             email=email,
             # account = ,
-            number_of_guests=number_of_guests,
             status=0,
             comments=comments,
         )

@@ -1,49 +1,68 @@
 {% extends "base.html" %}
+
 {% block content %}
+
 {% load crispy_forms_tags %}
-    <div class="col-9 offset-3">
-        <div class="container" id="form-container">
+    <div class="col-6 offset-4">
+        <div class="container mt-5" id="form-container">
             <div class="row">
-                <div class="col-10 offset-1 mt-5">
-                    {% if user.is_authenticated %}
-                    <h3>Make a booking:</h3>
-                    <h3>Choose a Date:</h3>
-                    <input type="date" name="date" id="date" \>
-                    <div class="row justify-content-md-center">
-                        <h3>Choose a timeslot:</h3>
-                        <div class="form-check form-check-inline">
-                            {% for timeslot in timeslots %}
-                            <input type="radio" id="btn-check-{{ timeslot }}" name="timeslot" value="{{ timeslot }}"
-                                class="btn-check form-check-input" required>
-                            <label for="btn-check-{{ timeslot }}"
-                                class="btn btn-primary form-check-label time-slot"><b>{{ timeslot.startTime }}</b></label>
-                            {%if forloop.counter|divisibleby:4 %}
+                <div class="col-12 mt-3" id="form-block">
+                    <h2 class="mx-auto mt-2">Make a booking</h2>
+                    <div class="row pt-5" id="form-row-top">
+                        <div class="col-5">
+                            <h3 class="mb-3 fancy-font">1. Select date</h3>
+                            <input type="date" class="ms-4" name="date" id="date" value="2017-06-01" min="2018-01-01" max="2018-12-31">
                         </div>
-                        <div class="form-check form-check-inline">
-                            {% endif %}
-                            {% endfor %}
+                        <div class="col-7">
+                            <div class="row justify-content-md-center">
+                                <h3 class="mb-2 fancy-font">2. Select start time</h3>
+                                <div class="form-check form-check-inline ms-4">
+                                    {% for timeslot in timeslots %}
+                                    <input type="radio" id="btn-check-{{ timeslot }}" name="timeslot" value="{{ timeslot }}"
+                                        class="btn-check form-check-input" required>
+                                    <label for="btn-check-{{ timeslot }}" class="btn btn-primary form-check-label time-slot"><b>
+                                            {{timeslot.startTime }}</b></label>
+                                    {%if forloop.counter|divisibleby:4 %}
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <form method="POST">
                         {% csrf_token %}
-                        <label for="firstname" class="form-label">First Name:</label>
-                        <input class="form-control" type="text" value="{{ user.first_name }}" id="firstname"
-                            name="firstname" aria-label="Input First Name" required>
-                        <label for="lasttname" class="form-label">Last Name:</label>
-                        <input class="form-control" type="text" value="{{ user.last_name }}" id="lastname"
-                            name="lastname" aria-label="Input Last Name" required>
-                        <label for="email" class="form-label">Email:</label>
-                        <input class="form-control" type="email" name="email" value="{{ user.email }}" id="email"
-                            aria-label="Input Email" required>
-                        <label for="guestnumber" class="form-label">Number of Guests:</label>
-                        <input class="form-control" type="number" value="1" name="guestnumber" id="guestnumber" min="1"
-                            max="12" aria-label="Input Number of Guests">
-                        <label for="comments" class="form-label">Additional Comments:</label>
-                        <textarea class="form-control" id="comments" name="comments" aria-label="additional comments"
-                            rows="4" cols="50"></textarea>
-                        <div class="row justify-content-md-center">
-                            <h3 class="text-center">Select a table:</h3>
-                            <div class="form-check form-check-inline text-center">
+                        <div class="row mt-4">
+                            <h3 class="fancy-font">3. Details</h3>
+                            <div class="col ms-4">
+                                <div class="form-floating">
+                                    <input class="form-control mt-3" type="text" value="{{ user.first_name }}" id="firstname" name="firstname"
+                                        placeholder="First Name" aria-label="Input First Name" required>
+                                    <label for="firstname">First Name</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control mt-4" type="text" value="{{ user.last_name }}" id="lastname" name="lastname"
+                                        placeholder="Last Name" aria-label=" Input Last Name" required>
+                                    <label for="lasttname">Last Name</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control mt-4" type="email" name="email" value="{{ user.email }}" id="email"
+                                        aria-label="Input Email" placeholder="Email" required>
+                                    <label for="email">Email</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating me-4">
+                                    <textarea class="form-control mt-3" id="comments" name="comments" placeholder="Additional Comments"
+                                        aria-label="additional comments" style="height: 222px" maxlength="200"></textarea>
+                                    <label for="comments">Comments</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-md-center mt-4 pb-4" id="form-row-bot">
+                            <h3 class="fancy-font">4. Select table</h3>
+                            <div class="form-check form-check-inline ms-5">
                                 {% for bookingslot in bookingslots %}
                                 <input type="radio" id="btn-check-{{ bookingslot.id }}" name="bookingslot"
                                     value="{{ bookingslot.id }}" class="btn-check form-check-input" required>
@@ -51,28 +70,22 @@
                                     class="btn btn-success form-check-label booking-slot">{{ bookingslot.table }}</label>
                                 {%if forloop.counter|divisibleby:4 %}
                             </div>
-                            <div class="form-check form-check-inline text-center">
+                            <div class="form-check form-check-inline ms-5">
                                 {% endif %}
                                 {% endfor %}
                             </div>
                         </div>
                         <div class="row justify-content-md-center mt-3">
-                            <div class="col-auto">
+                            <div class="col-auto mt-2 mb-4">
                                 <input type="submit" class="btn btn-danger" value="Book Now">
                             </div>
                         </div>
                         {{ booking_form | crispy }}
                     </form>
-                    {% else %}
-                    <h3>Please Sign in or Register to make a booking</h3>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-{% endif %}
 
 {% endblock %}
