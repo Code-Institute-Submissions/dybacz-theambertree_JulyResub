@@ -34,7 +34,7 @@
 
 #logo {
     margin: 10px 0 0 0;
-
+    text-align: center;
 }
 
 #logo p{
@@ -43,7 +43,8 @@
     line-height: 50px;
     font-weight: 400;
     border-bottom: 1px solid var(--color2);
-    margin: 0 10px 4px 10px;
+    width: 18vw;
+    display: inline-block;
 }
 
 

@@ -1,108 +1,328 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# The Amber Tree Booking System & Site WebApp
 
-Welcome dybacz,
+![AT logo](/static/img/readme/logo.png)
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+This WebApp is a booking system and general website for the mock restaurant The Amber Tree.
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+The backend runs on the Django 3.2 python web-framework with a PostgreSQL database using the Django MVT model (similar to the standard MVC), the front-end web pages are rendered from templates served by the Django backend, these templates were written in a combination of HTML5 & Django templating language which allows for pythonic functions such as loops and variables to be utilised. 
 
-## Gitpod Reminders
+CSS3, Bootstrap 5, JavaScript & jQuery were also utilised to gain the desired front-end functionality and UX based on initial wireframes. AJAX requests were performed using the JavaScript Fetch API.
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+This WebApp is hosted on Heroku with all static & media files hosted on cloudinary and dealt with by Django.
 
-`python3 -m http.server`
+[Click here for the live version](https://theambertree.herokuapp.com/)
 
-A blue button should appear to click: _Make Public_,
+## Features
+### Current Features:
 
-Another blue button should appear to click: _Open Browser_.
+**Guest Features**
+* Navigation
+    * About 
+    * Menu
+    * Drinks
+    * Contact
+    * Make a Booking 
+    
+    ![Navigation](/static/img/readme/nav-large.png)
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+<!-- ![Navigation Mobile](assets/images/readme/multiplayer.png) -->
 
-A blue button should appear to click: _Make Public_,
+* Make a Booking - Booking Form
+    * Accepts User Input
+    * User selects a date and time then all available tables are show.
+    * User then must complete the required details form and select their slot.
+    * User then submits form and is redirected to a booking complete page with the booking details
+    * If the form is incorrect or booking unavailable the user is redirected to a booking failed page with the reason for failure 
 
-Another blue button should appear to click: _Open Browser_.
+    ![Booking Form]()
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
 
-To log into the Heroku toolbelt CLI:
+**Staff Features**
+* Admin
+    * Create Table
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+    ![Admin]()
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+* Menu
+    * Create, Update & Delete menu items
 
-------
+    ![Menu]()
 
-## Release History
+* Drinks
+    * Create, Update & Delete drink items
+    * Images for drinks can be uploaded and rendered with the drink item to the drinks Page
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+    ![Drinks]()
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+* User Management
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+![User management]()
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+### Current Features & Functionality Left to Implement:
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+**Guest Features**
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+* __Booking Complete Page__
+    - This feature will allow users to know that there booking has been successful
+    
+    - This feature will allow users to view a summary of there booking
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+* __Booking Failure Page__
+    - This feature will allow users to know that there booking has been unsuccessful
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+    - This feature will allow users to know why there booking was unsucessful
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+* __Contact us Form__
+    - This feature will allow users to complete a form and send enquires such as party booking to the restaurant. 
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+**Admin/Staff Features**
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+* __Contact us Messages__
+    - This feature will all users who have access to the Django admin to view all enquires from the contact us form
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+* __Custom Admin Panel__
+    - This feature would allow users who are authenticated as staff to create, update, and delete bookings without the need to access Django admin
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+    - This feature will also allow the users who are authenticated as staff to quickly create and manage open time slots for future bookings in batch requests rather than having to create and manage each slot individually in the Django admin
 
-------
+    - This feature will also allow the users who are authenticated as staff to quickly manage any received contact us forms
 
-## FAQ about the uptime script
+**Functionality**
 
-**Why have you added this script?**
+* __Ajax requests__ (Fetch API)
+    - This feature will allow the booking form to dynamically update the available timeslots based on the user input for the date
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+    - This feature will then allow the booking form to dynamically update the available tables based on the user input for the time
 
-**How will this affect me?**
+* __Mobile Version of Site / Site Dynamics__ (CSS media queries/set bootstrap classes)
+    - This feature would allow users to access the webapp via medium and small devices and have a pleasant experience with the UI
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+* __Unique Booking reference numbers__
+    - This Feature will allow for each booking to be assigned a unique booking reference number.
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+### Future Features:
+* Customer accounts.
+    * Attach bookings to accounts when logged in
+    * Allow customer accounts to amend or cancel bookings
+    * Set up email verification
+    * Autonomous booking confirmation email
+* Allow guest bookings to amend and cancel bookings
+    * Autonomous guest booking confirmation email
+    * Unique URLs based on booking reference number attached to booking confirmation email for easy amend or cancel
+* Customer reviews
+* Sign in with Social Account
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+## How To Use:
 
-**So….?**
+### Booking System
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+This booking system uses multiple models available in the Django Admin Panel
 
-**Can I opt out?**
+Upon initialisation, It is recommended you create objects in this order:
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+1. **Tables**
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+    Each Table represents a table available to have bookings made for it. 
 
-**Anything more?**
+    Repeat for each table at the establishment:
+    - Create a new Table
+    - Give new Table a number
+    - Give new Table a capacity
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+2. **Time Slots**
 
----
+    Each Time Slot represents a defined segment of time for a booking e.g., 6:00 PM - 7:30 PM is a 90 min slot.
+    Restaurant can customise start & end times for these slots.
 
-Happy coding!
+    Repeat for each time slot:
+    - Create a new Time Slot
+    - Give new Time Slot a start time
+    - Give new Time Slot an end time
+    - Set new Time Slot status:
+        - 'Closed': Unavailable for selection when making a Booking Slot (Default)
+        - 'Open': Available for selection when making a Booking Slot
+
+    **Please Note:** *If you wish to close a Time slot for any particular reason then change the Status to 'Closed'*
+
+3. **Booking Slots**
+
+    Each booking slot represents an empty booking for a single table with a defined time slot with a start time and end time and defined date
+
+    Repeat for each Booking Slot:
+    - Create a new Booking Slot
+    - Select a Table for new Booking Slot
+    - Select a Date for new Booking Slot
+    - Select a Time Slot for new Booking Slot
+    - Set new Booking Slot Status:
+        - 'Draft': Unavailable for selection when making a Booking (Default)
+        - 'Published': Available for selection when making a Booking
+    - Set new Booking Slot Booking Status to 'Available'
+
+    **Please Note:** *If you wish to close a booking slot for any particular reason then either change the Status to 'Draft' or Booking Status to 'Booked'*
+
+4. **Bookings**
+
+    A booking is the attachment of the guests details to either one or multiple Booking Slots.
+
+    Bookings can be updated and deleted here.
+
+    
+    ***Booking Attended:***
+
+    - Find the suests booking in Bookings and set status to 'Attended' 
+    <br />
+    <br />
+
+    ***Booking Amended:***
+
+    - Find the suests booking in Bookings and update the booking slots by de-selecting the current ones and selecting the desired slot for ammendmant (mulitple can be selected) 
+    <br />
+    <br />
+
+    ***Booking Canceled:***
+    - Find the guests booking in Bookings and set status to 'Cancelled' 
+    - Find Booking Slot from for booking in Booking Slots and change Booking Status back to 'Available'
+    <br />
+    <br />
+    *It doesn't matter which order these two are completed as long as both are completed after each cancellation so the Booking Slot is visible to other guests* 
+        <br />
+    <br />
+
+    If creating a booking manually this can be done via Bookings on the Django admin. 
+    
+    **Please Note:** *Creating a manual booking is **not** advised. If you have to then you must make sure the timeslot selected in the booking has its status manually changed to booked before making the booking as to not allow a site guest to double book.*
+
+## Data Model:
+I decided to use class and Player classes as my models. 
+
+<!-- The game creates an instance for the game board to hold the board size, VS title, layout, counter positions and also has a board `print` function.
+
+While also creating two separate instances, one for each player to hold the name, counter color data and player type (Human or Computer). -->
+
+## Testing 
+
+### General Testing:
+- N/A
+<!-- - I tested this webapp works in different browsers: Chrome, Firefox, Edge.
+- I confirmed that the ... results are always correct.
+- I confirmed that the project is responsive, looks good and functions on all standard screen sizes using the devtools device toolbar.
+- I confirmed the name entry input works; requires an entry into the field, accepts only characters (Desktop). Start button works and user name is added to the DOM.
+- I confirmed the colours and fonts chosen are easy to read and accessible by running it through lighthouse in devtools. -->
+
+### Javascript Testing
+**Jest**
+- N/A
+
+### Django Testing
+**Coverage**
+- N/A
+
+### User Testing
+
+**Guest**
+- N/A
+
+**Staff**
+- N/A
+
+### Browser Testing
+**Lighthouse**
+- N/A
+<!-- ![Lighthouse Results]()
+- I confirmed that ... are all readable and easy to understand. -->
+
+### Validator Testing 
+
+**HTML**
+- N/A
+    <!-- - No errors were returned when passing through the official [W3C validator]
+    () -->
+**CSS**
+- N/A
+    <!-- - No errors were found when passing through the official [(Jigsaw) validator]() -->
+**JavaScript**
+- N/A
+    <!-- - No errors were found when passing through the official [Jshint validator]
+    ()
+      - The following metrics were returned: 
+      - There are 30 functions in this file.
+      - Function with the largest signature takes 3 arguments, while the median is 0.
+      - Largest function has 13 statements in it, while the median is 6.
+      - The most complex function has a cyclomatic complexity value of 7 while the median is 2. -->
+
+## Deployment
+
+This project was deployed using Heroku.
+
+### Steps for deployment
+
+* Fork or clone this repository
+* Create a new Heroku app
+* Create new PostgreSQL database for your Heroku app
+* Set the build packs to `Python`
+* Link the Heroku app to the repository
+* Set Config Vars in settings as follows:
+    * CLOUDINARY_URL : Your cloudinary API Environment variable
+    * DATABASE_URL : PostgreSQL database URL
+    * SECRET_KEY : A_SECRET_KEY_OF_YOUR_CHOICE
+* Click on **Deploy**
+* Run Heroku Console:
+    ```
+        $ python3 manage.py migrate
+    ```
+
+The live link can be found here - [TheAmberTree](https://theambertree.herokuapp.com/)
+
+## Design
+
+### Model Designs
+
+**Initial Models:**
+
+![Initial Slot Model](/static/img/readme/InitialSlotModel.png)
+![Initial Booking Model](/static/img/readme/InitialBookingModel.png)
+
+**Current Models:**
+
+### Initial Wireframes & Design Features
+
+![Wireframe](/wireframe.png)
+
+In my initial design I went with the functionality of a single page for the whole site other than the booking form.
+
+**Index**
+
+This single page is scrollable and designed with a responsive side navigation panel which indicates to the user which part of the page they are scrolling on, as seen by the larger link for in the sidebar in the wireframes.
+
+**Bookings**
+
+A form allowing the user to make a future booking at the restaurant. This form should dynamically load available tables based on the date and time inputted using AJAX fetch requests.
+
+
+## Credits 
+
+**Python Packages:**
+- Django (3.2) - Web-Framework
+- gunicorn (20.1.0) - Python WSGI HTTP Server for UNIX
+- django-allauth (0.48) - Authentication
+- django-crispy-forms (1.14.0) - Bootstrap Form Tags
+- Cloudinary (1.29.0) - Static & Media file hosting
+- dj3-cloudinary-storage (0.0.6) - Cloudinary for Django
+- dj-database-url (0.5.0) - Allows connection to db
+- psycopg2 (2.9.3) - Interact with PostgreSQL
+
+**Front end:**
+
+- [Bootstrap 5](https://getbootstrap.com/) - CSS Framework
+- [jQuery](https://jquery.com/) - JavaScript Library
+- [Font Awesome](https://fontawesome.com/) - Icons
+
+**Media:**
+- The images used in this webapp were sourced from [Pexels](https://www.https://www.pexels.com/)
+- The Tree SVG used in the logo was sourced from [freesvg.org](https://freesvg.org/maple-tree-vector-drawing)
+
+**Fonts**
+- Some of the fonts used in this webapp were sourced from [Google Fonts](https://fonts.google.com/)
+
