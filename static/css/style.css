@@ -229,11 +229,11 @@ body {
     border-color: rgba(48, 65, 74, 0.85);
 }
 
-#about-containter{
+/* #about-containter{
     background-color: rgb(255, 255, 255, 0.6);
     border-radius: 7px;
     height: 88vh;
-}
+} */
 
 input[type="radio"]{
     position: absolute;
@@ -320,12 +320,14 @@ h2 {
     font-size: 34px;
 }
 
-#form-block {
+
+
+#form-block, .general-block {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 12px;
 }
 
-#form-container{
+#form-container, .general-container{
     background-color: rgba(48, 65, 74, 0.3);
     border-radius: 12px;
     height: 88vh;

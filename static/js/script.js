@@ -4,16 +4,18 @@ $(document).ready(function() {
             $(this).addClass("active");
         } 
     });
-    if ($("#booking-link").hasClass("active") === false){
-        $("#about-link").addClass("active")
-        console.log("err")
-    }   else {
+    if ($("#booking-link").hasClass("active") === true){
         getDates()
-    }
+    }  
+
     
-    let windowHeight = window.innerHeight
-    let scrollDemo = document.documentElement
-    document.addEventListener("scroll", event => {
+    document.addEventListener("scroll", sideNavCheck, { passive: true });
+    
+ 
+    function sideNavCheck(){
+
+        let windowHeight = window.innerHeight
+        let scrollDemo = document.documentElement
         let x = scrollDemo.scrollTop
 
         if (x < windowHeight/2) {
@@ -34,7 +36,8 @@ $(document).ready(function() {
             $("#drinks-link").removeClass("active")
             $("#contact-link").addClass("active")
         }
-    }, { passive: true });
+    }
+   
 
     function getDates() {
     let dateControl = document.querySelector('input[type="date"]');
