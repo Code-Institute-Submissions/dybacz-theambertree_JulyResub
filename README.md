@@ -13,7 +13,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 [Click here for the live version](https://theambertree.herokuapp.com/)
 
 ## Features
-### Current Features:
+### Current Features
 
 **Guest Features**
 * Navigation
@@ -77,7 +77,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
         ![User management models](/static/images/readme/django_admin_page4.png)
         ![User management page](/static/images/readme/django_admin_page5.png)
 
-### Current Features & Functionality Left to Implement:
+### Current Features & Functionality Left to Implement
 
 **Guest Features**
 
@@ -122,7 +122,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 * __Unique Booking reference numbers__
     - This Feature will allow for each booking to be assigned a unique booking reference number.
 
-### Future Features:
+### Future Features
 * Customer accounts.
     * Attach bookings to accounts when logged in
     * Allow customer accounts to amend or cancel bookings
@@ -134,7 +134,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 * Customer reviews
 * Sign in with Social Account
 
-## How To Use:
+## How To Use
 
 ### Booking System
 
@@ -215,15 +215,17 @@ Upon initialisation, It is recommended you create objects in this order:
     - Find Booking Slot from for booking in Booking Slots and change Booking Status back to 'Available'
     <br />
     <br />
+
     *It doesn't matter which order these two are completed as long as both are completed after each cancellation so the Booking Slot is visible to other guests* 
-        <br />
+    
+    <br />
     <br />
 
     If creating a booking manually this can be done via Bookings on the Django admin. 
     
     **Please Note:** *Creating a manual booking is **not** advised. If you have to then you must make sure the timeslot selected in the booking has its status manually changed to booked before making the booking as to not allow a site guest to double book.*
 
-## Data Model:
+## Data Model
 <!-- I decided to use class and Player classes as my models.  -->
 
 <!-- The game creates an instance for the game board to hold the board size, VS title, layout, counter positions and also has a board `print` function.
@@ -232,7 +234,7 @@ While also creating two separate instances, one for each player to hold the name
 
 ## Testing 
 
-### General Testing:
+### General Testing
 - N/A
 <!-- - I tested this webapp works in different browsers: Chrome, Firefox, Edge.
 - I confirmed that the ... results are always correct.
