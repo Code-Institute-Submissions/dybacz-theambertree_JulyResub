@@ -321,7 +321,7 @@ The live link can be found here - [TheAmberTree](https://theambertree.herokuapp.
 
 ### Initial Wireframes & Design Features
 
-![Wireframe](/wireframe.png)
+![Wireframe](/static/images/readme/wireframe.png)
 
 In my initial design I went with the functionality of a single page for the whole site other than the booking form.
 
