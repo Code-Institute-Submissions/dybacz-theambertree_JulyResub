@@ -2,10 +2,12 @@ $(document).ready(function() {
     $("a.nav-link").each(function() {
         if (this.href == window.location.href) {
             $(this).addClass("active");
-        } else if (window.location.href != 'https://8000-dybacz-theambertree-1rthxxrqpst.ws-eu31.gitpod.io/'){
-            $(this).removeClass("active")
-        }
+        } 
     });
+    if ($("#booking-link").hasClass("active") === false){
+        $("#about-link").addClass("active")
+        console.log("err")
+    }
     
     let windowHeight = window.innerHeight
     let scrollDemo = document.documentElement
@@ -30,8 +32,5 @@ $(document).ready(function() {
             $("#drinks-link").removeClass("active")
             $("#contact-link").addClass("active")
         }
-        console.log(x)  
-
-        console.log(windowHeight)
     }, { passive: true });
 });

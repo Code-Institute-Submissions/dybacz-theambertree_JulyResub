@@ -32,8 +32,8 @@
     </nav>
 
 
-    <div class="container-fluid" id="about">
-        <div class="row container-border" id="scrollDemo">
+    <div class="container-fluid" id="{{ page_type }}">
+        <div class="row container-border">
             <div class="col-3" id="fixed-nav">
                 <div class="row justify-content-center">
                     <div class="col-10" id="side-nav">
@@ -45,11 +45,11 @@
                                         <p>The <span id="amber">Amber</span> Tree <br>
                                             <sup>Restaurant & Bar</sup></p>
                                     </a>
-                                    <a class="nav-link active" id="about-link" href="{% url 'index' %}#about">About</a>
+                                    <a class="nav-link" id="about-link" href="{% url 'index' %}#about">About</a>
                                     <a class="nav-link" id="menu-link" href="{% url 'index' %}#menu">Menu</a>
                                     <a class="nav-link" id="drinks-link" href="{% url 'index' %}#drinks">Drinks</a>
                                     <a class="nav-link" id="contact-link" href="{% url 'index' %}#contact">Contact</a>
-                                    <a class="nav-link" href="{% url 'bookings_home' %}">Make a Booking</a>
+                                    <a class="nav-link" id="booking-link"href="{% url 'bookings_home' %}">Make a Booking</a>
                                 </nav>
                                 <span class="divider"></span>
                             </div>

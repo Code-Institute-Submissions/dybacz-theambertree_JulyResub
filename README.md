@@ -158,7 +158,9 @@ Upon initialisation, It is recommended you create objects in this order:
     - Set new Booking Slot Status:
         - 'Draft': Unavailable for selection when making a Booking (Default)
         - 'Published': Available for selection when making a Booking
-    - Set new Booking Slot Booking Status to 'Available'
+    - Set new Booking Slot Booking Status:
+        - 'Available': Available for selection when making a Booking (Default)
+        - 'Booked': Unavailable for selection when making a Booking
 
     **Please Note:** *If you wish to close a booking slot for any particular reason then either change the Status to 'Draft' or Booking Status to 'Booked'*
 
@@ -171,13 +173,13 @@ Upon initialisation, It is recommended you create objects in this order:
     
     ***Booking Attended:***
 
-    - Find the suests booking in Bookings and set status to 'Attended' 
+    - Find the guests booking in Bookings and set status to 'Attended' 
     <br />
     <br />
 
     ***Booking Amended:***
 
-    - Find the suests booking in Bookings and update the booking slots by de-selecting the current ones and selecting the desired slot for ammendmant (mulitple can be selected) 
+    - Find the guests booking in Bookings and update the booking slots by de-selecting the current ones and selecting the desired slot for ammendmant (mulitple can be selected) 
     <br />
     <br />
 
