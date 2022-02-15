@@ -6,7 +6,7 @@ This WebApp is a booking system and general website for the mock restaurant The 
 
 The backend runs on the Django 3.2 python web-framework with a PostgreSQL database using the Django MVT model (similar to the standard MVC), the front-end web pages are rendered from templates served by the Django backend, these templates were written in a combination of HTML5 & Django templating language which allows for pythonic functions such as loops and variables to be utilised. 
 
-CSS3, Bootstrap 5, JavaScript & jQuery were also utilised to gain the desired front-end functionality and UX based on initial wireframes. AJAX requests were performed using the JavaScript Fetch API.
+CSS3, Bootstrap 5, JavaScript & jQuery were also utilised to gain the desired front-end functionality and UX based on initial wireframes. AJAX requests will be performed using the JavaScript Fetch API.
 
 This WebApp is hosted on Heroku with all static & media files hosted on Cloudinary and dealt with by Django.
 
