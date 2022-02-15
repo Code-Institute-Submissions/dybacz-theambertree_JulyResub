@@ -8,7 +8,7 @@ The backend runs on the Django 3.2 python web-framework with a PostgreSQL databa
 
 CSS3, Bootstrap 5, JavaScript & jQuery were also utilised to gain the desired front-end functionality and UX based on initial wireframes. AJAX requests were performed using the JavaScript Fetch API.
 
-This WebApp is hosted on Heroku with all static & media files hosted on cloudinary and dealt with by Django.
+This WebApp is hosted on Heroku with all static & media files hosted on Cloudinary and dealt with by Django.
 
 [Click here for the live version](https://theambertree.herokuapp.com/)
 
@@ -27,38 +27,55 @@ This WebApp is hosted on Heroku with all static & media files hosted on cloudina
 
 <!-- ![Navigation Mobile](assets/images/readme/multiplayer.png) -->
 
+* Single Index Page for majority of the content
+    * About
+    ![About Page](/static/images/readme/about_page.png)
+
+    * Menu
+    ![Menu Page](/static/images/readme/menu_page.png)
+
+    * Drinks
+    ![Drinks Page](/static/images/readme/drinks_page.png)
+
+    * Contact
+    ![Contact Page](/static/images/readme/contact_page.png)
+
+
 * Make a Booking - Booking Form
     * Accepts User Input
     * User selects a date and time then all available tables are show.
     * User then must complete the required details form and select their slot.
     * User then submits form and is redirected to a booking complete page with the booking details
     * If the form is incorrect or booking unavailable the user is redirected to a booking failed page with the reason for failure 
-
     ![Booking Form](/static/images/readme/booking_form.png)
 
-
 **Staff Features**
-* Admin
-    * Create Table
+* Django Admin - currently only accessible with superuser
+    * Accessed via adding /admin to the root directory of the app in a browser.
+    * Create, update and delete objects in all the models.
 
-    ![Admin]()
+    ![Django Admin](/static/images/readme/django_admin_page1.png)
+    ![Django Admin](/static/images/readme/django_admin_page3.png)
 
-* Menu
+
+<!-- * Menu
     * Create, Update & Delete menu items
 
-    ![Menu]()
+    ![Menu]() -->
 
-* Drinks
+<!-- * Drinks
     * Create, Update & Delete drink items
     * Images for drinks can be uploaded and rendered with the drink item to the drinks Page
 
-    ![Drinks]()
+    ![Drinks]() -->
 
-* User Management
+* User Management - currently only accessible with superuser 
+    * Accessed via Django Admin panel
+    * Create, update and delete a user in the Users model.
+    * Set user access and privilege
 
-![User management]()
-
-
+        ![User management models](/static/images/readme/django_admin_page4.png)
+        ![User management page](/static/images/readme/django_admin_page5.png)
 
 ### Current Features & Functionality Left to Implement:
 
@@ -72,22 +89,25 @@ This WebApp is hosted on Heroku with all static & media files hosted on cloudina
 * __Booking Failure Page__
     - This feature will allow users to know that there booking has been unsuccessful
 
-    - This feature will allow users to know why there booking was unsucessful
+    - This feature will allow users to know why there booking was unsuccessful
 
 * __Contact us Form__
     - This feature will allow users to complete a form and send enquires such as party booking to the restaurant. 
 
 **Admin/Staff Features**
 
+* __Menu & Drinks menu management system__
+    - This feature will all users who are authenticated as staff or higher to create, update and delete database entries for items to be displayed on both the menu page and drinks page. It will also allow for an image to be uploaded for each item which will can be rendered as part of the item in the menu/drinks page.
+
 * __Contact us Messages__
     - This feature will all users who have access to the Django admin to view all enquires from the contact us form
 
 * __Custom Admin Panel__
-    - This feature would allow users who are authenticated as staff to create, update, and delete bookings without the need to access Django admin
+    - This feature would allow users who are authenticated as staff or higher to create, update, and delete bookings without the need to access Django admin
 
-    - This feature will also allow the users who are authenticated as staff to quickly create and manage open time slots for future bookings in batch requests rather than having to create and manage each slot individually in the Django admin
+    - This feature will also allow the users who are authenticated as staff or higher to quickly create and manage open time slots for future bookings in batch requests rather than having to create and manage each slot individually in the Django admin
 
-    - This feature will also allow the users who are authenticated as staff to quickly manage any received contact us forms
+    - This feature will also allow the users who are authenticated as staff or higher to quickly manage any received contact us forms
 
 **Functionality**
 
@@ -126,6 +146,8 @@ Upon initialisation, It is recommended you create objects in this order:
 
     Each Table represents a table available to have bookings made for it. 
 
+    ![Django Admin](/static/images/readme/add_table.png)
+
     Repeat for each table at the establishment:
     - Create a new Table
     - Give new Table a number
@@ -135,6 +157,8 @@ Upon initialisation, It is recommended you create objects in this order:
 
     Each Time Slot represents a defined segment of time for a booking e.g., 6:00 PM - 7:30 PM is a 90 min slot.
     Restaurant can customise start & end times for these slots.
+
+    ![Django Admin](/static/images/readme/add_timeslot.png)
 
     Repeat for each time slot:
     - Create a new Time Slot
@@ -149,6 +173,8 @@ Upon initialisation, It is recommended you create objects in this order:
 3. **Booking Slots**
 
     Each booking slot represents an empty booking for a single table with a defined time slot with a start time and end time and defined date
+
+    ![Django Admin](/static/images/readme/add_bookinglot.png)
 
     Repeat for each Booking Slot:
     - Create a new Booking Slot
@@ -170,6 +196,7 @@ Upon initialisation, It is recommended you create objects in this order:
 
     Bookings can be updated and deleted here.
 
+    ![Django Admin](/static/images/readme/django_admin_page2.png)
     
     ***Booking Attended:***
 
@@ -179,11 +206,11 @@ Upon initialisation, It is recommended you create objects in this order:
 
     ***Booking Amended:***
 
-    - Find the guests booking in Bookings and update the booking slots by de-selecting the current ones and selecting the desired slot for ammendmant (mulitple can be selected) 
+    - Find the guests booking in Bookings and update the booking slots by de-selecting the current ones and selecting the desired slot for amendment (multiple can be selected) 
     <br />
     <br />
 
-    ***Booking Canceled:***
+    ***Booking Cancelled:***
     - Find the guests booking in Bookings and set status to 'Cancelled' 
     - Find Booking Slot from for booking in Booking Slots and change Booking Status back to 'Available'
     <br />
@@ -197,7 +224,7 @@ Upon initialisation, It is recommended you create objects in this order:
     **Please Note:** *Creating a manual booking is **not** advised. If you have to then you must make sure the timeslot selected in the booking has its status manually changed to booked before making the booking as to not allow a site guest to double book.*
 
 ## Data Model:
-I decided to use class and Player classes as my models. 
+<!-- I decided to use class and Player classes as my models.  -->
 
 <!-- The game creates an instance for the game board to hold the board size, VS title, layout, counter positions and also has a board `print` function.
 
@@ -266,13 +293,17 @@ This project was deployed using Heroku.
 * Set the build packs to `Python`
 * Link the Heroku app to the repository
 * Set Config Vars in settings as follows:
-    * CLOUDINARY_URL : Your cloudinary API Environment variable
+    * CLOUDINARY_URL : Your Cloudinary API Environment variable
     * DATABASE_URL : PostgreSQL database URL
     * SECRET_KEY : A_SECRET_KEY_OF_YOUR_CHOICE
 * Click on **Deploy**
-* Run Heroku Console:
+* Run Heroku console:
     ```
         $ python3 manage.py migrate
+    ```
+* Finally to create a super user, in the Heroku console:
+    ```
+        $ python3 manage.py createsuperuser
     ```
 
 The live link can be found here - [TheAmberTree](https://theambertree.herokuapp.com/)
@@ -302,7 +333,6 @@ This single page is scrollable and designed with a responsive side navigation pa
 
 A form allowing the user to make a future booking at the restaurant. This form should dynamically load available tables based on the date and time inputted using AJAX fetch requests.
 
-
 ## Credits 
 
 **Python Packages:**
@@ -327,4 +357,6 @@ A form allowing the user to make a future booking at the restaurant. This form s
 
 **Fonts**
 - Some of the fonts used in this webapp were sourced from [Google Fonts](https://fonts.google.com/)
+
+
 
