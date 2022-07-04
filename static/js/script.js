@@ -20,31 +20,35 @@ $(document).ready(function() {
         let scrollDemo = document.documentElement
         let x = scrollDemo.scrollTop
 
-        if (x < windowHeight/2) {
-            $("#about-link").addClass("active")
-            $("#menu-link").removeClass("active")
-            $("#drinks-link").removeClass("active")
-            $("#contact-link").removeClass("active")
-        }
-        if (x > windowHeight/2 && x < (3/2)*windowHeight) {
-            $("#menu-link").addClass("active")
-            $("#about-link").removeClass("active")
-            $("#drinks-link").removeClass("active")
-            $("#contact-link").removeClass("active")
+        let pathName = window.location.pathname  
 
-        }
-        if (x > (3/2)*windowHeight && x < (5/2)*windowHeight){
-            $("#drinks-link").addClass("active")
-            $("#about-link").removeClass("active")
-            $("#menu-link").removeClass("active")
-            $("#contact-link").removeClass("active")
-        }
-        if (x >= (5/2)*windowHeight){
-            $("#contact-link").addClass("active")
-            $("#about-link").removeClass("active")
-            $("#menu-link").removeClass("active")
-            $("#drinks-link").removeClass("active")
-        }
+        if (pathName == '/') {
+            if (x < windowHeight/2) {
+                $("#about-link").addClass("active")
+                $("#menu-link").removeClass("active")
+                $("#drinks-link").removeClass("active")
+                $("#contact-link").removeClass("active")
+            }
+            if (x > windowHeight/2 && x < (3/2)*windowHeight) {
+                $("#menu-link").addClass("active")
+                $("#about-link").removeClass("active")
+                $("#drinks-link").removeClass("active")
+                $("#contact-link").removeClass("active")
+    
+            }
+            if (x > (3/2)*windowHeight && x < (5/2)*windowHeight){
+                $("#drinks-link").addClass("active")
+                $("#about-link").removeClass("active")
+                $("#menu-link").removeClass("active")
+                $("#contact-link").removeClass("active")
+            }
+            if (x >= (5/2)*windowHeight){
+                $("#contact-link").addClass("active")
+                $("#about-link").removeClass("active")
+                $("#menu-link").removeClass("active")
+                $("#drinks-link").removeClass("active")
+            }
+        }   
     }
    
 
