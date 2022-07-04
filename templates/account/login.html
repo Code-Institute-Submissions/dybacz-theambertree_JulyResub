@@ -5,40 +5,31 @@
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
-{% block content %}
-        <div class="col-9 offset-3">
-          <div class="container" id="about-containter">
-            <div class="row">
-              <div class="col-10 offset-1">
-                <h1>{% trans "Sign In" %}</h1>
-
-                <p>{% blocktrans %}If you have not created an account yet, then please
-                  <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-
-                <form class="login" method="POST" action="{% url 'account_login' %}">
-                  {% csrf_token %}
-                  {{ form.as_p }}
-                  {% if redirect_field_value %}
-                  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                  {% endif %}
-                  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-                </form>
-              </div>
-            </div>
-
+  {% block content %}
+  <div class="col-6 offset-4">
+    <div class="container mt-5 general-container">
+      <div class="row">
+        <div class="col-12 mt-3 mb-3 general-block">
+          <h2 class="mx-auto mt-2">Login</h2>
+          <div class="mt-5 text-center">
+            <h1>{% trans "Sign In" %}</h1>
+            <p>{% blocktrans %}If you have not created an account yet, then please
+              <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+            </p>
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+              {% csrf_token %}
+              {{ form.as_p }}
+              {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+              {% endif %}
+                <button class="btn-primary btn-lg primaryAction" type="submit">{% trans "Sign In" %}</button>
+            </form>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 
-<div class="col-9 offset-3">
-  <div class="container" id="about-containter">
-      <div class="row">
-          <div class="col-10 offset-1">
-              <h3>Welcome </h3>
-          </div>
-      </div>
-  </div>
-</div>
-</div>
