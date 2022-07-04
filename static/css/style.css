@@ -120,7 +120,7 @@
 
 
 
-body {
+#home {
     background: url("/static/images/home_bg_1.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -368,4 +368,8 @@ h2 {
 
 .btn-submit:hover {
     color: var(--coloramber);
+}
+
+input::placeholder {
+    color: transparent;
 }
