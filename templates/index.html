@@ -15,7 +15,7 @@
         <div class="col-6 offset-4">
             <div class="container mt-5 general-container">
                 <div class="row">
-                    <div class="col-12 mt-3 mb-3 general-block">
+                    <div class="col-12 mt-3 mb-3 general-block menu-scroll px-3">
                         <div class="row justify-content-center mt-2">
                             <div class="col-12">
                                 <h2 class="mx-auto">Menu</h2>
@@ -25,73 +25,76 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 mt-3 text-center">
+                            <div class="col-12 my-2 text-center">
                                 <h5>Appertisers</h5>
                             </div>
                             {% for i in menu %}
                                 {% if i.category.pk == 1 %}
-                                <div class="col-3 text-center menu-item">
-                                        <p class="fw-bold fst-italic">{{ i.name }}</p>
-                                        <p>{{ i.description }}</p>
-                                        <p>£{{ i.price }}</p>
-                                </div>
+                                    <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
+                                            <h6 class="fw-bold fst-italic">{{ i.name }}</h6>
+                                            <p>{{ i.description }}</p>
+                                            <p>£{{ i.price }}</p>
+                                    </div>
                                 {% endif %}
                             {% endfor %}
                         </div>
                         <div class="row">
-                            <div class="col-12 mt-3 text-center">
+                            <div class="col-12 my-2 text-center">
                                 <h5>Main Courses</h5>
                             </div>
                             {% for i in menu %}
                                 {% if i.category.pk == 2 %}
-                                <div class="col-3 text-center menu-item">
-                                        <p class="fw-bold fst-italic">{{ i.name }}</p>
-                                        <p>{{ i.description }}</p>
-                                        <p>£{{ i.price }}</p>
-                                </div>
+                                    <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
+                                        <h6 class="fw-bold fst-italic">{{ i.name }}</h6>
+                                            <p>{{ i.description }}</p>
+                                            <p>£{{ i.price }}</p>
+                                    </div>
                                 {% endif %}
                             {% endfor %}
                         </div>
                         <div class="row">
-                            <div class="col-12 mt-3 text-center">
+                            <div class="col-12 my-2 text-center">
                                 <h5>Dessert's</h5>
                             </div>
                             {% for i in menu %}
                                 {% if i.category.pk == 3 %}
-                                <div class="col-3 text-center menu-item">
-                                        <p class="fw-bold fst-italic">{{ i.name }}</p>
-                                        <p>{{ i.description }}</p>
-                                        <p>£{{ i.price }}</p>
-                                </div>
+                                    <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
+                                            <h6 class="fw-bold fst-italic">{{ i.name }}</h6>
+                                            <p>{{ i.description }}</p>
+                                            <p>£{{ i.price }}</p>
+                                    </div>
                                 {% endif %}
                             {% endfor %}
                         </div>
                         <div class="row">
-                            <div class="col-6">
-                                <div class="col-12 mt-3 text-center">
-                                    <h5>Side's</h5>
-                                </div>
-                                {% for i in menu %}
-                                    {% if i.category.pk == 4 %}
-                                    <div class="col-6 text-center menu-item">
-                                            <p class="fw-bold fst-italic">{{ i.name }}</p>
-                                            <p>{{ i.description }}</p>
-                                            <p>£{{ i.price }}</p>
+                            <div class="col-xxl-7 col-12">
+                                <div class="row">
+                                    <div class="col-12 my-2 text-center">
+                                        <h5>Side's</h5>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    {% for i in menu %}
+                                    {% if i.category.pk == 4 %}
+                                        <div class="col-4 text-center menu-item d-flex flex-column justify-content-between">
+                                                <h6 class="fw-bold fst-italic">{{ i.name }}</h6>
+                                                <p>{{ i.description }}</p>
+                                                <p>£{{ i.price }}</p>
+                                        </div>
                                     {% endif %}
                                 {% endfor %}
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <div class="col-12 mt-3 text-center menu-item">
+                            <div class="col-xxl-5 col-12 d-flex flex-column">
+                                <div class="col-12 my-2 text-center menu-item">
                                     <h5>Extras</h5>
                                 </div>
                                 {% for i in menu %}
                                     {% if i.category.pk == 5 %}
-                                    <div class="col-3 text-center menu-item">
-                                            <p class="fw-bold fst-italic">{{ i.name }}</p>
-                                            <p>{{ i.description }}</p>
-                                            <p>£{{ i.price }}</p>
-                                    </div>
+                                        <div class="col text-center menu-item">
+                                                <h6 class="fw-bold fst-italic mb-1">{{ i.name }}</h6>
+                                                <p class="mb-1">£{{ i.price }}</p>
+                                        </div>
                                     {% endif %}
                                 {% endfor %}
                             </div>
