@@ -6,7 +6,7 @@
 
 /*************** VARIABLES ***************/
 :root{
---color1: #35524a;
+--color1: rgb(53, 82, 74);
 --color2: #b9e3c3;
 --coloramber: #ffb300;
 --color3: #824c71;
@@ -304,7 +304,6 @@ h2 {
     margin-bottom: 0;
     font-family: var(--logofont);
     line-height: 1.75em;
-    margin-bottom: -10px;
     font-size: 42px;
     border: 1px solid var(--coloramber);
 }
@@ -333,12 +332,13 @@ h2 {
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.3);
     min-height: 80vh;
+    max-height: 80vh;
 }
 
 #form-container, .general-container{
     background-color: rgba(48, 65, 74, 0.3);
     border-radius: 12px;
-    min-height: 80vh;
+    max-height: 85vh;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -372,4 +372,28 @@ h2 {
 
 input::placeholder {
     color: transparent;
+}
+
+h5 {
+    font-weight: bold;
+}
+
+.menu-scroll {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+}
+
+.menu-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.menu-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 179, 0, 0.3);
+    border-radius: 10px;
+}
+  
+.menu-scroll::-webkit-scrollbar-thumb {
+    background: var(--color3);
+    border-radius: 10px;
 }
