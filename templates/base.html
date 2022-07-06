@@ -11,35 +11,19 @@
     <title>{{ page_title }}</title>
 </head>
 <body>
-
-    <!-- <nav class="navbar navbar-light bg-light" id="toolbar-nav">
-        {% if user.is_authenticated %}    
-        <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'index' %}">Home</a>
-          
-          <a class="navbar-brand" href="{% url 'account_logout' %}">Logout</a>
-          <a class="navbar-brand" href="{% url 'account_login' %}">Login</a>
-          <a class="navbar-brand" href="{% url 'account_signup' %}">Register</a>
-          
-          <a class="navbar-brand" href="{% url 'bookings_home' %}">Make a Booking</a>
-          {% if user.is_staff %}
-          <a class="navbar-brand" href="/admin">Admin</a>
-          {% endif %}
-          {% if user.is_authenticated %}
-          <p>You are loggind in as {{ user.username }}</p>
-          {% endif %}
-        </div>
-        {% endif %}
-    </nav> -->
-
-
-    <div class="container-fluid" id="{{ page_type }}">
+    <div class="container-fluid" id="home">
         <div class="row container-border">
-            <div class="col-3" id="fixed-nav">
+        {% include 'includes/navbars/mobile_nav.html' %}
+            <div class="col-3 d-none d-xxl-block" id="fixed-nav">
                 <div class="row justify-content-center">
                     <div class="col-10" id="side-nav">
                         <div class="container">
-                            <div class="row justify-content-center mb-5 pb-3">
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    {% include 'includes/navbars/toolbar.html' %}
+                                </div>
+                            </div>
+                            <div class="row justify-content-center pt-2">
                                 <nav class="nav flex-column">
                                     <a class="navbar-brand" href="{% url 'index' %}" id="logo">
                                         <img src="{% static 'images/tree.svg' %}" alt="" class="mx-auto d-block ambertree">
@@ -54,7 +38,7 @@
                                 </nav>
                                 <span class="divider"></span>
                             </div>
-                            <div class="row justify-content-center mt-5 pt-5">
+                            <div class="row justify-content-center mt-3 pt-3">
                                 <div class="col-12  text-center" id="social">
                                 <p>Find us on:</p>
                                 <ul class="list-group list-group-horizontal">
@@ -86,5 +70,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="{% static 'js/script.js' %}"></script>
+
+    {% block postload_js %}
+    {% endblock %}
 </body>
 </html>

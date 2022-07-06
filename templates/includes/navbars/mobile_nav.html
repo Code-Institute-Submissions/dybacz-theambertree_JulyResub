@@ -1,0 +1,27 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top d-xxl-none py-1 mobilenav">
+    <div class="container-fluid">
+        <a class="navbar-brand py-0" href="{% url 'index' %}">
+            <img src="{% static 'images/tree.svg' %}" alt="" width="60" height="60" class="ambertree-mob d-inline-block align-text-center">
+            <span class="d-inline-block ps-2">The Amber Tree</span>
+          </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                <!-- <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="#">Pricing</a>
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+                <a class="nav-link" id="about-link" href="{% url 'index' %}#home">About</a>
+                <a class="nav-link" id="menu-link" href="{% url 'index' %}#menu">Menu</a>
+                <a class="nav-link" id="drinks-link" href="{% url 'index' %}#drinks">Drinks</a>
+                <a class="nav-link" id="contact-link" href="{% url 'index' %}#contact">Contact</a>
+                <a class="nav-link" id="booking-link" href="{% url 'bookings_home' %}">Make a Booking</a>
+            </div>
+        </div>
+    </div>
+</nav>
