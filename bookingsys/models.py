@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
-
+import datetime
 
 A_STATUS = ((0, "Draft"), (1, "Published"))
 B_STATUS = ((0, "Booked"), (1, "Availble"))
@@ -95,12 +95,16 @@ class Booking(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=C_STATUS, default=0)
     comments = models.CharField(max_length=200, blank=True)
+
     timeslot = models.ManyToManyField(
         BookingSlot,
         related_name="booking_table_slot",
         limit_choices_to={
             'status': 1,
-            'booking_status': 1},
+            'booking_status': 1,
+            'date__range': (
+                datetime.date.today(), datetime.date.today()+datetime.timedelta(days=30))
+            },
         default='')
 
     class Meta:
