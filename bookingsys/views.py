@@ -17,10 +17,10 @@ class BookingSlot(View):
 
     def get(self, request, *args, **kwargs):
         timeslots = shortcuts.get_list_or_404(
-            models.TimeSlot.objects.filter(status=1)
+            models.TimeSlot.objects
             )
         bookingslots = shortcuts.get_list_or_404(
-            models.BookingSlot.objects.filter(status=1, booking_status=1)
+            models.Table.objects
             )
         page_type = 'bookingform'
         page_title = 'Make a Booking | The Amber Tree'
