@@ -24,17 +24,22 @@ class BookingSlot(View):
             )
         page_type = 'bookingform'
         page_title = 'Make a Booking | The Amber Tree'
-        return shortcuts.render(
-            request,
-            "bookings.html",
-            {
-                # 'booking_form': BookingForm(),
-                'timeslots': timeslots,
-                'bookingslots': bookingslots,
-                'page_type': page_type,
-                'page_title': page_title,
-            }
-        )
+
+        if request.user.is_authenticated:
+            return shortcuts.render(
+                request,
+                "bookings.html",
+                {
+                    # 'booking_form': BookingForm(),
+                    'timeslots': timeslots,
+                    'bookingslots': bookingslots,
+                    'page_type': page_type,
+                    'page_title': page_title,
+                }
+            )
+        else:
+            return shortcuts.redirect("account_login")
+
 
     def post(self, request, *args, **kwargs):
         booking_id = 1
