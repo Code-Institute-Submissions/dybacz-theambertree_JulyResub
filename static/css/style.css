@@ -405,3 +405,13 @@ h5 {
 .mobilenav {
     background-color: var(--color1);
 }
+
+#tagline-mob {
+    font-family: var(--logofont);
+    font-size: 1.1em;
+}
+
+.navbar-toggler {
+    padding: 0.55rem 0.55rem !important;
+    border-radius: 50%;
+}
