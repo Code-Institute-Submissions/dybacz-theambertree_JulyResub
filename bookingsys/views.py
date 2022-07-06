@@ -3,6 +3,9 @@
 from django import shortcuts
 from django.views import generic, View
 from . import models
+from django.http import JsonResponse
+import json
+from django.core.serializers import serialize
 # from .forms import BookingForm
 
 
@@ -12,6 +15,22 @@ class BookingSlotList(generic.ListView):
     template_name = 'bookings.html'
     paginate_by = 6
 
+
+class AjaxRequest(generic.ListView):
+
+    def post(self, request, *args, **kwargs):
+        data = kwargs
+        data_from_post = json.load(request)['post_data']
+        print(data_from_post)
+        try:
+            bookingSlots = shortcuts.get_list_or_404(models.BookingSlot.objects.filter(date=data_from_post, booking_status=1))
+        except Exception:
+            return JsonResponse({'nodata': 'No dates Found'})
+
+        print(bookingSlots, type(bookingSlots))
+        new_list = json.loads(serialize('json', bookingSlots))
+        print(new_list, type(new_list))
+        return JsonResponse({'data': new_list})
 
 class BookingSlot(View):
 
