@@ -3,50 +3,56 @@
         <h2 class="mx-auto">Menu</h2>
     </div>
     <div class="col-8 text-center mt-2">
-        <p class="fst-italic my-0">At The Amber Tree our menu is meticulously crafted by our team of chefs on a bi-weekly schedule, working closely with local farmers and butchers to supply the highest quality, best dishes and an unbeatable experience. </p>
+        <p class="fst-italic my-0">At The Amber Tree our food menu is meticulously crafted by our team of chefs on a bi-weekly schedule, working closely with local farmers and butchers to supply the highest quality, best dishes and an unbeatable experience. </p>
     </div>
 </div>
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-10 mx-auto my-2 text-center border-bottom border-top border-secondary border-1">
         <h5>Appertisers</h5>
     </div>
-    {% for i in menu %}
-        {% if i.group.pk == 1 and i.category.pk == 1 %}
-            <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
-                    <h6 class="fw-bold">{{ i.name }}</h6>
-                    <p class=" fst-italic">{{ i.description }}</p>
-                    <p class="fw-bold">£{{ i.price }}</p>
-            </div>
-        {% endif %}
-    {% endfor %}
+    <div class="row px-0">
+        {% for i in menu %}
+            {% if i.group.pk == 1 and i.category.pk == 1 %}
+                <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
+                        <h6 class="fw-bold">{{ i.name }}</h6>
+                        <p class=" fst-italic">{{ i.description }}</p>
+                        <p class="fw-bold">£{{ i.price }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-10 mx-auto my-2 text-center border-bottom border-top border-secondary border-1">
         <h5>Main Courses</h5>
     </div>
-    {% for i in menu %}
-        {% if i.group.pk == 1 and i.category.pk == 2 %}
-            <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
-                <h6 class="fw-bold">{{ i.name }}</h6>
-                <p class="fst-italic">{{ i.description }}</p>
-                <p class="fw-bold">£{{ i.price }}</p>
-            </div>
-        {% endif %}
-    {% endfor %}
-</div>
-<div class="row">
-    <div class="col-10 mx-auto my-2 text-center border-bottom border-top border-secondary border-1">
-        <h5>Dessert's</h5>
-    </div>
-    {% for i in menu %}
-        {% if i.group.pk == 1 and i.category.pk == 3 %}
-            <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
+    <div class="row px-0">
+        {% for i in menu %}
+            {% if i.group.pk == 1 and i.category.pk == 2 %}
+                <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
                     <h6 class="fw-bold">{{ i.name }}</h6>
                     <p class="fst-italic">{{ i.description }}</p>
                     <p class="fw-bold">£{{ i.price }}</p>
-            </div>
-        {% endif %}
-    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-10 mx-auto my-2 text-center border-bottom border-top border-secondary border-1">
+        <h5>Dessert's</h5>
+    </div>
+    <div class="row px-0">
+        {% for i in menu %}
+            {% if i.group.pk == 1 and i.category.pk == 3 %}
+                <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
+                        <h6 class="fw-bold">{{ i.name }}</h6>
+                        <p class="fst-italic">{{ i.description }}</p>
+                        <p class="fw-bold">£{{ i.price }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>
 <div class="row">
     <div class="col-xxl-6 col-10 mx-auto">
