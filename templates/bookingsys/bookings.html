@@ -173,16 +173,13 @@
                 let prk = i.fields.table
                 let tableNum
                 let tableTime = i.fields.time_slot.toString()
-                console.log(prk)
                 for (let x of tablenums) {
                     if (prk == x.pk) {
                         tableNum = x.pk
-                        console.log(tableNum,'num')
                     }
                 }
                 //check against time
                 for (let t of tables) {
-                    console.log(tableNum, t.value, 'tvalue')
                     if (t.id == `table-btn-${tableNum}` & tableTime == timeslot) {
                         t.disabled = false
                         t.onchange = function () {
@@ -201,12 +198,12 @@
             for (let t of timeSlots) {
                 if (t.checked == true)
                     time = t.value
-                console.log(time)
+                console.log(time, '1')
             }
             for (let t of tables) {
                 if (t.checked == true)
                     table = t.id.split("-")
-                console.log(table)
+                console.log(table, '2')
             }
             for (let i of data) {
                 let timeslot = i.fields.time_slot.toString()
