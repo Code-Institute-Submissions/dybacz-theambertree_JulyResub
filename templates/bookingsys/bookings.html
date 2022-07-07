@@ -20,16 +20,16 @@
                                 <h3 class="mb-2 fancy-font">2. Select start time
                                     <i class="fa-regular fa-clock ms-1"></i>
                                 </h3>
-                                <div class="form-check form-check-inline">
+                                <div>
                                     {% for timeslot in timeslots %}
-                                    <input type="radio" id="btn-{{ timeslot.pk }}" name="btn-{{ timeslot.pk }}" value="{{ timeslot.pk }}"
-                                        class="btn-check timeslots" required disabled>
-                                    <label for="btn-{{ timeslot.pk }}" class="btn btn-primary time-slot">
+                                    <div class="form-check form-check-inline px-0 mx-0">
+                                    <input type="radio" id="btn-{{ timeslot.pk }}" name="btn-timeslot" value="{{ timeslot.pk }}"
+                                        class="form-check-input timeslots" required disabled>
+                                    <label for="btn-{{ timeslot.pk }}" class="btn btn-primary form-check-label time-slot">
                                         <b>{{timeslot.startTime }}</b>
                                     </label>
-                                    {%if forloop.counter|divisibleby:4 %}
-                                </div>
-                                <div class="form-check form-check-inline">
+                                    </div>
+                                {%if forloop.counter|divisibleby:4 %}
                                     {% endif %}
                                     {% endfor %}
                                 </div>
@@ -71,28 +71,22 @@
                                 <h3 class="fancy-font">4. Select table
                                     <i class="fa-solid fa-utensils ms-1"></i>
                                 </h3>
-                                <div class="form-check form-check-inline mt-1">
-                                    <div class="row">
-                                        {% for bookingslot in bookingslots %}
-                                        <div class="col-3 px-1">
-                                            <input type="checkbox" id="table-btn-{{ bookingslot.table_id }}" name="bookingslot"
+                                        <div>
+                                            {% for bookingslot in bookingslots %}
+                                            <div class="form-check form-check-inline px-0 mx-0">
+                                                <input type="radio" id="table-btn-{{ bookingslot.table_id }}" name="bookingslot"
                                                 value="{{ bookingslot.table_id }}" class="btn-check tables" required disabled>
-                                            <label for="table-btn-{{ bookingslot.table_id }}"
+                                                <label for="table-btn-{{ bookingslot.table_id }}"
                                                 class="btn btn-booking-slot form-check-label booking-slot">
-                                                <b>Table:{{ bookingslot.table_id }}</b>
+                                                <b>Table: {{ bookingslot.table_id }}</b>
                                                 |
-                                                <b>Capacity:{{ bookingslot.table_capacity }}</b>
+                                                <b>Capacity: {{ bookingslot.table_capacity }}</b>
                                             </label>
-                                        </div>
+                                            </div>
                                         {%if forloop.counter|divisibleby:4 %}
-                                    </div>
-                                </div>
-                                <div class="form-check form-check-inline mt-1">
-                                    <div class="row">
-                                        {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
                             </div>
                         <div class="row justify-content-md-center mt-3">
                             <div class="col-auto mt-2 mb-4">
@@ -142,35 +136,54 @@
         tables = document.querySelectorAll('.tables')
         bookBtn = document.querySelector('#book-btn')
 
-        function enableTimeSlots(data) {
+        function enableTimeSlots(data, tablenums) {
             for (let i of data) {
                 let time = i.fields.time_slot.toString()
                 for (let t of timeSlots) {
                     if (t.value == time) {
                         t.disabled = false
                         t.onchange = function () {
-                            enableFormText(data)
+                            enableFormText(data, t.value, tablenums)
+                            for (let tab of tables) {
+                                if (tab.disabled == false) {
+                                    tab.disabled = true
+                                    tab.checked = false
+                                    bookBtn.disabled = true
+                                    enableTables(data, t.value, tablenums)
+                                }
+                            }
+
                         }
                     }
                 }
             }
         }
 
-        function enableFormText(data) {
-            for (let t of formText ){
+        function enableFormText(data, timeslot, tablenums) {
+            for (let t of formText) {
                 t.disabled = false
-                t.onchange = function() {
-                    enableTables(data)
+                t.onchange = function () {
+                    enableTables(data, timeslot, tablenums)
                 }
             }
         }
 
-        function enableTables(data) {
+        function enableTables(data, timeslot, tablenums) {
+            console.log(timeslot, 'haha', tablenums)
             for (let i of data) {
-                let tableNum = i.fields.table.toString()
+                let prk = i.fields.table
+                let tableNum
+                let tableTime = i.fields.time_slot.toString()
+                console.log(prk)
+                for (let x of tablenums) {
+                    if (prk == x.pk) {
+                        tableNum = x.fields.table_id.toString()
+                    }
+                }
+                //check against time
                 for (let t of tables) {
                     console.log(tableNum, t.value)
-                    if (t.id == `table-btn-${tableNum}`) {
+                    if (t.id == `table-btn-${tableNum}` & tableTime == timeslot) {
                         t.disabled = false
                         t.onchange = function () {
                             enableBook(data)
@@ -180,71 +193,88 @@
             }
         }
 
-        function enableBook(data){
+        function enableBook(data) {
             let bookBtn = document.querySelector('#book-btn')
             bookBtn.disabled = false
             let time
             let table
-            for (let t of timeSlots){
+            for (let t of timeSlots) {
                 if (t.checked == true)
-                time = t.value
+                    time = t.value
                 console.log(time)
             }
-            for (let t of tables){
+            for (let t of tables) {
                 if (t.checked == true)
-                table = t.id.split("-")
+                    table = t.id.split("-")
                 console.log(table)
             }
-            for (let i of data){
+            for (let i of data) {
                 let timeslot = i.fields.time_slot.toString()
                 let tablenum = i.fields.table.toString()
                 if (timeslot == time & tablenum == table[2]) {
                     console.log(i, 'lol')
-                    for (let t of tables){
+                    for (let t of tables) {
                         if (t.checked == true)
-                        t.value = i.pk
-                        
+                            t.value = i.pk
+
                     }
                 }
             }
         }
 
-        calendar.onchange = function() {
+        calendar.onchange = function () {
             console.log('change')
             let date = calendar.value
             ajaxRequest(date)
         }
 
-        function ajaxRequest(data){
+        function disableAll() {
+            bookBtn.disabled = true
+            for (let slot of timeSlots) {
+                if (slot.disabled == false) {
+                    slot.disabled = true
+                }
+            }
+            for (let tab of tables) {
+                if (tab.disabled == false) {
+                    tab.disabled = true
+                }
+            }
+
+        }
+
+        function ajaxRequest(data) {
             let csrfToken = "{{ csrf_token }}";
             let dataRequest = 'timeslots';
             let url = `/bookings/ajax/${dataRequest}/`
             // let data = {'product_size': size}
             fetch(url, {
                 method: "POST",
-                headers: {'Accept': 'application/json' , 'X-Requested-With': 'XMLHttpRequest','X-CSRFToken': csrfToken},
-                body: JSON.stringify({'post_data': data})
-                }).then(response => {
-                    return response.json() //Convert response to JSON
-                })
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': csrfToken },
+                body: JSON.stringify({ 'post_data': data })
+            }).then(response => {
+                return response.json() //Convert response to JSON
+            })
                 .then(data => {
                     console.log(data, 'tree')
-                    if ('nodata' in data){
+                    if ('nodata' in data) {
                         console.log(data, "hello")
                         let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
                         myModal.show();
+                        disableAll();
                     } else {
                         let newdata = data.data
-                        console.log(newdata, 'ff')
+                        let tables = data.tables
+                        console.log(newdata, 'ff', tables)
 
-                        enableTimeSlots(newdata)
+                        enableTimeSlots(newdata, tables)
                     }
                 })
                 .catch(err => {
-                // Do something for an error here
-                console.log("Error Reading data");
-            });
+                    // Do something for an error here
+                    console.log("Error Reading data");
+                });
         }
-        
+
     </script>
 {% endblock %}
