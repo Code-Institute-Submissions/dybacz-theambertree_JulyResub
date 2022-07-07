@@ -9,13 +9,13 @@
                 <div class="col-12 mt-3 mb-3 menu-scroll" id="form-block">
                     <h2 class="mx-auto mt-2">Make a booking</h2>
                     <div class="row pt-5" id="form-row-top">
-                        <div class="col-5">
+                        <div class="col-12">
                             <h3 class="mb-3 fancy-font">1. Select date
                                 <i class="fa-regular fa-calendar-days ms-1"></i>
                             </h3>
                             <input type="date" class="ms-4" name="date" id="date" value="2017-06-01" min="2018-01-01" max="2018-12-31">
                         </div>
-                        <div class="col-7">
+                        <div class="col-12 mt-3">
                             <div class="row justify-content-md-center">
                                 <h3 class="mb-2 fancy-font">2. Select start time
                                     <i class="fa-regular fa-clock ms-1"></i>
@@ -38,11 +38,32 @@
                     </div>
                     <form method="POST">
                         {% csrf_token %}
-                        <div class="row mt-4">
-                            <h3 class="fancy-font">3. Details
+                        <div class="row justify-content-md-center mt-4 pb-4">
+                            <h3 class="fancy-font">3. Select table
+                                <i class="fa-solid fa-utensils ms-1"></i>
+                            </h3>
+                                    <div>
+                                        {% for bookingslot in bookingslots %}
+                                        <div class="form-check form-check-inline px-0 mx-0">
+                                            <input type="radio" id="table-btn-{{ bookingslot.pk }}" name="bookingslot"
+                                            value="" class="btn-check tables" required disabled>
+                                            <label for="table-btn-{{ bookingslot.pk }}"
+                                            class="btn btn-booking-slot form-check-label booking-slot">
+                                            <b>Table: {{ bookingslot.table_id }}</b>
+                                            |
+                                            <b>Capacity: {{ bookingslot.table_capacity }}</b>
+                                        </label>
+                                        </div>
+                                    {%if forloop.counter|divisibleby:4 %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                        </div>
+                        <div class="row" id="form-row-bot">
+                            <h3 class="fancy-font">4. Details
                                 <i class="fa-regular fa-address-card"></i>
                             </h3>
-                            <div class="col-6">
+                            <div class="col-12 col-md-6">
                                 <div class="form-floating">
                                     <input class="form-control mt-3 form-text" type="text" value="{{ user.first_name }}" id="firstname" name="firstname"
                                         placeholder="First Name" aria-label="Input First Name" required disabled>
@@ -59,36 +80,15 @@
                                     <label for="email">Email</label>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-floating me-4">
+                            <div class="col-12 col-md-6 pb-3">
+                                <div class="form-floating">
                                     <textarea class="form-control mt-3 form-text" id="comments" name="comments" placeholder="Additional Comments"
                                         aria-label="additional comments" style="height: 222px" maxlength="200" disabled></textarea>
                                     <label for="comments">Comments</label>
                                 </div>
                             </div>
                         </div>
-                            <div class="row justify-content-md-center mt-4 pb-4" id="form-row-bot">
-                                <h3 class="fancy-font">4. Select table
-                                    <i class="fa-solid fa-utensils ms-1"></i>
-                                </h3>
-                                        <div>
-                                            {% for bookingslot in bookingslots %}
-                                            <div class="form-check form-check-inline px-0 mx-0">
-                                                <input type="radio" id="table-btn-{{ bookingslot.pk }}" name="bookingslot"
-                                                value="" class="btn-check tables" required disabled>
-                                                <label for="table-btn-{{ bookingslot.pk }}"
-                                                class="btn btn-booking-slot form-check-label booking-slot">
-                                                <b>Table: {{ bookingslot.table_id }}</b>
-                                                |
-                                                <b>Capacity: {{ bookingslot.table_capacity }}</b>
-                                            </label>
-                                            </div>
-                                        {%if forloop.counter|divisibleby:4 %}
-                                            {% endif %}
-                                            {% endfor %}
-                                        </div>
-                            </div>
-                        <div class="row justify-content-md-center mt-3">
+                        <div class="row justify-content-evenly mt-3">
                             <div class="col-auto mt-2 mb-4">
                                 <button type="submit" class="btn btn-submit" id="book-btn" value="Book Now" disabled>
                                     <i class="fa-regular fa-calendar-plus ms-1"></i>
@@ -144,6 +144,7 @@
                         t.disabled = false
                         t.onchange = function () {
                             enableFormText(data, t.value, tablenums)
+                            enableTables(data, t.value, tablenums)
                             for (let tab of tables) {
                                 if (tab.disabled == false) {
                                     tab.disabled = true
