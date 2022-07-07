@@ -4,7 +4,7 @@ from . import models
 
 @admin.register(models.Table)
 class TableAdmin(admin.ModelAdmin):
-    list_display = ('table_id', 'table_capacity')
+    list_display = ('pk', 'table_id', 'table_capacity')
     search_fields = ['table_id', 'table_capacity']
     list_filter = ('table_capacity',)
 
