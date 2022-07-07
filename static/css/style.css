@@ -124,7 +124,6 @@
 
 
 #home {
-    background: url("/static/images/home_bg_1.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -134,7 +133,6 @@
   }
 
 #menu {
-    background: url("/static/images/site_images/home_bg_2.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -143,7 +141,6 @@
 }
 
 #drinks {
-    background: url("/static/images/site_images/home_bg_3.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -152,7 +149,6 @@
 }
 
 #contact {
-    background: url("/static/images/site_images/home_bg_4.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -161,7 +157,6 @@
 }
 
 #bookingform {
-    background: url("/static/images/site_images/booking_bg.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
