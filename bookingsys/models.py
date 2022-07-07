@@ -99,12 +99,12 @@ class Booking(models.Model):
     timeslot = models.ManyToManyField(
         BookingSlot,
         related_name="booking_table_slot",
-        # limit_choices_to={
-        #     'status': 1,
-        #     'booking_status': 1,
-        #     'date__range': (
-        #         datetime.date.today(), datetime.date.today()+datetime.timedelta(days=30))
-        #     },
+        limit_choices_to={
+            'status': 1,
+            'booking_status': 1,
+            'date__range': (
+                datetime.date.today(), datetime.date.today()+datetime.timedelta(days=30))
+            },
         default='')
 
     class Meta:
