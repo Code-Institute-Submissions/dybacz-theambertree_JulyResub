@@ -61,7 +61,7 @@ $(document).ready(function() {
     let yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd
     todayPlusMonth = yyyy + '-' + mmPlusone + '-' + dd
-    dateControl.value = today;
+    dateControl.value = null;
     dateControl.min = today;
     dateControl.max = todayPlusMonth;
     }
