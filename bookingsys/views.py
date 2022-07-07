@@ -24,13 +24,18 @@ class AjaxRequest(generic.ListView):
         print(data_from_post)
         try:
             bookingSlots = shortcuts.get_list_or_404(models.BookingSlot.objects.filter(date=data_from_post, booking_status=1))
+            tablesOne = shortcuts.get_list_or_404(models.Table.objects)
         except Exception:
             return JsonResponse({'nodata': 'No dates Found'})
 
         print(bookingSlots, type(bookingSlots))
         new_list = json.loads(serialize('json', bookingSlots))
+        table_list = json.loads(serialize('json', tablesOne))
         print(new_list, type(new_list))
-        return JsonResponse({'data': new_list})
+        return JsonResponse({
+            'data': new_list,
+            'tables': table_list,
+            })
 
 class BookingSlot(View):
 
@@ -47,7 +52,7 @@ class BookingSlot(View):
         if request.user.is_authenticated:
             return shortcuts.render(
                 request,
-                "bookings.html",
+                "bookingsys/bookings.html",
                 {
                     # 'booking_form': BookingForm(),
                     'timeslots': timeslots,
@@ -89,14 +94,7 @@ class BookingSlot(View):
         p1.booking_status = 0
         print(p1.booking_status)
         p1.save()
-        return shortcuts.redirect('index')
-
-    # def get(self, request, *args, **kwargs):
-
-    #     return render(
-    #         request,
-    #         "bookings.html",
-    #         {
-    #             "booking_form": BookingForm()
-    #         }
-    #     )
+        return shortcuts.render(
+                request,
+                "bookingsys/success.html"
+            )
