@@ -224,7 +224,7 @@
         calendar.onchange = function () {
             console.log('change')
             let date = calendar.value
-            ajaxRequest(date)
+            fetchRequest(date)
         }
 
         function disableAll() {
@@ -242,7 +242,7 @@
 
         }
 
-        function ajaxRequest(data) {
+        function fetchRequest(data) {
             let csrfToken = "{{ csrf_token }}";
             let dataRequest = 'timeslots';
             let url = `/bookings/ajax/${dataRequest}/`
