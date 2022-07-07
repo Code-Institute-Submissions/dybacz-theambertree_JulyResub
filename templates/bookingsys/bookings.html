@@ -74,9 +74,9 @@
                                         <div>
                                             {% for bookingslot in bookingslots %}
                                             <div class="form-check form-check-inline px-0 mx-0">
-                                                <input type="radio" id="table-btn-{{ bookingslot.table_id }}" name="bookingslot"
-                                                value="{{ bookingslot.table_id }}" class="btn-check tables" required disabled>
-                                                <label for="table-btn-{{ bookingslot.table_id }}"
+                                                <input type="radio" id="table-btn-{{ bookingslot.pk }}" name="bookingslot"
+                                                value="" class="btn-check tables" required disabled>
+                                                <label for="table-btn-{{ bookingslot.pk }}"
                                                 class="btn btn-booking-slot form-check-label booking-slot">
                                                 <b>Table: {{ bookingslot.table_id }}</b>
                                                 |
@@ -169,7 +169,6 @@
         }
 
         function enableTables(data, timeslot, tablenums) {
-            console.log(timeslot, 'haha', tablenums)
             for (let i of data) {
                 let prk = i.fields.table
                 let tableNum
@@ -177,12 +176,13 @@
                 console.log(prk)
                 for (let x of tablenums) {
                     if (prk == x.pk) {
-                        tableNum = x.fields.table_id.toString()
+                        tableNum = x.pk
+                        console.log(tableNum,'num')
                     }
                 }
                 //check against time
                 for (let t of tables) {
-                    console.log(tableNum, t.value)
+                    console.log(tableNum, t.value, 'tvalue')
                     if (t.id == `table-btn-${tableNum}` & tableTime == timeslot) {
                         t.disabled = false
                         t.onchange = function () {
@@ -211,6 +211,7 @@
             for (let i of data) {
                 let timeslot = i.fields.time_slot.toString()
                 let tablenum = i.fields.table.toString()
+                console.log(time,timeslot,tablenum, table[2])
                 if (timeslot == time & tablenum == table[2]) {
                     console.log(i, 'lol')
                     for (let t of tables) {
