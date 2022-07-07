@@ -9,7 +9,7 @@
   <div class="col-12 col-xxl-6 offset-xxl-4 pt-4">
     <div class="container mt-5 general-container">
       <div class="row">
-        <div class="col-12 mt-3 mb-3 general-block">
+        <div class="col-12 mt-3 mb-3 general-block menu-scroll">
           <h2 class="mx-auto mt-2">My Bookings</h2>
           <div class="mt-5 text-center">
             <h3>We look forward to seeing you next at The Amber Tree</h3>
@@ -38,7 +38,7 @@
                     <td class="align-middle">{{slot.date}}</td>
                     <td class="align-middle time-format">{{slot.time_slot}}</td>
                     <td class="align-middle">{{slot.table}}</td>
-                    <td hidden>{{slot.pk}}</td>
+                    <td hidden>{{booking.pk}}</td>
                   {% endfor %}
                   <th class="align-middle">
                     <button type="button" class="btn btn-danger cancel-btn rounded-circle" style="height:30px; width: 30px; padding:0">
@@ -147,28 +147,32 @@
       modalDate.innerHTML = `${bookingTable}`
 
       myModal.show();
+      let modalSubmitBtn = document.querySelector('.remove-booking')
+      modalSubmitBtn.id = `remove_${bookingPk}`
     }
   }
 
-      try {
-        removeBooking = document.querySelectorAll('.remove-booking');
+  removeBooking = document.querySelectorAll('.remove-booking');
+  for (let i of removeBooking){
+    i.onclick = function(e){
+      fetchRequest(i.id)
+    }
+  };
 
-        for (let i of removeBooking){
-            i.onclick = function(e){
+
+      try {
+        function fetchRequest(data) {
                 let csrfToken = "{{ csrf_token }}";
-                let bookingId = this.id.split('remove_')[1];
-                let size = this.dataset.product_size;
-                let url = `/bookings/my-bookings/remove/${bookingId}/`
-                let data = {'product_size': size}
+                let bookingId = data.split('remove_')[1];
+                let url = `/bookings/my-bookings/remove/${bookingId}`
                 fetch(url, {
                 method: "POST",
                 headers: {'Accept': 'application/json' , 'X-Requested-With': 'XMLHttpRequest','X-CSRFToken': csrfToken},
                 body: JSON.stringify(data)
                 }).then(res => {
-                    // location.reload();
+                    location.reload();
                 });
-            }
-        };
+        }
     } catch (e) {
         // error caught when basket is empty
     }
