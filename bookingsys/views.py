@@ -3,7 +3,7 @@
 from django import shortcuts
 from django.views import generic, View
 from . import models
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 import json
 from django.core.serializers import serialize
 # from .forms import BookingForm
@@ -19,23 +19,23 @@ class BookingSlotList(generic.ListView):
 class AjaxRequest(generic.ListView):
 
     def post(self, request, *args, **kwargs):
-        data = kwargs
-        data_from_post = json.load(request)['post_data']
-        print(data_from_post)
-        try:
-            bookingSlots = shortcuts.get_list_or_404(models.BookingSlot.objects.filter(date=data_from_post, booking_status=1))
-            tablesOne = shortcuts.get_list_or_404(models.Table.objects)
-        except Exception:
-            return JsonResponse({'nodata': 'No dates Found'})
+        if request.user.is_authenticated:
+            data = kwargs
+            data_from_post = json.load(request)['post_data']
+            try:
+                bookingSlots = shortcuts.get_list_or_404(models.BookingSlot.objects.filter(date=data_from_post, booking_status=1))
+                tablesOne = shortcuts.get_list_or_404(models.Table.objects)
+            except Exception:
+                return JsonResponse({'nodata': 'No dates Found'})
 
-        print(bookingSlots, type(bookingSlots))
-        new_list = json.loads(serialize('json', bookingSlots))
-        table_list = json.loads(serialize('json', tablesOne))
-        print(new_list, type(new_list))
-        return JsonResponse({
-            'data': new_list,
-            'tables': table_list,
-            })
+            new_list = json.loads(serialize('json', bookingSlots))
+            table_list = json.loads(serialize('json', tablesOne))
+            return JsonResponse({
+                'data': new_list,
+                'tables': table_list,
+                })
+        else:
+            return shortcuts.redirect("account_login")
 
 class BookingSlot(View):
 
@@ -73,7 +73,6 @@ class BookingSlot(View):
         comments = request.POST.get('comments')
         # bookingslotid = 'bookingslot' in request.POST
         idd = request.POST.get('bookingslot')
-        print(idd)
         user = request.user
         p1 = shortcuts.get_object_or_404(models.BookingSlot, id=idd)
         a1 = models.Booking.objects.create(
@@ -91,9 +90,7 @@ class BookingSlot(View):
         # p1.booking_status(
         #     booking_status=booked,
         # )
-        print(p1.booking_status)
         p1.booking_status = 0
-        print(p1.booking_status)
         p1.save()
         return shortcuts.render(
                 request,
@@ -101,11 +98,26 @@ class BookingSlot(View):
             )
 
 class Bookings(View):
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            bookingId = kwargs['booking_id']
+            print(bookingId)
+            booking = shortcuts.get_object_or_404(models.Booking, pk=bookingId)
+            booking.status = 1
+            booking.save()
+            bookingSlotId = booking.timeslot.all()[0].pk
+            bookingSlot = shortcuts.get_object_or_404(models.BookingSlot, pk=bookingSlotId)
+            bookingSlot.booking_status = 1
+            print(bookingSlot.booking_status)
+            bookingSlot.save()
+            return JsonResponse({'nodata': 'No dates Found'})
+        else:
+            return shortcuts.redirect("account_login")
+
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             user = request.user
-            bookings = models.Booking.objects.filter(account=user).order_by('-timeslot')
-            print(bookings)
+            bookings = models.Booking.objects.filter(account=user, status=0).order_by('timeslot')
             return shortcuts.render(
                 request,
                 "bookingsys/my_bookings.html",
@@ -115,3 +127,4 @@ class Bookings(View):
             )
         else:
             return shortcuts.redirect("account_login")
+
