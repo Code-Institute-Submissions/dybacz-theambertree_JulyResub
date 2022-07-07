@@ -74,12 +74,13 @@ class BookingSlot(View):
         # bookingslotid = 'bookingslot' in request.POST
         idd = request.POST.get('bookingslot')
         print(idd)
+        user = request.user
         p1 = shortcuts.get_object_or_404(models.BookingSlot, id=idd)
         a1 = models.Booking.objects.create(
             first_name=first_name,
             last_name=last_name,
             email=email,
-            # account = ,
+            account = user,
             status=0,
             comments=comments,
         )
@@ -98,3 +99,19 @@ class BookingSlot(View):
                 request,
                 "bookingsys/success.html"
             )
+
+class Bookings(View):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            user = request.user
+            bookings = models.Booking.objects.filter(account=user).order_by('-timeslot')
+            print(bookings)
+            return shortcuts.render(
+                request,
+                "bookingsys/my_bookings.html",
+                {
+                    'bookings': bookings,
+                }
+            )
+        else:
+            return shortcuts.redirect("account_login")
