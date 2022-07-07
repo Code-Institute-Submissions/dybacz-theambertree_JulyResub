@@ -378,3 +378,7 @@ h5 {
     height: 35vh;
     object-fit: cover
 }
+
+.carousel {
+    border: 9px double rgb(53, 82, 74);
+}
