@@ -1,3 +1,5 @@
+{% load static %}
+
 <style>
 #home {
     background: url("{% static 'images/site_images/home_bg_1.png' %}") no-repeat center center fixed;
@@ -17,5 +19,13 @@
 
 #bookingform {
     background: url("{% static 'images/site_images/booking_bg.png' %}") no-repeat center center fixed;
+}
+
+#home, #menu, #drinks, #contact, #bookingform {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-color: var(--color4);
 }
 </style>

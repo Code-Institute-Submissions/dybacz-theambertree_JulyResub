@@ -124,45 +124,8 @@
 
 
 #home {
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    background-color: var(--color4);
     font-family: var(--font1);
   }
-
-#menu {
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    background-color: var(--color4);
-}
-
-#drinks {
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    background-color: var(--color4);
-}
-
-#contact {
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    background-color: var(--color4);
-}
-
-#bookingform {
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    background-color: var(--color4);
-}
 
 #social ul {
     list-style-type: none;
