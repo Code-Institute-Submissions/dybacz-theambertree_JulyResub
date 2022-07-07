@@ -17,6 +17,9 @@
             <p>To make a new booking please head over to
               <a href="{% url 'bookings_home' %}">Make A Booking</a>.
             </p>
+            <p>To make an amendmant to a current booking please
+              <a href="{% url 'index' %}#contact">Contact Us</a>.
+            </p>
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
@@ -24,17 +27,24 @@
                   <th scope="col">Date</th>
                   <th scope="col">Time</th>
                   <th scope="col">Table</th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
                 {% for booking in bookings %}
                 <tr>
-                  <th>{{ booking.first_name }} {{ booking.last_name }}</th>
+                  <th class="align-middle">{{ booking.first_name }} {{ booking.last_name }}</th>
                   {% for slot in booking.timeslot.all %}
-                    <td>{{slot.date}}</td>
-                    <td>{{slot.time_slot}}</td>
-                    <td>{{slot.table}}</td>
+                    <td class="align-middle">{{slot.date}}</td>
+                    <td class="align-middle time-format">{{slot.time_slot}}</td>
+                    <td class="align-middle">{{slot.table}}</td>
+                    <td hidden>{{slot.pk}}</td>
                   {% endfor %}
+                  <th class="align-middle">
+                    <button type="button" class="btn btn-danger cancel-btn rounded-circle" style="height:30px; width: 30px; padding:0">
+                      <i class="fa-solid fa-x mt-1 fs-6"></i>
+                    </button>
+                  </th>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -45,6 +55,123 @@
     </div>
   </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="myModalLabel">Cancel Booking</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body pb-1">
+              <p class="mb-1">Current Booking:</p>
+              <div>
+                <div class="row">
+                  <div class="col-2 pe-0">
+                    <span class="mt-2 fw-bold">Date:</span>
+                  </div>
+                  <div class="col-10 ps-0">
+                    <span id="booking-date" class="mt-2 text-center"></span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-2 pe-0">
+                    <span class="mt-2 fw-bold">Time:</span>
+                  </div>
+                  <div class="col-10 ps-0">
+                    <span id="booking-time" class="mt-2 text-center"></span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-2 pe-0">
+                    <span class="mt-2 fw-bold">Table:</span>
+                  </div>
+                  <div class="col-10 ps-0">
+                    <span id="booking-table" class="mt-2 text-center"></span>
+                  </div>
+                </div>
+              <p class="text-center my-2">Are you sure you want to <b>cancel</b> this booking?</p> 
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger remove-booking">Cancel booking</button>
+          </div>
+      </div>
+  </div>
+</div>
+
 {% endblock %}
 
 
+{% block postload_js %}
+<script type="text/javascript">
+  let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+
+  let cancelButtons = document.querySelectorAll('.cancel-btn')
+  let bookingPk
+
+  let times = document.querySelectorAll('.time-format')
+
+  for (let t of times) {
+    let currentTime = t.innerHTML
+    let currentTimeSplit = currentTime.split('-')
+    let list = []
+    for (let c of currentTimeSplit){
+      list.push(c.split(':'))
+    }
+    let newTime = `${list[0][0]}:${list[0][1]} - ${list[1][0]}:${list[1][1]}`
+    t.innerHTML = newTime
+  }
+  
+
+  for (let b of cancelButtons){
+    b.onclick = function(e){
+      let domStartPoint = b.parentNode.parentElement
+      let bookingDate = domStartPoint.children[1].innerHTML
+      let bookingTime = domStartPoint.children[2].innerHTML
+      let bookingTable = domStartPoint.children[3].innerHTML
+      let bookingPk = domStartPoint.children[4].innerHTML
+
+      let newBookingTimeSplit = bookingTime.split('-')
+      let list = []
+      for (let i of newBookingTimeSplit){
+        list.push(i.split(':'))
+      }
+      console.log(list)
+      let newBookingTime = `${list[0][0]}:${list[0][1]} - ${list[1][0]}:${list[1][1]}`
+      modalDate = document.getElementById("booking-date")
+      modalDate.innerHTML = `${bookingDate}`
+      modalDate = document.getElementById("booking-time")
+      modalDate.innerHTML = `${newBookingTime}`
+      modalDate = document.getElementById("booking-table")
+      modalDate.innerHTML = `${bookingTable}`
+
+      myModal.show();
+    }
+  }
+
+      try {
+        removeBooking = document.querySelectorAll('.remove-booking');
+
+        for (let i of removeBooking){
+            i.onclick = function(e){
+                let csrfToken = "{{ csrf_token }}";
+                let bookingId = this.id.split('remove_')[1];
+                let size = this.dataset.product_size;
+                let url = `/bookings/my-bookings/remove/${bookingId}/`
+                let data = {'product_size': size}
+                fetch(url, {
+                method: "POST",
+                headers: {'Accept': 'application/json' , 'X-Requested-With': 'XMLHttpRequest','X-CSRFToken': csrfToken},
+                body: JSON.stringify(data)
+                }).then(res => {
+                    // location.reload();
+                });
+            }
+        };
+    } catch (e) {
+        // error caught when basket is empty
+    }
+</script>
+
+{% endblock %}
