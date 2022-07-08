@@ -385,3 +385,10 @@ h5 {
 .btn-check:disabled+.btn, .btn-check[disabled]+.btn {
     opacity: .40 !important;
 }
+
+.signup p {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
