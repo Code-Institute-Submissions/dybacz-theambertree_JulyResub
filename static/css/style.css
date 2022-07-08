@@ -381,3 +381,7 @@ h5 {
 .carousel {
     border: 9px double rgb(53, 82, 74);
 }
+
+.btn-check:disabled+.btn, .btn-check[disabled]+.btn {
+    opacity: .40 !important;
+}
