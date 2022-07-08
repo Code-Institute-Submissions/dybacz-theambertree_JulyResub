@@ -5,16 +5,16 @@
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
-  <div class="col-12 col-xxl-6 offset-xxl-4 pt-4">
+  <div class="col-12 col-xxl-6 offset-xxl-4 pt-4 px-0 px-sm-4">
     <div class="container-fluid mt-5 general-container">
       <div class="row">
-        <div class="col-12 mt-3 mb-3 general-block">
+        <div class="col-12 mt-3 mb-3 general-block menu-scroll">
           <h2 class="mx-auto mt-2">Register</h2>
           <div class="mt-5 text-center">
             <h1>{% trans "Sign Up" %}</h1>
             <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans%}</p>
-            <div class="row text-end">
-              <div class="offset-xxl-1 col-xxl-7 col-lg-8 col-md-9 col-10">
+            <div class="row text-center justify-content-evenly">
+              <div class="col-12 px-0 col-sm-11 px-sm-5 col-md-8 col-lg-6 col-xl-5 col-xxl-6">
                 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
                   {% csrf_token %}
                   {{ form.as_p }}
