@@ -309,7 +309,7 @@ h2 {
 }
 
 .time-slot {
-    min-width: 10%;
+    width: 125px;
     border-radius: 50px;
 }
 
@@ -375,7 +375,8 @@ h5 {
 
 .carousel-item img {
     height: 35vh;
-    object-fit: cover
+    object-fit: cover;
+    object-position: 50% 34%
 }
 
 .carousel {
@@ -395,8 +396,11 @@ h5 {
 
 .carousel-caption{
     background-color: rgba(30, 40, 46, 0.45);
-    border-radius: 25px;
     margin: 5px 0 5px 0;
+    padding: 10px 0 10px 0;
+    width: 100%;
+    right: 0;
+    left: 0;
 }
 
 .carousel-caption p {

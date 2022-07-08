@@ -18,19 +18,20 @@
                         </div>
                         <div class="col-12 mt-3">
                             <div class="row justify-content-md-center">
-                                <h3 class="mb-2 fancy-font">
+                                <h3 class="mb-0 fancy-font">
                                     <i class="fa-regular fa-clock ms-1"></i>
                                     Select time
                                 </h3>
-                                <div>
+                                <span class="text-muted fst-italic ps-3 mb-2" style="font-size: 16px !important">Booking duration: 90 mins </span>
+                                <div class="text-center text-md-start">
                                     {% for timeslot in timeslots %}
                                     <div class="form-check form-check-inline px-0 mx-0">
                                     <input type="radio" id="btn-{{ timeslot.pk }}" name="btn-timeslot" value="{{ timeslot.pk }}"
                                         class="btn-check timeslots" required disabled>
-                                    <label for="btn-{{ timeslot.pk }}" class="btn btn-primary form-check-label time-slot">
+                                    <label for="btn-{{ timeslot.pk }}" class="btn btn-primary form-check-label time-slot m-1">
                                         <b>{{timeslot.startTime }}</b>
                                     </label>
-                                    </div>
+                                </div>
                                 {%if forloop.counter|divisibleby:4 %}
                                     {% endif %}
                                     {% endfor %}
@@ -45,13 +46,13 @@
                                 <i class="fa-solid fa-utensils ms-1"></i>
                                 Select Table
                             </h3>
-                                    <div class="text-center">
+                                    <div class="text-center text-md-start">
                                         {% for bookingslot in bookingslots %}
                                         <div class="form-check form-check-inline px-0 mx-0">
                                             <input type="radio" id="table-btn-{{ bookingslot.pk }}" name="bookingslot"
                                             value="" class="btn-check tables" required disabled>
                                             <label for="table-btn-{{ bookingslot.pk }}"
-                                            class="btn btn-booking-slot form-check-label booking-slot">
+                                            class="btn btn-booking-slot form-check-label booking-slot m-1">
                                             <b>Table: {{ bookingslot.table_id }}</b>
                                             |
                                             <b>Capacity: {{ bookingslot.table_capacity }}</b>
