@@ -350,7 +350,6 @@ h5 {
     scrollbar-width: none; /* for Firefox */
     overflow-y: scroll; 
     white-space: wrap;
-    overscroll-behavior: none
 }
 
 .menu-scroll::-webkit-scrollbar {
