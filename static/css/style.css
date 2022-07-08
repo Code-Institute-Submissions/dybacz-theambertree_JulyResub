@@ -17,6 +17,9 @@
 --font1: Roboto;
 
 }
+html { height: 100% }
+body { max-height: 100% }
+
 .ambertree {
     width: 200px;
     height: 200px;
@@ -197,8 +200,11 @@
 } */
 
 input[type="radio"]{
-    position: absolute;
     z-index: -99;
+}
+
+.btn-check {
+    position: fixed !important;
 }
 
 input[type="radio"] + label{
@@ -343,6 +349,8 @@ h5 {
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */
     overflow-y: scroll; 
+    white-space: wrap;
+    overscroll-behavior: none
 }
 
 .menu-scroll::-webkit-scrollbar {
