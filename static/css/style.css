@@ -392,3 +392,13 @@ h5 {
     justify-content: space-between;
     align-items: center;
 }
+
+.carousel-caption{
+    background-color: rgba(48, 65, 74, 0.45);
+    border-radius: 25px;
+    margin: 5px 0 5px 0;
+}
+
+.carousel-caption p {
+    margin: 0;
+}
