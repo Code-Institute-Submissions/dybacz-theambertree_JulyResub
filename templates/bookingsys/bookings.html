@@ -3,22 +3,24 @@
 {% block content %}
 
 <!-- {% load crispy_forms_tags %} -->
-    <div class="col-12 col-xxl-6 offset-xxl-4">
+    <div class="col-12 col-xxl-6 offset-xxl-4 px-0 px-sm-4">
         <div class="container mt-5" id="form-container">
             <div class="row">
                 <div class="col-12 mt-3 mb-3 menu-scroll" id="form-block">
                     <h2 class="mx-auto mt-2">Make a booking</h2>
                     <div class="row pt-5" id="form-row-top">
                         <div class="col-12">
-                            <h3 class="mb-3 fancy-font">1. Select date
+                            <h3 class="mb-3 fancy-font">
                                 <i class="fa-regular fa-calendar-days ms-1"></i>
+                                Select date
                             </h3>
                             <input type="date" class="ms-4" name="date" id="date" value="2017-06-01" min="2018-01-01" max="2018-12-31">
                         </div>
                         <div class="col-12 mt-3">
                             <div class="row justify-content-md-center">
-                                <h3 class="mb-2 fancy-font">2. Select start time
+                                <h3 class="mb-2 fancy-font">
                                     <i class="fa-regular fa-clock ms-1"></i>
+                                    Select time
                                 </h3>
                                 <div>
                                     {% for timeslot in timeslots %}
@@ -39,10 +41,11 @@
                     <form method="POST">
                         {% csrf_token %}
                         <div class="row justify-content-md-center mt-4 pb-4">
-                            <h3 class="fancy-font">3. Select table
+                            <h3 class="fancy-font">
                                 <i class="fa-solid fa-utensils ms-1"></i>
+                                Select Table
                             </h3>
-                                    <div>
+                                    <div class="text-center">
                                         {% for bookingslot in bookingslots %}
                                         <div class="form-check form-check-inline px-0 mx-0">
                                             <input type="radio" id="table-btn-{{ bookingslot.pk }}" name="bookingslot"
@@ -60,8 +63,9 @@
                                     </div>
                         </div>
                         <div class="row" id="form-row-bot">
-                            <h3 class="fancy-font">4. Details
+                            <h3 class="fancy-font">
                                 <i class="fa-regular fa-address-card"></i>
+                                Enter details
                             </h3>
                             <div class="col-12 col-md-6">
                                 <div class="form-floating">
