@@ -13,19 +13,132 @@
                         {% include 'includes/navbars/dashboard_subnav.html' %}
                     </div>
                     {% include 'includes/dashboard/header.html' %}
-                    <div class="row">
-                        <p>Number of bookings for today: <span class="fw-bold">{{ bookings_len }}</p>
-                        <p>Number of bookings made today: <span class="fw-bold">{{ bookings_len }}</p>
-                        <p>Number of bookings cancelled today: <span class="fw-bold">{{ bookings_len }}</p>
-                        <p>Unread Contact Form Messages: <span class="fw-bold">{{ bookings_len }}</p>
+                    <p>Number of bookings for today: <span class="fw-bold">{{ bookings_len }}</p>
+                    <p>Number of bookings made today: <span class="fw-bold">{{ bookings_len }}</p>
+                    <p>Number of bookings cancelled today: <span class="fw-bold">{{ bookings_len }}</p>
+                    <p>Unread Contact Form Messages: <span class="fw-bold">{{ bookings_len }}</p>
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-10 menu-scroll dash-block">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Table Number</th>
+                                        <th scope="col">Capacity</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for table in tables %}
+                                        <tr>
+                                            <th class="align-middle">{{ table.table_id }}</th>
+                                            <td class="align-middle">{{ table.table_capacity }}</td>
+                                            <td hidden>{{table.pk}}</td>
+                                            <td class="align-middle">
+                                                <button type="button" class="btn btn-success rounded-circle"
+                                                style="height:30px; width: 30px; padding:0">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger cancel-btn rounded-circle"
+                                                    style="height:30px; width: 30px; padding:0">
+                                                    <i class="fa-solid fa-x mt-1 fs-6"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Delete Table</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-1">
+                <p class="mb-1">Current Table:</p>
+                <div>
+                  <div class="row">
+                    <div class="col-3 pe-0">
+                      <span class="mt-2 fw-bold">Table Number:</span>
+                    </div>
+                    <div class="col-9 ps-0">
+                      <span id="table-number" class="mt-2 text-center"></span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-2 pe-0">
+                      <span class="mt-2 fw-bold">Capacity:</span>
+                    </div>
+                    <div class="col-10 ps-0">
+                      <span id="table-capacity" class="mt-2 text-center"></span>
+                    </div>
+                  </div>
+                <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this table?</p> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger modal-submit">Delete table</button>
+            </div>
+        </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block postload_js %}
 {% include 'includes/dashboard/sub_nav_script.html' %}
+<script type="text/javascript">
+    let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+    let cancelButtons = document.querySelectorAll('.cancel-btn')
+    let tablePk
+
+    for (let b of cancelButtons) {
+            b.onclick = function (e) {
+                let domStartPoint = b.parentNode.parentElement
+                let tableNumber = domStartPoint.children[0].innerHTML
+                let tableCapacity = domStartPoint.children[1].innerHTML
+                let tablePk = domStartPoint.children[2].innerHTML
+                console.log(tableCapacity, tableNumber, tablePk)
+                modalTableNumber = document.getElementById("table-number")
+                modalTableNumber.innerHTML = `${tableNumber}`
+                modalTableCapacity = document.getElementById("table-capacity")
+                modalTableCapacity.innerHTML = `${tableCapacity}`
+                myModal.show();
+                let modalSubmitBtn = document.querySelector('.modal-submit')
+                modalSubmitBtn.id = `remove_${tablePk}`
+            }
+        }
+
+    removeTable = document.querySelectorAll('.modal-submit');
+    for (let i of removeTable) {
+        i.onclick = function (e) {
+            fetchRequest(i.id)
+        }
+    };
+
+        try {
+        function fetchRequest(data) {
+                let csrfToken = "{{ csrf_token }}";
+                let tableId = data.split('remove_')[1];
+                let url = `/dashboard/tables/remove/${tableId}`
+                fetch(url, {
+                method: "POST",
+                headers: {'Accept': 'application/json' , 'X-Requested-With': 'XMLHttpRequest','X-CSRFToken': csrfToken},
+                body: JSON.stringify(data)
+                }).then(res => {
+                    location.reload();
+                });
+        }
+    } catch (e) {
+        // error caught when basket is empty
+    }
+</script>  
 {% endblock %}
