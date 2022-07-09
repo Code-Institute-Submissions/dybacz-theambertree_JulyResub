@@ -22,4 +22,5 @@ urlpatterns = [
     path('', views.Index.as_view(), name='index'),
     path('bookings/', include('bookingsys.urls'), name="bookingsys"),
     path('accounts/', include('allauth.urls')),
+    path('dashboard/', include('dashboard.urls'), name='dashboard'),
 ]

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="col-12">
+        <div class="container-fluid mt-2 general-container" style="min-height:95vh;">
+            <div class="row">
+                <div class="col-12 mb-3 mt-3 general-block" style="min-height:91vh;">
+                    <h2 class="mx-auto mt-2">Dashboard</h2>
+                    <nav>
+                        <ul class="nav nav-tabs justify-content-start flex-column flex-lg-row">
+                            <li class="nav-item">
+                                <a class="nav-link active border-2" aria-current="page" href="#">
+                                  <h4 class="my-0">
+                                    <i class="fa-solid fa-house"></i>
+                                      Home
+                                  </h4>
+                                </a>
+                              </li>
+                            <li class="nav-item">
+                              <a class="nav-link border-2"href="#">
+                                <h4 class="my-0">
+                                    <i class="fa-solid fa-utensils"></i>
+                                    Table
+                                </h4>
+                              </a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link border-2" href="#">
+                                <h4 class="my-0">
+                                    <i class="fa-regular fa-clock"></i>
+                                    Times
+                                </h4>
+                              </a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link border-2" href="#">
+                                <h4 class="my-0">
+                                    <i class="fa-solid fa-table-list"></i>
+                                    Schedule
+                                </h4>
+                              </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link border-2" href="#">
+                                    <h4 class="my-0">
+                                        <i class="fa-regular fa-calendar-check"></i>
+                                        Bookings
+                                    </h4>
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link border-2" href="#">
+                                    <h4 class="my-0">
+                                        <i class="fa-regular fa-message"></i>
+                                        Messages
+                                    </h4>
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link border-2" href="#">
+                                    <h4 class="my-0">
+                                        <i class="fa-regular fa-circle-question"></i>
+                                        Help
+                                    </h4>
+                                </a>
+                              </li>
+                          </ul>
+                        <!-- <div class="row my-3">
+                            <div class="col-2 text-center">
+                                <a href="" class="border-2">
+                                    <h4 class="my-0">
+                                        <i class="fa-solid fa-utensils"></i>
+                                        <p class="my-0">Table</p>
+                                    </h4>
+                                </a>
+                            </div>
+                            <div class="col-2 text-center">
+                                <a href="" class="border-2">
+                                    <h4 class="my-0">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <p class="my-0">Times</p>
+                                    </h4>
+                                </a>
+                            </div>
+                            <div class="col-2 text-center">
+                                <a href="" class="border-2">
+                                    <h4 class="my-0">
+                                        <i class="fa-solid fa-table-list"></i>
+                                        <p class="my-0">Schedule</p>
+                                    </h4>
+                                </a>
+                            </div>
+                            <div class="col-2 text-center">
+                                <a href="" class="border-2">
+                                    <h4 class="my-0">
+                                        <i class="fa-regular fa-calendar-check"></i>
+                                        <p class="my-0">Bookings</p>
+                                    </h4>
+                                </a>
+                            </div>
+                            <div class="col-2 text-center">
+                                <a href="" class="border-2">
+                                    <h4 class="my-0">
+                                        <i class="fa-regular fa-message"></i>
+                                        <p class="my-0">Messages</p>
+                                    </h4>
+                                </a>
+                            </div>
+                            <div class="col-2 text-center">
+                                <a href="" class="border-2">
+                                    <h4 class="my-0">
+                                        <i class="fa-regular fa-circle-question"></i>
+                                        <p class="my-0">Help</p>
+                                    </h4>
+                                </a>
+                            </div>
+                        </div> -->
+                    </nav>
+                    <h1>{{ current_date }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
