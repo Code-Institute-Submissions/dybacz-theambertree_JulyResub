@@ -65,4 +65,5 @@ $(document).ready(function() {
     dateControl.min = today;
     dateControl.max = todayPlusMonth;
     }
+    alert(window.onload)
 });
