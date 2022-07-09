@@ -96,6 +96,11 @@
             console.log(positionFromTopOfScrollableDiv)
             let scrollableDivElement = document.getElementsByClassName('x-scroll')[0]
             scrollableDivElement.scrollLeft = positionFromTopOfScrollableDiv - 41
+            scrollableDivElement.addEventListener("wheel", (evt) => {
+                evt.preventDefault();
+                scrollableDivElement.scrollLeft += evt.deltaY;
+                
+            }, {passive: false});
         } catch (e) {
         // error caught when intial load no active status on any subnavlinks due to bootstrap js waiting for dom to also load.
         }
