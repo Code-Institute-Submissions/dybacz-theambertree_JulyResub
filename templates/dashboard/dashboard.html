@@ -84,3 +84,21 @@
     </div>
 </div>
 {% endblock %}
+
+{% block postload_js %}
+
+
+<script type="text/javascript" >
+    document.onreadystatechange = function () {
+        try {
+            let elementInScrollableDiv = document.getElementsByClassName("active")[0]
+            let positionFromTopOfScrollableDiv = elementInScrollableDiv.offsetLeft
+            console.log(positionFromTopOfScrollableDiv)
+            let scrollableDivElement = document.getElementsByClassName('x-scroll')[0]
+            scrollableDivElement.scrollLeft = positionFromTopOfScrollableDiv - 41
+        } catch (e) {
+        // error caught when intial load no active status on any subnavlinks due to bootstrap js waiting for dom to also load.
+        }
+    }
+</script>
+{% endblock %}
