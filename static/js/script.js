@@ -65,23 +65,4 @@ $(document).ready(function() {
     dateControl.min = today;
     dateControl.max = todayPlusMonth;
     }
-    window.onload = function () {
-        let active = document.getElementsByClassName("active")
-        let activeLink = active[0]
-        log3.innerHTML = (active)
-
-        let positionFromLeftOfScrollableDiv = activeLink.offsetLeft
-        let log = document.getElementById("log")
-        let log2 = document.getElementById("log2")
-        console.log(positionFromLeftOfScrollableDiv)
-        log.innerHTML = (positionFromLeftOfScrollableDiv)
-        let scrollableElement = document.getElementsByClassName("x-scroll")[0]
-        log2.innerHTML = (scrollableElement)
-        scrollableElement.scrollLeft = positionFromLeftOfScrollableDiv - 41
-        scrollableElement.addEventListener("wheel", (evt) => {
-            evt.preventDefault();
-            scrollableDivElement.scrollLeft += evt.deltaY;
-            
-        }, {passive: false});
-    }
 });
