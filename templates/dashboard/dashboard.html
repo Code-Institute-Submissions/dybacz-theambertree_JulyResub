@@ -94,7 +94,7 @@
 
 <script type="text/javascript" >
     window.onload = function () {
-        let activeLink = document.getElementsByClassName("active")[0]
+        let activeLink = document.getElementsByClassName("active")
         log3.innerHTML = (activeLink)
 
         let positionFromLeftOfScrollableDiv = activeLink.offsetLeft
@@ -102,7 +102,7 @@
         let log2 = document.getElementById("log2")
         console.log(positionFromLeftOfScrollableDiv)
         log.innerHTML = (positionFromLeftOfScrollableDiv)
-        let scrollableElement = document.getElementsByClassName("x-scroll")[0]
+        let scrollableElement = document.getElementsByClassName("x-scroll")
         log2.innerHTML = (scrollableElement)
         scrollableElement.scrollLeft = positionFromLeftOfScrollableDiv - 41
         scrollableElement.addEventListener("wheel", (evt) => {
