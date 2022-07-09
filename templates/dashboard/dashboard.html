@@ -76,12 +76,6 @@
                     <p>Number of bookings made today: <span class="fw-bold">{{ bookings_len }}</p>
                     <p>Number of bookings cancelled today: <span class="fw-bold">{{ bookings_len }}</p>
                     <p>Unread Contact Form Messages: <span class="fw-bold">{{ bookings_len }}</p>
-                    <span id="log"></span>
-                    <span id="log2"></span>
-                    <span id="log3"></span>
-
-                        
-
                 </div>
             </div>
         </div>
@@ -106,15 +100,8 @@
 
         function subNavAutoScroll(){
             let activeLink = active[0]
-            log3.innerHTML = (activeLink)
-
             let positionFromLeftOfScrollableDiv = activeLink.offsetLeft
-            let log = document.getElementById("log")
-            let log2 = document.getElementById("log2")
-            console.log(positionFromLeftOfScrollableDiv)
-            log.innerHTML = (positionFromLeftOfScrollableDiv)
             let scrollableElement = document.getElementsByClassName("x-scroll")[0]
-            log2.innerHTML = (scrollableElement)
             scrollableElement.scrollLeft = positionFromLeftOfScrollableDiv - 41
             scrollableElement.addEventListener("wheel", (evt) => {
                 evt.preventDefault();
