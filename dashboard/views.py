@@ -8,13 +8,13 @@ from django.core.serializers import serialize
 from datetime import datetime
 # Create your views here.
 
+current_date = datetime.now().date()
 
 class DashboardHome(View):
 
     def get(self, request, *args, **kwargs):
         page_title = 'Home | Dashboard'
         page_type = 'dashboard'
-        current_date = datetime.now().date()
         print(current_date)
         list_today_bookings = shortcuts.get_list_or_404(models.Booking.objects.filter(status=0))
         list_bookings = []
@@ -44,9 +44,23 @@ class DashboardHome(View):
             return shortcuts.redirect("account_login")
 
 class DashboardTables(View):
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            tableId = kwargs['table_id']
+            print(tableId, kwargs,'heyy')
+            table = shortcuts.get_object_or_404(models.Table, pk=tableId)
+            table.delete()
+            return JsonResponse({'nodata': 'No dates Found'})
+        else:
+            return shortcuts.redirect("account_login")
+
     def get(self, request, *args, **kwargs):
         page_title = 'Tables | Dashboard'
         page_type = 'dashboard'
+
+        table_objects = models.Table.objects.all()
+        print(table_objects)
+
 
         if request.user.is_staff:
             return shortcuts.render(
@@ -55,6 +69,8 @@ class DashboardTables(View):
                 {
                     'page_title': page_title,
                     'page_type': page_type,
+                    'current_date': current_date,
+                    'tables': table_objects,
 
                 }
             )
@@ -73,6 +89,7 @@ class DashboardTimes(View):
                 {
                     'page_title': page_title,
                     'page_type': page_type,
+                    'current_date': current_date,
                 }
             )
         else:
@@ -91,6 +108,7 @@ class DashboardSchedule(View):
                 {
                     'page_title': page_title,
                     'page_type': page_type,
+                    'current_date': current_date,
                 }
             )
         else:
@@ -109,6 +127,7 @@ class DashboardBookings(View):
                 {
                     'page_title': page_title,
                     'page_type': page_type,
+                    'current_date': current_date,
                 }
             )
         else:
@@ -127,6 +146,7 @@ class DashboardMenu(View):
                 {
                     'page_title': page_title,
                     'page_type': page_type,
+                    'current_date': current_date,
                 }
             )
         else:
@@ -145,6 +165,7 @@ class DashboardMessages(View):
                 {
                     'page_title': page_title,
                     'page_type': page_type,
+                    'current_date': current_date,
                 }
             )
         else:
@@ -163,6 +184,7 @@ class DashboardHelp(View):
                 {
                     'page_title': page_title,
                     'page_type': page_type,
+                    'current_date': current_date,
                 }
             )
         else:
