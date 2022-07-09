@@ -3,7 +3,7 @@
         {% if user.is_authenticated %}
             <a class="toolbar mx-auto" href="">
                 <i class="fa-solid fa-user"></i>
-                <p>Account</p>
+                <p>Profile</p>
             </a>
             <a class="toolbar mx-auto" href="{% url 'my_bookings' %}">
                 <i class="fa-regular fa-calendar-days"></i>
@@ -11,7 +11,7 @@
             </a>
         {% endif %}
         {% if user.is_staff %}
-            <a class="toolbar mx-auto" href="/admin">
+            <a class="toolbar mx-auto" href="{% url 'dashboard_home' %}">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
                 <p>Admin</p>
             </a>

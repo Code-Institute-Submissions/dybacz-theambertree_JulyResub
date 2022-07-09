@@ -29,15 +29,27 @@
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  {{ user.username }}
+                  {% if user.is_authenticated %}
+                    Account
+                  {% else %}
+                    Login / Register
+                  {% endif %}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="{% url 'my_bookings' %}">Bookings</a></li>
-                  <li><a class="dropdown-item" href="#">Account</a></li>
-                  <li><a class="dropdown-item" href="#">Login</a></li>
-                  <li><a class="dropdown-item" href="#">Register</a></li>
-                  <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
-                  <li><a class="dropdown-item" href="#">Admin</a></li>
+                  {% if user.is_authenticated %}
+                    <li><a class="dropdown-item" href="{% url 'my_bookings' %}">My Bookings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                  {% endif %}
+                  {% if user.is_staff %}
+                    <li><a class="dropdown-item" href="{% url 'dashboard_home' %}">Admin</a></li>
+                  {% endif %}
+                  {% if user.is_authenticated %}
+                    <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                  {% else %}
+                    <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
+                    <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>
+                  {% endif %}
+                  
                 </ul>
               </li>
             </ul>
