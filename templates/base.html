@@ -21,6 +21,7 @@
 <body>
     <div class="container-fluid" id="home">
         <div class="row container-border">
+            {% if page_type != 'dashboard' %}
         {% include 'includes/navbars/mobile_nav.html' %}
             <div class="col-3 d-none d-xxl-block" id="fixed-nav">
                 <div class="row justify-content-center">
@@ -72,6 +73,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         {% block content %}
         {% endblock %}
     </div>
