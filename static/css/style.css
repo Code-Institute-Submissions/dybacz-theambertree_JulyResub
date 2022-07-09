@@ -187,8 +187,6 @@ body { max-height: 100% }
     height: 100vh;
     border-top: 15px;
     border-bottom: 10px;
-    border-left: 10px;
-    border-right:10px;
     border-style: solid;
     border-color: rgba(48, 65, 74, 0.85);
 }
@@ -321,7 +319,6 @@ h2 {
 
 .btn-booking-slot {
     background-color: var(--color1);
-    border: 1px solid var(--color2);
     color: rgba(255, 255, 255);
 }
 
