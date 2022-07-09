@@ -115,6 +115,24 @@ class DashboardBookings(View):
             return shortcuts.redirect("account_login")
 
 
+class DashboardMenu(View):
+    def get(self, request, *args, **kwargs):
+        page_title = 'Menu | Dashboard'
+        page_type = 'dashboard'
+
+        if request.user.is_staff:
+            return shortcuts.render(
+                request,
+                "dashboard/menu.html",
+                {
+                    'page_title': page_title,
+                    'page_type': page_type,
+                }
+            )
+        else:
+            return shortcuts.redirect("account_login")
+
+
 class DashboardMessages(View):
     def get(self, request, *args, **kwargs):
         page_title = 'Messages | Dashboard'
