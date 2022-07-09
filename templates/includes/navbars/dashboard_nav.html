@@ -1,0 +1,31 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top mobilenav">
+    <div class="container-fluid px-0">
+        <a class="navbar-brand py-0" href="{% url 'index' %}">
+            <img src="{% static 'images/site_images/tree.svg' %}" alt="" width="60" height="60" class="ambertree-mob d-inline-block align-text-center">
+            <span class="d-inline-block ps-0" id="tagline-mob">The Amber Tree</span>
+          </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse dashboard-nav" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Account
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="{% url 'my_bookings' %}">Bookings</a></li>
+                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                  <li><a class="dropdown-item" href="#">Login</a></li>
+                  <li><a class="dropdown-item" href="#">Register</a></li>
+                  <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                  <li><a class="dropdown-item" href="#">Admin</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+    </div>
+</nav>

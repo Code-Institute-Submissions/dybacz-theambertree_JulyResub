@@ -1,122 +1,83 @@
 {% extends "base.html" %}
 
+
+
 {% block content %}
-    <div class="col-12">
-        <div class="container-fluid mt-2 general-container" style="min-height:95vh;">
+    {% include 'includes/navbars/dashboard_nav.html' %}
+    <div class="col-12 mt-5">
+        <div class="container-fluid mt-3 general-container" style="min-height:90vh;">
             <div class="row">
-                <div class="col-12 mb-3 mt-3 general-block" style="min-height:91vh;">
+                <div class="col-12 mb-3 mt-3 general-block" style="min-height:86vh;">
                     <h2 class="mx-auto mt-2">Dashboard</h2>
                     <nav>
-                        <ul class="nav nav-tabs justify-content-start flex-column flex-lg-row">
+                        <ul class="nav nav-tabs justify-content-start flex-nowrap x-scroll">
                             <li class="nav-item">
-                                <a class="nav-link active border-2" aria-current="page" href="#">
-                                  <h4 class="my-0">
+                                <a class="nav-link border-0 mb-1" href="{% url 'dashboard_home' %}">
+                                  <h5 class="my-0">
                                     <i class="fa-solid fa-house"></i>
                                       Home
-                                  </h4>
+                                  </h5>
                                 </a>
                               </li>
                             <li class="nav-item">
-                              <a class="nav-link border-2"href="#">
-                                <h4 class="my-0">
+                              <a class="nav-link border-0 mb-1"href="{% url 'dashboard_tables' %}">
+                                <h5 class="my-0">
                                     <i class="fa-solid fa-utensils"></i>
                                     Table
-                                </h4>
+                                </h5>
                               </a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link border-2" href="#">
-                                <h4 class="my-0">
+                              <a class="nav-link border-0 mb-1" href="{% url 'dashboard_times' %}">
+                                <h5 class="my-0">
                                     <i class="fa-regular fa-clock"></i>
                                     Times
-                                </h4>
+                                </h5>
                               </a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link border-2" href="#">
-                                <h4 class="my-0">
+                              <a class="nav-link border-0 mb-1" href="{% url 'dashboard_schedule' %}">
+                                <h5 class="my-0">
                                     <i class="fa-solid fa-table-list"></i>
                                     Schedule
-                                </h4>
+                                </h5>
                               </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link border-2" href="#">
-                                    <h4 class="my-0">
+                                <a class="nav-link border-0 mb-1" href="{% url 'dashboard_bookings' %}">
+                                    <h5 class="my-0">
                                         <i class="fa-regular fa-calendar-check"></i>
                                         Bookings
-                                    </h4>
+                                    </h5>
                                 </a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link border-2" href="#">
-                                    <h4 class="my-0">
+                                <a class="nav-link border-0 mb-1" href="{% url 'dashboard_messages' %}">
+                                    <h5 class="my-0">
                                         <i class="fa-regular fa-message"></i>
                                         Messages
-                                    </h4>
+                                    </h5>
                                 </a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link border-2" href="#">
-                                    <h4 class="my-0">
+                                <a class="nav-link border-0 mb-1" href="{% url 'dashboard_help' %}">
+                                    <h5 class="my-0">
                                         <i class="fa-regular fa-circle-question"></i>
                                         Help
-                                    </h4>
+                                    </h5>
                                 </a>
                               </li>
                           </ul>
-                        <!-- <div class="row my-3">
-                            <div class="col-2 text-center">
-                                <a href="" class="border-2">
-                                    <h4 class="my-0">
-                                        <i class="fa-solid fa-utensils"></i>
-                                        <p class="my-0">Table</p>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div class="col-2 text-center">
-                                <a href="" class="border-2">
-                                    <h4 class="my-0">
-                                        <i class="fa-regular fa-clock"></i>
-                                        <p class="my-0">Times</p>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div class="col-2 text-center">
-                                <a href="" class="border-2">
-                                    <h4 class="my-0">
-                                        <i class="fa-solid fa-table-list"></i>
-                                        <p class="my-0">Schedule</p>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div class="col-2 text-center">
-                                <a href="" class="border-2">
-                                    <h4 class="my-0">
-                                        <i class="fa-regular fa-calendar-check"></i>
-                                        <p class="my-0">Bookings</p>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div class="col-2 text-center">
-                                <a href="" class="border-2">
-                                    <h4 class="my-0">
-                                        <i class="fa-regular fa-message"></i>
-                                        <p class="my-0">Messages</p>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div class="col-2 text-center">
-                                <a href="" class="border-2">
-                                    <h4 class="my-0">
-                                        <i class="fa-regular fa-circle-question"></i>
-                                        <p class="my-0">Help</p>
-                                    </h4>
-                                </a>
-                            </div>
-                        </div> -->
                     </nav>
-                    <h1>{{ current_date }}</h1>
+                    <h1></h1>
+                    <p>Logged in as: <span class="fw-bold">{{ user.username }}</p>
+                    <p>Date: <span class="fw-bold">{{ current_date|date:"D jS M  Y" }}</p>
+                    <p>Number of bookings for today: <span class="fw-bold">{{ bookings_len }}</p>
+                    <p>Number of bookings made today: <span class="fw-bold">{{ bookings_len }}</p>
+                    <p>Number of bookings cancelled today: <span class="fw-bold">{{ bookings_len }}</p>
+                    <p>Unread Contact Form Messages: <span class="fw-bold">{{ bookings_len }}</p>
+                        
+
                 </div>
             </div>
         </div>

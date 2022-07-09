@@ -410,3 +410,24 @@ h5 {
 .carousel-caption p {
     margin: 0;
 }
+
+.x-scroll {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-x: scroll; 
+    overflow-y:hidden;
+    white-space: wrap;
+}
+.x-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.x-scroll::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+  
+.x-scroll::-webkit-scrollbar-thumb {
+    background: var(--color3);
+    border-radius: 10px;
+}
