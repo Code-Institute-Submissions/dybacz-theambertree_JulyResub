@@ -1,0 +1,24 @@
+<script type="text/javascript" >
+    let active
+    window.addEventListener("load", function(){
+        let i = setInterval(function (){
+            active = document.getElementsByClassName("active")
+            if (active.length != 0)
+            {
+                clearInterval(i);
+                subNavAutoScroll()
+            }
+        }, 100);
+    });
+    function subNavAutoScroll(){
+            let activeLink = active[0]
+            let positionFromLeftOfScrollableDiv = activeLink.offsetLeft
+            let scrollableElement = document.getElementsByClassName("x-scroll")[0]
+            scrollableElement.scrollLeft = positionFromLeftOfScrollableDiv - 41
+            scrollableElement.addEventListener("wheel", (evt) => {
+                evt.preventDefault();
+                scrollableElement.scrollLeft += evt.deltaY;
+                
+            }, {passive: false});
+        }
+</script>
