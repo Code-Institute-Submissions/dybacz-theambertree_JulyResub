@@ -22,7 +22,7 @@
                                     <i class="fa-regular fa-clock ms-1"></i>
                                     Select time
                                 </h3>
-                                <span class="text-muted fst-italic ps-3 mb-2" style="font-size: 16px !important">Booking duration: 90 mins </span>
+                                <span class="text-muted fst-italic ps-3 mb-2" style="font-size: 16px !important">Booking duration: 90 mins</span>
                                 <div class="text-center text-md-start">
                                     {% for timeslot in timeslots %}
                                     <div class="form-check form-check-inline px-0 mx-0">
@@ -46,6 +46,7 @@
                                     <i class="fa-solid fa-utensils ms-1"></i>
                                     Select Table
                                 </h3>
+                                <span class="text-muted fst-italic ps-3 mb-2" style="font-size: 16px !important">One table per booking</span>
                                 <div class="text-center text-md-start">
                                     <form method="POST">
                                         {% csrf_token %}
