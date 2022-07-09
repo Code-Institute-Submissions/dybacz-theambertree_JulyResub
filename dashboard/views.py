@@ -32,12 +32,12 @@ class DashboardHome(View):
         if request.user.is_staff:
             return shortcuts.render(
                 request,
-                "dashboard/dashboard.html",
+                "dashboard/home.html",
                 {
                     'page_title': page_title,
-                    'page_type': page_type,
                     'current_date': current_date,
                     'bookings_len': bookings_len,
+                    'page_type': page_type,
                 }
             )
         else:
@@ -51,10 +51,11 @@ class DashboardTables(View):
         if request.user.is_staff:
             return shortcuts.render(
                 request,
-                "dashboard/dashboard.html",
+                "dashboard/tables.html",
                 {
                     'page_title': page_title,
                     'page_type': page_type,
+
                 }
             )
         else:
@@ -68,7 +69,7 @@ class DashboardTimes(View):
         if request.user.is_staff:
             return shortcuts.render(
                 request,
-                "dashboard/dashboard.html",
+                "dashboard/times.html",
                 {
                     'page_title': page_title,
                     'page_type': page_type,
@@ -86,7 +87,7 @@ class DashboardSchedule(View):
         if request.user.is_staff:
             return shortcuts.render(
                 request,
-                "dashboard/dashboard.html",
+                "dashboard/schedule.html",
                 {
                     'page_title': page_title,
                     'page_type': page_type,
@@ -104,7 +105,7 @@ class DashboardBookings(View):
         if request.user.is_staff:
             return shortcuts.render(
                 request,
-                "dashboard/dashboard.html",
+                "dashboard/bookings.html",
                 {
                     'page_title': page_title,
                     'page_type': page_type,
@@ -122,7 +123,7 @@ class DashboardMessages(View):
         if request.user.is_staff:
             return shortcuts.render(
                 request,
-                "dashboard/dashboard.html",
+                "dashboard/messages.html",
                 {
                     'page_title': page_title,
                     'page_type': page_type,
@@ -140,7 +141,7 @@ class DashboardHelp(View):
         if request.user.is_staff:
             return shortcuts.render(
                 request,
-                "dashboard/dashboard.html",
+                "dashboard/help.html",
                 {
                     'page_title': page_title,
                     'page_type': page_type,
