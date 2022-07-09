@@ -94,7 +94,8 @@
 
 <script type="text/javascript" >
     window.onload = function () {
-        let activeLink = document.getElementsByClassName("active")
+        let active = document.getElementsByClassName("active")
+        let activeLink = active[0]
         log3.innerHTML = (activeLink)
 
         let positionFromLeftOfScrollableDiv = activeLink.offsetLeft
