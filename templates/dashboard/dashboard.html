@@ -100,7 +100,7 @@
         let log2 = document.getElementById("log2")
         console.log(positionFromLeftOfScrollableDiv)
         log.innerHTML = (positionFromLeftOfScrollableDiv)
-        let scrollableElement = document.getElementsByClassName('x-scroll')[0]
+        let scrollableElement = document.getElementsByClassName("x-scroll")[0]
         log2.innerHTML = (scrollableElement)
         scrollableElement.scrollLeft = positionFromLeftOfScrollableDiv - 41
         scrollableElement.addEventListener("wheel", (evt) => {
@@ -109,7 +109,5 @@
             
         }, {passive: false});
     }
-    alert(window.onload)
-
 </script>
 {% endblock %}
