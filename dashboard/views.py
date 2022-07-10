@@ -50,11 +50,20 @@ class DashboardTables(View):
             print(data_from_post)
             post_type = data_from_post[0]
             post_data = data_from_post[1]
+            print(post_data)
             if post_type == 'add-form':
                 models.Table.objects.create(
                     table_id=post_data[0],
                     table_capacity=post_data[1],
                 )
+                return HttpResponse(status=200)
+            elif post_type == 'edit-form':
+                table_pk = post_data[2]
+                table = shortcuts.get_object_or_404(models.Table, pk=table_pk)
+                table.table_id = post_data[0]
+                table.table_capacity = post_data[1]
+                table.save()
+
                 return HttpResponse(status=200)
             elif post_type == 'non-form':
                 tableId = kwargs['table_id']

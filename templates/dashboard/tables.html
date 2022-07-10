@@ -124,6 +124,16 @@
     
     for (let i of editButtons){
         i.onclick = function (e) {
+            tableNumberValue = document.querySelector('#tablenumber')
+            tableCapacityValue = document.querySelector('#tablecapacity')
+            domStartPoint = i.parentNode.parentElement
+            tableNumber = domStartPoint.children[0].innerHTML
+            tableCapacity = domStartPoint.children[1].innerHTML
+            tablePk = domStartPoint.children[2].innerHTML
+            
+            tableNumberValue.value = tableNumber
+            tableCapacityValue.value = tableCapacity
+
             modalNonForm = document.querySelector('#modal-non-form')
             modalForm = document.querySelector('#modal-form')
             modalTitle = document.querySelector('#myModalLabel')
@@ -134,7 +144,9 @@
             modalNonForm.hidden = true
             modalForm.hidden = false
             modalTitle.innerHTML = 'Edit Table'
-            myModal.show(); 
+            myModal.show();
+            let modalSubmitBtn = document.querySelector('.modal-submit')
+            modalSubmitBtn.id = `edit_${tablePk}` 
         }
     }
 
@@ -173,11 +185,18 @@
                 let type = 'non-form'
                 fetchRequest(i.id, type)
             } else {
-                let type = 'add-form'
+                modalTitle = document.querySelector('#myModalLabel')
+                let type
+                if (modalTitle.innerHTML == 'Edit Table'){
+                    type = 'edit-form'
+                } else {
+                    type = 'add-form'
+                }
                 let tableNum = parseInt(document.querySelector('#tablenumber').value)
                 let tableCap = parseInt(document.querySelector('#tablecapacity').value)
+                let tablePk = i.id
                 if (tableNum > 0 && tableCap > 0){
-                    let list = [tableNum, tableCap]
+                    let list = [tableNum, tableCap, tablePk]
                     fetchRequest(list, type)
                 }
                 else {
@@ -212,6 +231,10 @@
                     url = `/dashboard/tables/remove/${tableId}`
                 } else if (type == 'add-form') {
                     url = `/dashboard/tables/add/`
+                } else if (type == 'edit-form') {
+                    url = `/dashboard/tables/edit/`
+                    tablePkValue = data[2].split('edit_')[1];
+                    data[2] = tablePkValue
                 }
                 fetch(url, {
                 method: "POST",
