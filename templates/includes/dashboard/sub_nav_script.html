@@ -14,7 +14,7 @@
             let activeLink = active[0]
             let positionFromLeftOfScrollableDiv = activeLink.offsetLeft
             let scrollableElement = document.getElementsByClassName("x-scroll")[0]
-            scrollableElement.scrollLeft = positionFromLeftOfScrollableDiv - 41
+            scrollableElement.scrollLeft = positionFromLeftOfScrollableDiv - 29
             scrollableElement.addEventListener("wheel", (evt) => {
                 evt.preventDefault();
                 scrollableElement.scrollLeft += evt.deltaY;
