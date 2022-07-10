@@ -15,20 +15,20 @@ class DashboardHome(View):
     def get(self, request, *args, **kwargs):
         page_title = 'Home | Dashboard'
         page_type = 'dashboard'
-        print(current_date)
-        list_today_bookings = shortcuts.get_list_or_404(models.Booking.objects.filter(status=0))
+        current_date = datetime.now().date()
+        try:
+            list_today_bookings = shortcuts.get_list_or_404(models.Booking.objects.filter(status=0))
+            for i in list_today_bookings:
+                time_slot = (i.timeslot.all())
+                time_slot_date = (time_slot[0].date)
+                if time_slot_date == current_date:
+                    list_bookings.append(time_slot_date)
+        except:
+            list_today_bookings = 'No Data'
+
         list_bookings = []
-        for i in list_today_bookings:
-            time_slot = (i.timeslot.all())
-            time_slot_date = (time_slot[0].date)
-            if time_slot_date == current_date:
-                list_bookings.append(time_slot_date)
         bookings_len = len(list_bookings)
 
-
-
-
-        print(list_bookings) 
         if request.user.is_staff:
             return shortcuts.render(
                 request,
@@ -46,11 +46,22 @@ class DashboardHome(View):
 class DashboardTables(View):
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            tableId = kwargs['table_id']
-            print(tableId, kwargs,'heyy')
-            table = shortcuts.get_object_or_404(models.Table, pk=tableId)
-            table.delete()
-            return JsonResponse({'nodata': 'No dates Found'})
+            data_from_post = json.load(request)['post_data']
+            print(data_from_post)
+            post_type = data_from_post[0]
+            post_data = data_from_post[1]
+            if post_type == 'add-form':
+                models.Table.objects.create(
+                    table_id=post_data[0],
+                    table_capacity=post_data[1],
+                )
+                return HttpResponse(status=200)
+            elif post_type == 'non-form':
+                tableId = kwargs['table_id']
+                print(tableId, kwargs,'heyy')
+                table = shortcuts.get_object_or_404(models.Table, pk=tableId)
+                table.delete()
+                return HttpResponse(status=200)
         else:
             return shortcuts.redirect("account_login")
 
