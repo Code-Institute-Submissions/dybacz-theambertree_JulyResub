@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.DashboardHome.as_view(), name='dashboard_home'),
     path('tables/', views.DashboardTables.as_view(), name='dashboard_tables'),
     path('tables/remove/<table_id>', views.DashboardTables.as_view()),
+    path('tables/add/', views.DashboardTables.as_view()),
     path('times/', views.DashboardTimes.as_view(), name='dashboard_times'),
     path('schedule/', views.DashboardSchedule.as_view(), name='dashboard_schedule'),
     path('bookings/', views.DashboardBookings.as_view(), name='dashboard_bookings'),
