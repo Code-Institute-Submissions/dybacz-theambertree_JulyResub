@@ -5,19 +5,20 @@ from bookingsys import models
 from django.http import HttpResponse, JsonResponse
 import json
 from django.core.serializers import serialize
-from datetime import datetime
+from datetime import datetime, timedelta
 # Create your views here.
 
 current_date = datetime.now().date()
 
-class DashboardHome(View):
 
+class DashboardHome(View):
     def get(self, request, *args, **kwargs):
         page_title = 'Home | Dashboard'
         page_type = 'dashboard'
         current_date = datetime.now().date()
         try:
-            list_today_bookings = shortcuts.get_list_or_404(models.Booking.objects.filter(status=0))
+            list_today_bookings = shortcuts.get_list_or_404(
+                models.Booking.objects.filter(status=0))
             for i in list_today_bookings:
                 time_slot = (i.timeslot.all())
                 time_slot_date = (time_slot[0].date)
@@ -31,26 +32,23 @@ class DashboardHome(View):
 
         if request.user.is_staff:
             return shortcuts.render(
-                request,
-                "dashboard/home.html",
-                {
+                request, "dashboard/home.html", {
                     'page_title': page_title,
                     'current_date': current_date,
                     'bookings_len': bookings_len,
                     'page_type': page_type,
-                }
-            )
+                })
         else:
             return shortcuts.redirect("account_login")
 
+
 class DashboardTables(View):
+    """" """
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             data_from_post = json.load(request)['post_data']
-            print(data_from_post)
             post_type = data_from_post[0]
             post_data = data_from_post[1]
-            print(post_data)
             if post_type == 'add-form':
                 models.Table.objects.create(
                     table_id=post_data[0],
@@ -67,7 +65,6 @@ class DashboardTables(View):
                 return HttpResponse(status=200)
             elif post_type == 'non-form':
                 tableId = kwargs['table_id']
-                print(tableId, kwargs,'heyy')
                 table = shortcuts.get_object_or_404(models.Table, pk=tableId)
                 table.delete()
                 return HttpResponse(status=200)
@@ -79,39 +76,71 @@ class DashboardTables(View):
         page_type = 'dashboard'
 
         table_objects = models.Table.objects.all()
-        print(table_objects)
-
 
         if request.user.is_staff:
             return shortcuts.render(
-                request,
-                "dashboard/tables.html",
-                {
+                request, "dashboard/tables.html", {
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
                     'tables': table_objects,
-
-                }
-            )
+                })
         else:
             return shortcuts.redirect("account_login")
 
+
 class DashboardTimes(View):
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            data_from_post = json.load(request)['post_data']
+            post_type = data_from_post[0]
+            post_data = data_from_post[1]
+            if post_type == 'add-form':
+                time_str = post_data[0]
+                time_format = '%H:%M'
+                datetime_object = datetime.strptime(time_str, time_format)
+                end_time = datetime_object + timedelta(minutes=90)
+                models.TimeSlot.objects.create(
+                    startTime=post_data[0],
+                    endTime=end_time,
+                )
+                return HttpResponse(status=200)
+            elif post_type == 'edit-form':
+                table_pk = post_data[1]
+                table = shortcuts.get_object_or_404(models.TimeSlot,
+                                                    pk=table_pk)
+                time_str = post_data[0]
+                time_format = '%H:%M'
+                datetime_object = datetime.strptime(time_str, time_format)
+                end_time = datetime_object + timedelta(minutes=90)
+
+                table.startTime = post_data[0]
+                table.endTime = end_time
+                table.save()
+
+                return HttpResponse(status=200)
+            elif post_type == 'non-form':
+                timeslotId = kwargs['timeslot_id']
+                timeslot = shortcuts.get_object_or_404(models.TimeSlot,
+                                                       pk=timeslotId)
+                timeslot.delete()
+                return HttpResponse(status=200)
+        else:
+            return shortcuts.redirect("account_login")
+
     def get(self, request, *args, **kwargs):
         page_title = 'Times | Dashboard'
         page_type = 'dashboard'
+        timeslot_objects = models.TimeSlot.objects.all()
 
         if request.user.is_staff:
             return shortcuts.render(
-                request,
-                "dashboard/times.html",
-                {
+                request, "dashboard/times.html", {
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
-                }
-            )
+                    'timeslots': timeslot_objects,
+                })
         else:
             return shortcuts.redirect("account_login")
 
@@ -123,14 +152,11 @@ class DashboardSchedule(View):
 
         if request.user.is_staff:
             return shortcuts.render(
-                request,
-                "dashboard/schedule.html",
-                {
+                request, "dashboard/schedule.html", {
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
-                }
-            )
+                })
         else:
             return shortcuts.redirect("account_login")
 
@@ -142,14 +168,11 @@ class DashboardBookings(View):
 
         if request.user.is_staff:
             return shortcuts.render(
-                request,
-                "dashboard/bookings.html",
-                {
+                request, "dashboard/bookings.html", {
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
-                }
-            )
+                })
         else:
             return shortcuts.redirect("account_login")
 
@@ -161,14 +184,11 @@ class DashboardMenu(View):
 
         if request.user.is_staff:
             return shortcuts.render(
-                request,
-                "dashboard/menu.html",
-                {
+                request, "dashboard/menu.html", {
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
-                }
-            )
+                })
         else:
             return shortcuts.redirect("account_login")
 
@@ -180,14 +200,11 @@ class DashboardMessages(View):
 
         if request.user.is_staff:
             return shortcuts.render(
-                request,
-                "dashboard/messages.html",
-                {
+                request, "dashboard/messages.html", {
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
-                }
-            )
+                })
         else:
             return shortcuts.redirect("account_login")
 
@@ -199,13 +216,10 @@ class DashboardHelp(View):
 
         if request.user.is_staff:
             return shortcuts.render(
-                request,
-                "dashboard/help.html",
-                {
+                request, "dashboard/help.html", {
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
-                }
-            )
+                })
         else:
             return shortcuts.redirect("account_login")
