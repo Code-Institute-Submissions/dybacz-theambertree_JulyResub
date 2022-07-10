@@ -33,21 +33,21 @@
                                 </thead>
                                 <tbody>
                                     {% for table in tables %}
-                                        <tr>
-                                            <th class="align-middle">{{ table.table_id }}</th>
-                                            <td class="align-middle">{{ table.table_capacity }}</td>
-                                            <td hidden>{{table.pk}}</td>
-                                            <td class="align-middle">
-                                                <button type="button" class="btn btn-success rounded-circle edit-btn"
+                                    <tr>
+                                        <th class="align-middle">{{ table.table_id }}</th>
+                                        <td class="align-middle">{{ table.table_capacity }}</td>
+                                        <td hidden>{{table.pk}}</td>
+                                        <td class="align-middle">
+                                            <button type="button" class="btn btn-success rounded-circle edit-btn"
                                                 style="height:30px; width: 30px; padding:0">
                                                 <i class="fa-regular fa-pen-to-square"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger cancel-btn rounded-circle"
-                                                    style="height:30px; width: 30px; padding:0">
-                                                    <i class="fa-solid fa-x mt-1 fs-6"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                            </button>
+                                            <button type="button" class="btn btn-danger cancel-btn rounded-circle"
+                                                style="height:30px; width: 30px; padding:0">
+                                                <i class="fa-solid fa-x mt-1 fs-6"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -72,15 +72,15 @@
                     <div id="modal-form" hidden>
                         <div>
                             <label for="tablenumber">Table Number</label>
-                            <input class="form-control" type="number" min="1" value="" id="tablenumber" name="tablenumber"
-                                aria-label="Input Table Number" required>
+                            <input class="form-control" type="number" min="1" value="" id="tablenumber"
+                                name="tablenumber" aria-label="Input Table Number" required>
                         </div>
                         <div>
                             <label for="tablecapcity">Table Capacity</label>
-                            <input class="form-control" type="number" min="1" name="tablecapacity" value="" id="tablecapacity"
-                                aria-label="Input Table Capacity" required>
+                            <input class="form-control" type="number" min="1" name="tablecapacity" value=""
+                                id="tablecapacity" aria-label="Input Table Capacity" required>
                         </div>
-                    </div>            
+                    </div>
                     <div id="modal-non-form">
                         <p class="mb-1">Current Table:</p>
                         <div>
@@ -101,17 +101,18 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this table?</p>
+                        <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this table?
+                        </p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-danger modal-submit">Delete table</button>
                     </div>
             </form>
-            
+
         </div>
     </div>
-  </div>
+</div>
 {% endblock %}
 
 {% block postload_js %}
@@ -121,8 +122,8 @@
     let cancelButtons = document.querySelectorAll('.cancel-btn')
     let editButtons = document.querySelectorAll('.edit-btn')
     let tablePk
-    
-    for (let i of editButtons){
+
+    for (let i of editButtons) {
         i.onclick = function (e) {
             tableNumberValue = document.querySelector('#tablenumber')
             tableCapacityValue = document.querySelector('#tablecapacity')
@@ -130,7 +131,7 @@
             tableNumber = domStartPoint.children[0].innerHTML
             tableCapacity = domStartPoint.children[1].innerHTML
             tablePk = domStartPoint.children[2].innerHTML
-            
+
             tableNumberValue.value = tableNumber
             tableCapacityValue.value = tableCapacity
 
@@ -145,39 +146,39 @@
             modalForm.hidden = false
             modalTitle.innerHTML = 'Edit Table'
             myModal.show();
-            let modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `edit_${tablePk}` 
+            modalSubmitBtn = document.querySelector('.modal-submit')
+            modalSubmitBtn.id = `edit_${tablePk}`
         }
     }
 
     for (let b of cancelButtons) {
-            b.onclick = function (e) {
-                let domStartPoint = b.parentNode.parentElement
-                let tableNumber = domStartPoint.children[0].innerHTML
-                let tableCapacity = domStartPoint.children[1].innerHTML
-                let tablePk = domStartPoint.children[2].innerHTML
-                console.log(tableCapacity, tableNumber, tablePk)
-                modalNonForm = document.querySelector('#modal-non-form')
-                modalForm = document.querySelector('#modal-form')
-                modalTitle = document.querySelector('#myModalLabel')
-                modalNonForm.hidden = false
-                modalForm.hidden = true
-                modalTitle.innerHTML = 'Delete Table'
-                modalTableNumber = document.getElementById("table-number")
-                modalTableNumber.innerHTML = `${tableNumber}`
-                modalTableCapacity = document.getElementById("table-capacity")
-                modalTableCapacity.innerHTML = `${tableCapacity}`
-                modalButton = document.querySelector('.modal-submit')
-                modalButton.innerHTML = "Delete Table"
-                modalButton.classList.remove("btn-success")
-                modalButton.classList.add("btn-danger")
-                myModal.show();
-                let modalSubmitBtn = document.querySelector('.modal-submit')
-                modalSubmitBtn.id = `remove_${tablePk}`
-            }
+        b.onclick = function (e) {
+            domStartPoint = b.parentNode.parentElement
+            tableNumber = domStartPoint.children[0].innerHTML
+            tableCapacity = domStartPoint.children[1].innerHTML
+            tablePk = domStartPoint.children[2].innerHTML
+            modalNonForm = document.querySelector('#modal-non-form')
+            modalForm = document.querySelector('#modal-form')
+            modalTitle = document.querySelector('#myModalLabel')
+            modalNonForm.hidden = false
+            modalForm.hidden = true
+            modalTitle.innerHTML = 'Delete Table'
+            modalTableNumber = document.getElementById("table-number")
+            modalTableNumber.innerHTML = `${tableNumber}`
+            modalTableCapacity = document.getElementById("table-capacity")
+            modalTableCapacity.innerHTML = `${tableCapacity}`
+            modalButton = document.querySelector('.modal-submit')
+            modalButton.innerHTML = "Delete Table"
+            modalButton.classList.remove("btn-success")
+            modalButton.classList.add("btn-danger")
+            myModal.show();
+            modalSubmitBtn = document.querySelector('.modal-submit')
+            modalSubmitBtn.id = `remove_${tablePk}`
         }
+    }
 
-    submitModal = document.querySelectorAll('.modal-submit');
+    let submitModal = document.querySelectorAll('.modal-submit');
+
     for (let i of submitModal) {
         i.onclick = function (e) {
             modalForm = document.querySelector('#modal-form')
@@ -187,15 +188,15 @@
             } else {
                 modalTitle = document.querySelector('#myModalLabel')
                 let type
-                if (modalTitle.innerHTML == 'Edit Table'){
+                if (modalTitle.innerHTML == 'Edit Table') {
                     type = 'edit-form'
                 } else {
                     type = 'add-form'
                 }
-                let tableNum = parseInt(document.querySelector('#tablenumber').value)
-                let tableCap = parseInt(document.querySelector('#tablecapacity').value)
-                let tablePk = i.id
-                if (tableNum > 0 && tableCap > 0){
+                tableNum = parseInt(document.querySelector('#tablenumber').value)
+                tableCap = parseInt(document.querySelector('#tablecapacity').value)
+                tablePk = i.id
+                if (tableNum > 0 && tableCap > 0) {
                     let list = [tableNum, tableCap, tablePk]
                     fetchRequest(list, type)
                 }
@@ -207,6 +208,7 @@
     };
 
     let addButton = document.querySelector('#add-button')
+
     addButton.onclick = function (e) {
         modalNonForm = document.querySelector('#modal-non-form')
         modalForm = document.querySelector('#modal-form')
@@ -221,31 +223,31 @@
         myModal.show();
     }
 
-        try {
+    try {
         function fetchRequest(data, type) {
-                let csrfToken = "{{ csrf_token }}";
-                let tableId 
-                let url
-                if (type == 'non-form'){
-                    tableId = data.split('remove_')[1];
-                    url = `/dashboard/tables/remove/${tableId}`
-                } else if (type == 'add-form') {
-                    url = `/dashboard/tables/add/`
-                } else if (type == 'edit-form') {
-                    url = `/dashboard/tables/edit/`
-                    tablePkValue = data[2].split('edit_')[1];
-                    data[2] = tablePkValue
-                }
-                fetch(url, {
+            let csrfToken = "{{ csrf_token }}";
+            let tableId
+            let url
+            if (type == 'non-form') {
+                tableId = data.split('remove_')[1];
+                url = `/dashboard/tables/remove/${tableId}`
+            } else if (type == 'add-form') {
+                url = `/dashboard/tables/add/`
+            } else if (type == 'edit-form') {
+                url = `/dashboard/tables/edit/`
+                tablePkValue = data[2].split('edit_')[1];
+                data[2] = tablePkValue
+            }
+            fetch(url, {
                 method: "POST",
-                headers: {'Accept': 'application/json' , 'X-Requested-With': 'XMLHttpRequest','X-CSRFToken': csrfToken},
-                body: JSON.stringify({'post_data': [type, data]})
-                }).then(res => {
-                    location.reload();
-                });
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': csrfToken },
+                body: JSON.stringify({ 'post_data': [type, data] })
+            }).then(res => {
+                location.reload();
+            });
         }
     } catch (e) {
-        // error caught when basket is empty
+        Console.log(`The data you have requested is not available from the server. Error:${e}`)
     }
-</script>  
+</script>
 {% endblock %}
