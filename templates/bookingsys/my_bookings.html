@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load account socialaccount %}
 
-{% block head_title %}Success{% endblock %}
+{% block head_title %}My Bookings | The Amber Tree{% endblock %}
 
   {% block content %}
   <div class="col-12 col-xxl-6 offset-xxl-4 pt-4 px-0 px-sm-4">
@@ -40,11 +40,11 @@
                     <td class="align-middle">{{slot.table}}</td>
                     <td hidden>{{booking.pk}}</td>
                   {% endfor %}
-                  <th class="align-middle">
+                  <td class="align-middle">
                     <button type="button" class="btn btn-danger cancel-btn rounded-circle" style="height:30px; width: 30px; padding:0">
                       <i class="fa-solid fa-x mt-1 fs-6"></i>
                     </button>
-                  </th>
+                  </td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -141,10 +141,10 @@
       let newBookingTime = `${list[0][0]}:${list[0][1]} - ${list[1][0]}:${list[1][1]}`
       modalDate = document.getElementById("booking-date")
       modalDate.innerHTML = `${bookingDate}`
-      modalDate = document.getElementById("booking-time")
-      modalDate.innerHTML = `${newBookingTime}`
-      modalDate = document.getElementById("booking-table")
-      modalDate.innerHTML = `${bookingTable}`
+      modalTime = document.getElementById("booking-time")
+      modalTime.innerHTML = `${newBookingTime}`
+      modalTable = document.getElementById("booking-table")
+      modalTable.innerHTML = `${bookingTable}`
 
       myModal.show();
       let modalSubmitBtn = document.querySelector('.remove-booking')
