@@ -146,9 +146,49 @@ class DashboardTimes(View):
 
 
 class DashboardSchedule(View):
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            data_from_post = json.load(request)['post_data']
+            post_type = data_from_post[0]
+            post_data = data_from_post[1]
+
+            if post_type == 'add-form':
+                table = shortcuts.get_object_or_404(models.Table, pk=post_data[1])
+                timeslot = shortcuts.get_object_or_404(models.TimeSlot, pk=post_data[2])
+                models.BookingSlot.objects.create(
+                    date=post_data[0],
+                    table=table,
+                    time_slot=timeslot,
+                    status=post_data[3],
+                    booking_status=post_data[4],
+                )
+                return HttpResponse(status=200)
+            # elif post_type == 'edit-form':
+            #     table_pk = post_data[2]
+            #     table = shortcuts.get_object_or_404(models.Table, pk=table_pk)
+            #     table.table_id = post_data[0]
+            #     table.table_capacity = post_data[1]
+            #     table.save()
+
+            #     return HttpResponse(status=200)
+            if post_type == 'non-form':
+                bookingSlotId = kwargs['bookingslot_id']
+                print('message', bookingSlotId)
+                bookingSlot = shortcuts.get_object_or_404(models.BookingSlot, pk=bookingSlotId)
+                bookingSlot.delete()
+                return HttpResponse(status=200)
+        else:
+            return shortcuts.redirect("account_login")
+
     def get(self, request, *args, **kwargs):
         page_title = 'Schedule | Dashboard'
         page_type = 'dashboard'
+
+        schedule_objects = models.BookingSlot.objects.all()
+        tables = serialize('json', models.Table.objects.all())
+        times = serialize('json', models.TimeSlot.objects.all())
+
 
         if request.user.is_staff:
             return shortcuts.render(
@@ -156,6 +196,9 @@ class DashboardSchedule(View):
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
+                    'bookingslots': schedule_objects,
+                    'tables': tables,
+                    'times': times,
                 })
         else:
             return shortcuts.redirect("account_login")
