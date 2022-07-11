@@ -164,15 +164,20 @@ class DashboardSchedule(View):
                     booking_status=post_data[4],
                 )
                 return HttpResponse(status=200)
-            # elif post_type == 'edit-form':
-            #     table_pk = post_data[2]
-            #     table = shortcuts.get_object_or_404(models.Table, pk=table_pk)
-            #     table.table_id = post_data[0]
-            #     table.table_capacity = post_data[1]
-            #     table.save()
+            elif post_type == 'edit-form':
+                booking_slot_pk = post_data[5]
+                booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=booking_slot_pk)
+                timeslot = shortcuts.get_object_or_404(models.TimeSlot, pk=post_data[2])
+                table = shortcuts.get_object_or_404(models.Table, pk=post_data[1])
+                booking_slot.table = table
+                booking_slot.date = post_data[0]
+                booking_slot.time_slot = timeslot
+                booking_slot.status = post_data[3]
+                booking_slot.booking_status = post_data[4]
+                booking_slot.save()
 
-            #     return HttpResponse(status=200)
-            if post_type == 'non-form':
+                return HttpResponse(status=200)
+            elif post_type == 'non-form':
                 bookingSlotId = kwargs['bookingslot_id']
                 print('message', bookingSlotId)
                 bookingSlot = shortcuts.get_object_or_404(models.BookingSlot, pk=bookingSlotId)
