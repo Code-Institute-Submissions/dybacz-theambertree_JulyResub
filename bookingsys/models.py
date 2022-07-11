@@ -4,7 +4,7 @@ from django.contrib import admin
 import datetime
 
 A_STATUS = ((0, "Draft"), (1, "Published"))
-B_STATUS = ((0, "Booked"), (1, "Availble"))
+B_STATUS = ((0, "Booked"), (1, "Available"))
 C_STATUS = ((0, "Booked"), (1, "Cancelled"), (2, "Attended"))
 D_STATUS = ((0, "Closed"), (1, "Open"))
 
