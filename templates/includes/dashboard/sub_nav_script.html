@@ -1,6 +1,13 @@
 <script type="text/javascript" >
+    let navLinks = document.querySelectorAll("a.nav-link")
+    for (navLink of navLinks){
+        if (navLink.href == window.location.href) {
+            navLink.classList.add('active')
+        } 
+    }  
+
     let active
-    window.addEventListener("load", function(){
+    window.addEventListener("load", function(){     
         let i = setInterval(function (){
             active = document.getElementsByClassName("active")
             if (active.length != 0)
