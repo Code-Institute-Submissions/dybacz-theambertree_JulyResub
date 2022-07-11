@@ -40,12 +40,14 @@
                                     {% for bs in bookingslots %}
                                     <tr>
                                         <th class="align-middle">{{ bs.pk }}</th>
-                                        <td class="align-middle">{{ bs.date }}</td>
-                                        <th class="align-middle">{{ bs.table.table_id}}</th>
-                                        <th class="align-middle">{{ bs.table.table_capacity}}</th>
+                                        <td class="align-middle">{{ bs.date|date:"d/m/Y" }}</td>
+                                        <td class="align-middle">{{ bs.table.table_id}}</td>
+                                        <td class="align-middle">{{ bs.table.table_capacity}}</td>
                                         <td class="align-middle">{{ bs.time_slot.startTime }}</td>
                                         <td class="align-middle">{{ bs.get_status_display }}</td>
                                         <td class="align-middle">{{ bs.get_booking_status_display }}</td>
+                                        <td class="align-middle">{{ bs.table.pk}}</td>
+                                        <td class="align-middle">{{ bs.time_slot.pk }}</td>
                                         <td class="align-middle">
                                             <button type="button" class="btn btn-success rounded-circle edit-btn my-2"
                                                 style="height:30px; width: 30px; padding:0">
@@ -202,6 +204,11 @@
         dateControl.max = todayPlusMonth;
         }
     
+    function newOptionAdd(optionText, optionValue, selectorElement) {
+        let newOption = new Option(optionText,optionValue);
+        selectorElement.add(newOption,undefined)
+    }
+    
     let tables = JSON.parse(document.getElementById('tables').textContent);
     let times = JSON.parse(document.getElementById('times').textContent);
     let tablesObj = JSON.parse(tables) 
@@ -215,29 +222,74 @@
 
     for (let i of editButtons) {
         i.onclick = function (e) {
-            tableNumberValue = document.querySelector('#tablenumber')
-            tableCapacityValue = document.querySelector('#tablecapacity')
+            getDates()
+            bookingSlotPkVal = document.querySelector('#booking-slot-id')
+            // bookingSlotNumVal = document.querySelector('#table-number')
+            // bookingSlotCapVal = document.querySelector('#table-capacity')
+            bookingSlotDateVal = document.querySelector('#date-')
+            // bookingSlotTimeVal = document.querySelector('#tablenumber')
+            // bookingSlotPubVal = document.querySelector('#tablenumber')
+            // bookingSlotStatusVal =document.querySelector('#tablenumber')
+            // tableNumberValue = document.querySelector('#tablenumber')
+            // tableCapacityValue = document.querySelector('#tablecapacity')
             domStartPoint = i.parentNode.parentElement
-            tableNumber = domStartPoint.children[0].innerHTML
-            tableCapacity = domStartPoint.children[1].innerHTML
-            tablePk = domStartPoint.children[2].innerHTML
+            bookingSlotPk = domStartPoint.children[0].innerHTML
+            bookingSlotNum = domStartPoint.children[2].innerHTML
+            bookingSlotCap = domStartPoint.children[3].innerHTML
+            bookingSlotDate = domStartPoint.children[1].innerHTML
+            // let splitDate = bookingSlotDate.split('/')
+            // newBookingSlotDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+            // bookingSlotTime = domStartPoint.children[4].innerHTML
+            // bookingSlotPub = domStartPoint.children[5].innerHTML
+            // bookingSlotStatus = domStartPoint.children[6].innerHTML
+            // bookingSlotTablePk = domStartPoint.children[7].innerHTML
+            // bookingSlotTimePk = domStartPoint.children[8].innerHTML
+            // console.log(bookingSlotDateVal, bookingSlotDate, newBookingSlotDate)
+            // bookingSlotDateVal.value = newBookingSlotDate
+            // tableNumberValue.value = tableNumber
+            // tableCapacityValue.value = tableCapacity
 
-            tableNumberValue.value = tableNumber
-            tableCapacityValue.value = tableCapacity
+            for (t of tablesObj) {
+                let tableSelector = document.querySelector('#table-select')
+                let tableNum = t.fields.table_id
+                let tableCap = t.fields.table_capacity
+                let tablePk = t.pk
+                let optionText = `Table:${tableNum} | Capacity:${tableCap}`
+                if (optionText == `Table:${bookingSlotNum} | Capacity:${bookingSlotCap}`) { }
+                newOptionAdd(optionText, tablePk, tableSelector)
+                let options = document.querySelectorAll('option')
+                for (o of options) {
+                    if (o.innerHTML == `Table:${bookingSlotNum} | Capacity:${bookingSlotCap}`) {
+                        o.selected = true
+                    }
+
+                }
+                console.log(options)
+            }
+
+            // for (i of timesObj) {
+            //     let timesSelector = document.querySelector('#time-select')
+            //     let timeStart = i.fields.startTime
+            //     let timeEnd = i.fields.endTime
+            //     let timePk = i.pk
+            //     let optionText = `${timeStart} - ${timeEnd}`
+            //     newOptionAdd(optionText, timePk, timesSelector)
+            // }
+
 
             modalNonForm = document.querySelector('#modal-non-form')
             modalForm = document.querySelector('#modal-form')
             modalTitle = document.querySelector('#myModalLabel')
             modalButton = document.querySelector('.modal-submit')
-            modalButton.innerHTML = "Edit Table"
+            modalButton.innerHTML = "Edit Booking Slot"
             modalButton.classList.remove("btn-danger")
             modalButton.classList.add("btn-success")
             modalNonForm.hidden = true
             modalForm.hidden = false
-            modalTitle.innerHTML = 'Edit Table'
+            modalTitle.innerHTML = 'Edit Booking Slot'
             myModal.show();
-            modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `edit_${tablePk}`
+            // modalSubmitBtn = document.querySelector('.modal-submit')
+            // modalSubmitBtn.id = `edit_${bookingSlotPk}`
         }
     }
 
@@ -338,11 +390,6 @@
     let addButton = document.querySelector('#add-button')
 
     addButton.onclick = function (e) {
-
-        function newOptionAdd(optionText, optionValue, selectorElement) {
-            let newOption = new Option(optionText,optionValue);
-            selectorElement.add(newOption,undefined)
-        }
         
         for (t of tablesObj) {
             let tableSelector = document.querySelector('#table-select')
