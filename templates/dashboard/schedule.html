@@ -91,7 +91,7 @@
                             </select>
                         </div>
                         <div>
-                            <label for="time-select">Time Slot</label> 
+                            <label for="time-select">Time</label> 
                             <select class="form-select form-select-md" aria-label=".form-select-md Time Slot Select" id="time-select" required>
                             </select>
                         </div>
@@ -430,6 +430,7 @@
     let addButton = document.querySelector('#add-button')
 
     addButton.onclick = function (e) {
+        optionRemove()
         
         for (t of tablesObj) {
             let tableSelector = document.querySelector('#table-select')
