@@ -131,7 +131,7 @@
 
             time = startTime.split(':')
             suffix = time[1].split(' ')
-            if (suffix[1] == 'a.m.' && time[0] != 12){
+            if (suffix[1] == 'a.m.' && time[0] < 10){
               time[0] = `0${time[0]}`
             } else if(suffix[1] == 'p.m.'){
               time[0] = parseInt(time[0]) + 12
