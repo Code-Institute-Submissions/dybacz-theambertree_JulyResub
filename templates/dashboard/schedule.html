@@ -43,11 +43,9 @@
                                         <td class="align-middle">{{ bs.date|date:"d/m/Y" }}</td>
                                         <td class="align-middle">{{ bs.table.table_id}}</td>
                                         <td class="align-middle">{{ bs.table.table_capacity}}</td>
-                                        <td class="align-middle">{{ bs.time_slot.startTime }}</td>
+                                        <td class="align-middle">{{ bs.time_slot.startTime|time:"g:i a" }}</td>
                                         <td class="align-middle">{{ bs.get_status_display }}</td>
                                         <td class="align-middle">{{ bs.get_booking_status_display }}</td>
-                                        <td class="align-middle">{{ bs.table.pk}}</td>
-                                        <td class="align-middle">{{ bs.time_slot.pk }}</td>
                                         <td class="align-middle">
                                             <button type="button" class="btn btn-success rounded-circle edit-btn my-2"
                                                 style="height:30px; width: 30px; padding:0">
@@ -199,7 +197,7 @@
         let yyyy = today.getFullYear();
         today = yyyy + '-' + mm + '-' + dd
         todayPlusMonth = yyyy + '-' + mmPlusone + '-' + dd
-        dateControl.value = null;
+        dateControl.value = today;
         dateControl.min = today;
         dateControl.max = todayPlusMonth;
         }
@@ -208,12 +206,19 @@
         let newOption = new Option(optionText,optionValue);
         selectorElement.add(newOption,undefined)
     }
+
+    function optionRemove() {
+        let options = document.querySelectorAll('option')
+        for (o of options) {
+            o.remove()
+        }
+    }
     
     let tables = JSON.parse(document.getElementById('tables').textContent);
     let times = JSON.parse(document.getElementById('times').textContent);
     let tablesObj = JSON.parse(tables) 
     let timesObj = JSON.parse(times)
-    console.log(tablesObj)
+    // console.log(tablesObj)
 
     let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
     let cancelButtons = document.querySelectorAll('.cancel-btn')
@@ -223,13 +228,14 @@
     for (let i of editButtons) {
         i.onclick = function (e) {
             getDates()
+            optionRemove()
             bookingSlotPkVal = document.querySelector('#booking-slot-id')
             // bookingSlotNumVal = document.querySelector('#table-number')
             // bookingSlotCapVal = document.querySelector('#table-capacity')
-            bookingSlotDateVal = document.querySelector('#date-')
+            bookingSlotDateVal = document.querySelector('input[type="date"]')
             // bookingSlotTimeVal = document.querySelector('#tablenumber')
-            // bookingSlotPubVal = document.querySelector('#tablenumber')
-            // bookingSlotStatusVal =document.querySelector('#tablenumber')
+            bookingSlotPubVal = document.querySelector('#bookingslotstatus')
+            bookingSlotStatusVal =document.querySelector('#bookingslotbookingstatus')
             // tableNumberValue = document.querySelector('#tablenumber')
             // tableCapacityValue = document.querySelector('#tablecapacity')
             domStartPoint = i.parentNode.parentElement
@@ -237,25 +243,27 @@
             bookingSlotNum = domStartPoint.children[2].innerHTML
             bookingSlotCap = domStartPoint.children[3].innerHTML
             bookingSlotDate = domStartPoint.children[1].innerHTML
-            // let splitDate = bookingSlotDate.split('/')
-            // newBookingSlotDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
-            // bookingSlotTime = domStartPoint.children[4].innerHTML
-            // bookingSlotPub = domStartPoint.children[5].innerHTML
-            // bookingSlotStatus = domStartPoint.children[6].innerHTML
+            let splitDate = bookingSlotDate.split('/')
+            newBookingSlotDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+            bookingSlotTime = domStartPoint.children[4].innerHTML
+            console.log(bookingSlotTime)
+            bookingSlotPub = domStartPoint.children[5].innerHTML
+            bookingSlotStatus = domStartPoint.children[6].innerHTML
             // bookingSlotTablePk = domStartPoint.children[7].innerHTML
             // bookingSlotTimePk = domStartPoint.children[8].innerHTML
             // console.log(bookingSlotDateVal, bookingSlotDate, newBookingSlotDate)
-            // bookingSlotDateVal.value = newBookingSlotDate
+            bookingSlotDateVal.value = newBookingSlotDate
+            console.log(bookingSlotDateVal.value)
             // tableNumberValue.value = tableNumber
             // tableCapacityValue.value = tableCapacity
 
             for (t of tablesObj) {
                 let tableSelector = document.querySelector('#table-select')
+
                 let tableNum = t.fields.table_id
                 let tableCap = t.fields.table_capacity
                 let tablePk = t.pk
                 let optionText = `Table:${tableNum} | Capacity:${tableCap}`
-                if (optionText == `Table:${bookingSlotNum} | Capacity:${bookingSlotCap}`) { }
                 newOptionAdd(optionText, tablePk, tableSelector)
                 let options = document.querySelectorAll('option')
                 for (o of options) {
@@ -264,17 +272,48 @@
                     }
 
                 }
-                console.log(options)
             }
 
-            // for (i of timesObj) {
-            //     let timesSelector = document.querySelector('#time-select')
-            //     let timeStart = i.fields.startTime
-            //     let timeEnd = i.fields.endTime
-            //     let timePk = i.pk
-            //     let optionText = `${timeStart} - ${timeEnd}`
-            //     newOptionAdd(optionText, timePk, timesSelector)
-            // }
+            for (to of timesObj) {
+                let timesSelector = document.querySelector('#time-select')
+                let timeStart = to.fields.startTime
+                let timeEnd = to.fields.endTime
+                console.log(timeStart)
+                let timePk = to.pk
+
+                time = bookingSlotTime.split(':')
+                suffix = time[1].split(' ')
+                if (suffix[1] == 'a.m.' && time[0] < 10){
+                time[0] = `0${time[0]}`
+                } else if(suffix[1] == 'p.m.'){
+                time[0] = parseInt(time[0]) + 12
+                }
+
+                formattedBookingSlotTime = `${time[0]}:${suffix[0]}:00`
+                console.log(formattedBookingSlotTime)
+
+                let optionText = `${timeStart} - ${timeEnd}`
+                newOptionAdd(optionText, timePk, timesSelector)
+                let options = document.querySelectorAll('option')
+                for (o of options) {
+                    if (o.innerHTML == `${formattedBookingSlotTime} - ${timeEnd}`) {
+                        o.selected = true
+                    }
+
+                }
+            }
+
+            if (bookingSlotPub == 'Published') {
+                bookingSlotPubVal.checked = true
+            } else {
+                bookingSlotPubVal.checked = false
+            }
+
+            if (bookingSlotStatus == 'Available') {
+                bookingSlotStatusVal.checked = true
+            } else {
+                bookingSlotStatusVal.checked = false
+            }
 
 
             modalNonForm = document.querySelector('#modal-non-form')
@@ -288,8 +327,8 @@
             modalForm.hidden = false
             modalTitle.innerHTML = 'Edit Booking Slot'
             myModal.show();
-            // modalSubmitBtn = document.querySelector('.modal-submit')
-            // modalSubmitBtn.id = `edit_${bookingSlotPk}`
+            modalSubmitBtn = document.querySelector('.modal-submit')
+            modalSubmitBtn.id = `edit_${bookingSlotPk}`
         }
     }
 
@@ -352,6 +391,7 @@
                 } else {
                     type = 'add-form'
                 }
+                bookingSlotPk = i.id
                 bookingDate = document.querySelector('#bookingslotdate').value
                 tableChoice = parseInt(document.querySelector('#table-select').value)
                 timeSlot = parseInt(document.querySelector('#time-select').value)
@@ -371,7 +411,7 @@
                 }
                 console.log(type)
                 console.log(bookingDate,tableChoice,timeSlot,statusValue,bookingStatusValue)
-                let list = [bookingDate,tableChoice,timeSlot,statusValue,bookingStatusValue]
+                let list = [bookingDate,tableChoice,timeSlot,statusValue,bookingStatusValue,bookingSlotPk]
                 fetchRequest(list, type)
                 // tableNum = parseInt(document.querySelector('#tablenumber').value)
                 // tableCap = parseInt(document.querySelector('#tablecapacity').value)
@@ -434,9 +474,9 @@
             } else if (type == 'add-form') {
                 url = `/dashboard/schedule/add/`
             } else if (type == 'edit-form') {
-                url = `/dashboard/tables/edit/`
-                tablePkValue = data[2].split('edit_')[1];
-                data[2] = tablePkValue
+                url = `/dashboard/schedule/edit/`
+                bookingSlotPkValue = data[5].split('edit_')[1];
+                data[5] = bookingSlotPkValue
             }
             fetch(url, {
                 method: "POST",
