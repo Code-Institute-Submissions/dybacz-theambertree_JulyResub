@@ -17,6 +17,7 @@ urlpatterns = [
     path('schedule/add/', views.DashboardSchedule.as_view()),
     path('schedule/edit/', views.DashboardSchedule.as_view()),
     path('bookings/', views.DashboardBookings.as_view(), name='dashboard_bookings'),
+    path('bookings/cancel/<booking_id>', views.DashboardBookings.as_view()),
     path('menu/', views.DashboardBookings.as_view(), name='dashboard_menu'),
     path('messages/', views.DashboardMessages.as_view(), name='dashboard_messages'),
     path('help/', views.DashboardHelp.as_view(), name='dashboard_help'),
