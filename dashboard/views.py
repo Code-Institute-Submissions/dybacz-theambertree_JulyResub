@@ -210,9 +210,54 @@ class DashboardSchedule(View):
 
 
 class DashboardBookings(View):
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            data_from_post = json.load(request)['post_data']
+            post_type = data_from_post[0]
+            post_data = data_from_post[1]
+
+            # if post_type == 'add-form':
+            #     table = shortcuts.get_object_or_404(models.Table, pk=post_data[1])
+            #     timeslot = shortcuts.get_object_or_404(models.TimeSlot, pk=post_data[2])
+            #     models.BookingSlot.objects.create(
+            #         date=post_data[0],
+            #         table=table,
+            #         time_slot=timeslot,
+            #         status=post_data[3],
+            #         booking_status=post_data[4],
+            #     )
+            #     return HttpResponse(status=200)
+            # elif post_type == 'edit-form':
+            #     booking_slot_pk = post_data[5]
+            #     booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=booking_slot_pk)
+            #     timeslot = shortcuts.get_object_or_404(models.TimeSlot, pk=post_data[2])
+            #     table = shortcuts.get_object_or_404(models.Table, pk=post_data[1])
+            #     booking_slot.table = table
+            #     booking_slot.date = post_data[0]
+            #     booking_slot.time_slot = timeslot
+            #     booking_slot.status = post_data[3]
+            #     booking_slot.booking_status = post_data[4]
+            #     booking_slot.save()
+
+            #     return HttpResponse(status=200)
+            if post_type == 'non-form':
+                bookingId = kwargs['booking_id']
+                print('message', bookingId)
+                booking = shortcuts.get_object_or_404(models.Booking, pk=bookingId)
+                booking.status = 1
+                booking.save()
+                return HttpResponse(status=200)
+        else:
+            return shortcuts.redirect("account_login")
+
     def get(self, request, *args, **kwargs):
         page_title = 'Bookings | Dashboard'
         page_type = 'dashboard'
+
+        booking_objects = models.Booking.objects.all()
+        tables = serialize('json', models.Table.objects.all())
+        times = serialize('json', models.TimeSlot.objects.all())
 
         if request.user.is_staff:
             return shortcuts.render(
@@ -220,6 +265,9 @@ class DashboardBookings(View):
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
+                    'bookings': booking_objects,
+                    'tables': tables,
+                    'times': times,
                 })
         else:
             return shortcuts.redirect("account_login")
