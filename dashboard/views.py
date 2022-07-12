@@ -2,6 +2,7 @@ from django import shortcuts
 from django.views import generic, View
 from . import models
 from bookingsys import models
+from menu import models
 from django.http import HttpResponse, JsonResponse
 import json
 from django.core.serializers import serialize
@@ -297,10 +298,13 @@ class DashboardBookings(View):
             return shortcuts.redirect("account_login")
 
 
-class DashboardMenu(View):
+class DashboardFood(View):
     def get(self, request, *args, **kwargs):
-        page_title = 'Menu | Dashboard'
+        page_title = 'Food Menu | Dashboard'
         page_type = 'dashboard'
+
+        menu_objects = models.Item.objects.filter(group='1')
+
 
         if request.user.is_staff:
             return shortcuts.render(
@@ -308,6 +312,26 @@ class DashboardMenu(View):
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
+                    'items': menu_objects,
+                })
+        else:
+            return shortcuts.redirect("account_login")
+
+class DashboardDrinks(View):
+    def get(self, request, *args, **kwargs):
+        page_title = 'Food Menu | Dashboard'
+        page_type = 'dashboard'
+
+        menu_objects = models.Item.objects.filter(group='2')
+
+
+        if request.user.is_staff:
+            return shortcuts.render(
+                request, "dashboard/menu.html", {
+                    'page_title': page_title,
+                    'page_type': page_type,
+                    'current_date': current_date,
+                    'items': menu_objects,
                 })
         else:
             return shortcuts.redirect("account_login")
