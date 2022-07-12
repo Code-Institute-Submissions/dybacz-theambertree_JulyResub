@@ -11,9 +11,10 @@ class Index(View):
     def get(self, request, *args, **kwargs):
         page_type = 'home'
         page_title = 'The Amber Tree | Restaurant & Bar'
-        menu = shortcuts.get_list_or_404(
-            models.Item
-            )
+        try:
+            menu = models.Item.objects.all()
+        except:
+            return print('No Menu Data')
         return shortcuts.render(
             request,
             "index.html",
