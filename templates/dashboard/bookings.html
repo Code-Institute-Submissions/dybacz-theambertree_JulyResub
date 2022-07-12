@@ -43,11 +43,12 @@
                                         {% for slot in b.timeslot.all %}
                                         <td class="align-middle">{{ slot.date|date:"d/m/Y" }}</td>
                                         <td class="align-middle">{{ b.first_name}} {{ b.last_name }}</td>
-                                        <td class="align-middle">{{ slot.time_slot.startTime|time:"g:i a"}}</td>
+                                        <td class="align-middle">{{ slot.time_slot}}</td>
                                         <td class="align-middle">{{ slot.table}}</td>
                                         <td class="align-middle">{{ b.date_created }}</td>
                                         <td class="align-middle">{{ b.get_status_display }}</td>
                                         <td class="align-middle" hidden>{{ b.comments }}</td>
+                                        <td class="align-middle" hidden>{{ b.email }}</td>
                                         {% endfor %}
                                         <td class="align-middle">
                                             <button type="button" class="btn btn-primary rounded-circle comment-btn my-2"
@@ -189,7 +190,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger modal-submit">Cancel Booking Slot</button>
+                        <button type="submit" class="btn btn-danger modal-submit">Cancel Booking Slot</button>
                     </div>
             </form>
 
@@ -240,6 +241,9 @@
 
     for (let i of commentButtons){
         i.onclick = function (e) {
+            let submitButton = document.querySelector('.modal-submit')
+            submitButton.disabled = false
+
             domStartPoint = i.parentNode.parentElement
             bookingSlotPk = domStartPoint.children[0].innerHTML
             bookingComment = domStartPoint.children[7].innerHTML
@@ -279,107 +283,159 @@
     for (let i of editButtons) {
         i.onclick = function (e) {
             getDates()
-            optionRemove()
-            bookingSlotPkVal = document.querySelector('#booking-slot-id')
-            // bookingSlotNumVal = document.querySelector('#table-number')
-            // bookingSlotCapVal = document.querySelector('#table-capacity')
-            bookingSlotDateVal = document.querySelector('input[type="date"]')
-            // bookingSlotTimeVal = document.querySelector('#tablenumber')
-            bookingSlotPubVal = document.querySelector('#bookingslotstatus')
-            bookingSlotStatusVal =document.querySelector('#bookingslotbookingstatus')
-            // tableNumberValue = document.querySelector('#tablenumber')
-            // tableCapacityValue = document.querySelector('#tablecapacity')
+            optionRemove('')
+            optionRemove('#tableselect ')
+            let submitButton = document.querySelector('.modal-submit')
+            submitButton.disabled = false
+
             domStartPoint = i.parentNode.parentElement
-            bookingSlotPk = domStartPoint.children[0].innerHTML
-            bookingSlotNum = domStartPoint.children[2].innerHTML
-            bookingSlotCap = domStartPoint.children[3].innerHTML
+            bookingPk = domStartPoint.children[0].innerHTML
             bookingSlotDate = domStartPoint.children[1].innerHTML
+            bookingSlotName = domStartPoint.children[2].innerHTML
+            bookingSlotTime = domStartPoint.children[3].innerHTML
+            bookingSlotTab = domStartPoint.children[4].innerHTML
+            bookingSlotBkdOn = domStartPoint.children[5].innerHTML
+            bookingSlotStatus = domStartPoint.children[6].innerHTML
+            bookingSlotEmail = domStartPoint.children[8].innerHTML
+
             let splitDate = bookingSlotDate.split('/')
             newBookingSlotDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
-            bookingSlotTime = domStartPoint.children[4].innerHTML
-            console.log(bookingSlotTime)
-            bookingSlotPub = domStartPoint.children[5].innerHTML
-            bookingSlotStatus = domStartPoint.children[6].innerHTML
+
+            calender = document.querySelector('input[type="date"]')
+            calender.value = newBookingSlotDate
+
+            let date = calender.value
+            // clearDisableAll()
+            let time = document.querySelector('#timeselect')
+            let table = document.querySelector('#tableselect')
+            let firstName = document.querySelector('#firstname')
+            let lastName = document.querySelector('#lastname')
+            let email = document.querySelector('#email')
+            firstName.value = bookingSlotName.split(' ')[0]
+            lastName.value = bookingSlotName.split(' ')[1]
+            email.value = bookingSlotEmail
+            console.log(time.disabled , 'child len')
+
+
+
+            let list = [firstName, lastName, email]
+            for (l of list){
+                l.disabled = true
+            }
+
+            
+            fetchRequestDates(date)
+            setTimeout(populateEmpty, 600)
+            function populateEmpty() {
+                if (time.value == '') {
+                newOptionAdd(bookingSlotTime, '', time)
+                newOptionAdd(bookingSlotTab, '', table)
+                warning = time.previousElementSibling
+                warningText = warning.innerHTML
+                warning.innerHTML = warningText + ' (No times for this date)'
+            }
+            }
+
+            // bookingSlotPkVal = document.querySelector('#booking-slot-id')
+            // bookingSlotNumVal = document.querySelector('#table-number')
+            // bookingSlotCapVal = document.querySelector('#table-capacity')
+            // bookingSlotDateVal = document.querySelector('input[type="date"]')
+            // bookingSlotTimeVal = document.querySelector('#tablenumber')
+            // bookingSlotPubVal = document.querySelector('#bookingslotstatus')
+            // bookingSlotStatusVal =document.querySelector('#bookingslotbookingstatus')
+            // tableNumberValue = document.querySelector('#tablenumber')
+            // tableCapacityValue = document.querySelector('#tablecapacity')
+            // domStartPoint = i.parentNode.parentElement
+            // bookingSlotPk = domStartPoint.children[0].innerHTML
+            // bookingSlotNum = domStartPoint.children[2].innerHTML
+            // bookingSlotCap = domStartPoint.children[3].innerHTML
+            // bookingSlotDate = domStartPoint.children[1].innerHTML
+            // let splitDate = bookingSlotDate.split('/')
+            // newBookingSlotDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+            // bookingSlotTime = domStartPoint.children[4].innerHTML
+            // console.log(bookingSlotTime)
+            // bookingSlotPub = domStartPoint.children[5].innerHTML
+            // bookingSlotStatus = domStartPoint.children[6].innerHTML
             // bookingSlotTablePk = domStartPoint.children[7].innerHTML
             // bookingSlotTimePk = domStartPoint.children[8].innerHTML
             // console.log(bookingSlotDateVal, bookingSlotDate, newBookingSlotDate)
-            bookingSlotDateVal.value = newBookingSlotDate
-            console.log(bookingSlotDateVal.value)
+            // bookingSlotDateVal.value = newBookingSlotDate
+            // console.log(bookingSlotDateVal.value)
             // tableNumberValue.value = tableNumber
             // tableCapacityValue.value = tableCapacity
 
-            for (t of tablesObj) {
-                let tableSelector = document.querySelector('#table-select')
+            // for (t of tablesObj) {
+            //     let tableSelector = document.querySelector('#table-select')
 
-                let tableNum = t.fields.table_id
-                let tableCap = t.fields.table_capacity
-                let tablePk = t.pk
-                let optionText = `Table:${tableNum} | Capacity:${tableCap}`
-                newOptionAdd(optionText, tablePk, tableSelector)
-                let options = document.querySelectorAll('option')
-                for (o of options) {
-                    if (o.innerHTML == `Table:${bookingSlotNum} | Capacity:${bookingSlotCap}`) {
-                        o.selected = true
-                    }
+            //     let tableNum = t.fields.table_id
+            //     let tableCap = t.fields.table_capacity
+            //     let tablePk = t.pk
+            //     let optionText = `Table:${tableNum} | Capacity:${tableCap}`
+            //     newOptionAdd(optionText, tablePk, tableSelector)
+            //     let options = document.querySelectorAll('option')
+            //     for (o of options) {
+            //         if (o.innerHTML == `Table:${bookingSlotNum} | Capacity:${bookingSlotCap}`) {
+            //             o.selected = true
+            //         }
 
-                }
-            }
+            //     }
+            // }
 
-            for (to of timesObj) {
-                let timesSelector = document.querySelector('#time-select')
-                let timeStart = to.fields.startTime
-                let timeEnd = to.fields.endTime
-                console.log(timeStart)
-                let timePk = to.pk
+            // for (to of timesObj) {
+            //     let timesSelector = document.querySelector('#time-select')
+            //     let timeStart = to.fields.startTime
+            //     let timeEnd = to.fields.endTime
+            //     console.log(timeStart)
+            //     let timePk = to.pk
 
-                time = bookingSlotTime.split(':')
-                suffix = time[1].split(' ')
-                if (suffix[1] == 'a.m.' && time[0] < 10){
-                time[0] = `0${time[0]}`
-                } else if(suffix[1] == 'p.m.'){
-                time[0] = parseInt(time[0]) + 12
-                }
+            //     time = bookingSlotTime.split(':')
+            //     suffix = time[1].split(' ')
+            //     if (suffix[1] == 'a.m.' && time[0] < 10){
+            //     time[0] = `0${time[0]}`
+            //     } else if(suffix[1] == 'p.m.'){
+            //     time[0] = parseInt(time[0]) + 12
+            //     }
 
-                formattedBookingSlotTime = `${time[0]}:${suffix[0]}:00`
-                console.log(formattedBookingSlotTime)
+            //     formattedBookingSlotTime = `${time[0]}:${suffix[0]}:00`
+            //     console.log(formattedBookingSlotTime)
 
-                let optionText = `${timeStart} - ${timeEnd}`
-                newOptionAdd(optionText, timePk, timesSelector)
-                let options = document.querySelectorAll('option')
-                for (o of options) {
-                    if (o.innerHTML == `${formattedBookingSlotTime} - ${timeEnd}`) {
-                        o.selected = true
-                    }
+            //     let optionText = `${timeStart} - ${timeEnd}`
+            //     newOptionAdd(optionText, timePk, timesSelector)
+            //     let options = document.querySelectorAll('option')
+            //     for (o of options) {
+            //         if (o.innerHTML == `${formattedBookingSlotTime} - ${timeEnd}`) {
+            //             o.selected = true
+            //         }
 
-                }
-            }
+            //     }
+            // }
 
-            if (bookingSlotPub == 'Published') {
-                bookingSlotPubVal.checked = true
-            } else {
-                bookingSlotPubVal.checked = false
-            }
+            // if (bookingSlotPub == 'Published') {
+            //     bookingSlotPubVal.checked = true
+            // } else {
+            //     bookingSlotPubVal.checked = false
+            // }
 
-            if (bookingSlotStatus == 'Available') {
-                bookingSlotStatusVal.checked = true
-            } else {
-                bookingSlotStatusVal.checked = false
-            }
+            // if (bookingSlotStatus == 'Available') {
+            //     bookingSlotStatusVal.checked = true
+            // } else {
+            //     bookingSlotStatusVal.checked = false
+            // }
 
 
             modalNonForm = document.querySelector('#modal-non-form')
             modalForm = document.querySelector('#modal-form')
             modalTitle = document.querySelector('#myModalLabel')
             modalButton = document.querySelector('.modal-submit')
-            modalButton.innerHTML = "Edit Booking Slot"
+            modalButton.innerHTML = "Edit Booking"
             modalButton.classList.remove("btn-danger")
             modalButton.classList.add("btn-success")
             modalNonForm.hidden = true
             modalForm.hidden = false
-            modalTitle.innerHTML = 'Edit Booking Slot'
+            modalTitle.innerHTML = 'Edit Booking'
             myModal.show();
             modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `edit_${bookingSlotPk}`
+            modalSubmitBtn.id = `edit_${bookingPk}`
         }
     }
 
@@ -390,6 +446,9 @@
                 m.hidden = false
             }
             modalList[modalList.length - 1].hidden = true
+
+            let submitButton = document.querySelector('.modal-submit')
+            submitButton.disabled = false
             
             domStartPoint = b.parentNode.parentElement
             bookingSlotPk = domStartPoint.children[0].innerHTML
@@ -450,7 +509,7 @@
                 fetchRequest(list, type)
             } else {
                 let type
-                if (modalTitle.innerHTML == 'Edit Booking') {
+                if (modalTitle == 'Edit Booking') {
                     type = 'edit-form'
                 } else {
                     type = 'add-form'
@@ -460,6 +519,9 @@
                 lastName = document.querySelector('#lastname').value
                 email = document.querySelector('#email').value
                 bookingSlotId = document.querySelector('#tableselect').value
+                bookingId = document.querySelector('#tableselect').value
+                modalSubmitId = document.querySelector('.modal-submit').id
+                bookingId = modalSubmitId.split('edit_')[1]
 
                 // bookingSlotPk = i.id
                 // bookingDate = document.querySelector('#bookingslotdate').value
@@ -481,7 +543,15 @@
                 // }
                 // console.log(type)
                 // console.log(bookingDate,tableChoice,timeSlot,statusValue,bookingStatusValue)
-                let list = [firstName, lastName, email, bookingSlotId]
+                let list = []
+                if (type == 'add-form'){
+                    list = [firstName, lastName, email, bookingSlotId]
+                    console.log(list)
+                } else {
+                    list = [firstName, lastName, email, bookingSlotId, bookingId]
+                    console.log(list)
+                }
+
                 fetchRequest(list, type)
                 // tableNum = parseInt(document.querySelector('#tablenumber').value)
                 // tableCap = parseInt(document.querySelector('#tablecapacity').value)
@@ -499,6 +569,7 @@
 
     function clearDisableAll () {
         optionRemove('')
+        optionRemove('#tableselect ')
         let timesSelector = document.querySelector('#timeselect')
         let tableSelector = document.querySelector('#tableselect')
         let firstName = document.querySelector('#firstname')
@@ -514,7 +585,8 @@
 
     addButton.onclick = function (e) {
         clearDisableAll()
-
+        let submitButton = document.querySelector('.modal-submit')
+        submitButton.disabled = false
         modalNonForm = document.querySelector('#modal-non-form')
         modalForm = document.querySelector('#modal-form')
         modalTitle = document.querySelector('#myModalLabel')
@@ -526,6 +598,12 @@
         modalForm.hidden = false
         modalTitle.innerHTML = 'Add Booking'
         getDates();
+        let firstName = document.querySelector('#firstname')
+        let lastName = document.querySelector('#lastname')
+        let email = document.querySelector('#email')
+        firstName.value = ''
+        lastName.value = ''
+        email.value = ''
         myModal.show();
     }
 
@@ -593,8 +671,12 @@
         let lastName = document.querySelector('#lastname')
         let email = document.querySelector('#email')
         let list = [firstName, lastName, email]
-        for (l of list){
+        let submitButton = document.querySelector('.modal-submit')
+        submitButton.disabled = false
+        if (firstName.value == '' && lastName.value == '' && email.value == ''){
+            for (l of list){
             l.disabled = false
+        }
         }
     }
 
@@ -614,6 +696,8 @@
                 console.log(data, 'tree')
                 if ('nodata' in data) {
                     console.log(data, "hello")
+                    let submitButton = document.querySelector('.modal-submit')
+                    submitButton.disabled = true
                     // let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
                     // myModal.show();
                     // disableAll();
@@ -644,8 +728,6 @@
                 url = `/dashboard/bookings/add/`
             } else if (type == 'edit-form') {
                 url = `/dashboard/bookings/edit/`
-                bookingSlotPkValue = data[5].split('edit_')[1];
-                data[5] = bookingSlotPkValue
             }
             fetch(url, {
                 method: "POST",
