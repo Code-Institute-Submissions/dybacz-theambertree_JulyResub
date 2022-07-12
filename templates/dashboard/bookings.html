@@ -47,12 +47,14 @@
                                         <td class="align-middle">{{ slot.table}}</td>
                                         <td class="align-middle">{{ b.date_created }}</td>
                                         <td class="align-middle">{{ b.get_status_display }}</td>
+                                        <td class="align-middle" hidden>{{ b.comments }}</td>
                                         {% endfor %}
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-primary rounded-circle edit-btn my-2"
+                                            <button type="button" class="btn btn-primary rounded-circle comment-btn my-2"
                                             style="height:30px; width: 30px; padding:0">
                                             <i class="fa-regular fa-comment"></i>
                                             </button>
+                                        {% if b.status == 0 %}
                                             <button type="button" class="btn btn-success rounded-circle edit-btn my-2"
                                                 style="height:30px; width: 30px; padding:0">
                                                 <i class="fa-regular fa-pen-to-square"></i>
@@ -61,6 +63,7 @@
                                                 style="height:30px; width: 30px; padding:0">
                                                 <i class="fa-solid fa-x mt-1 fs-6"></i>
                                             </button>
+                                        {% endif %}
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -117,8 +120,8 @@
                         </div>
                     </div>
                     <div id="modal-non-form">
-                        <p class="mb-1">Current Booking:</p>
-                        <div>
+                        <p class="mb-1 non-form-head">Current Booking</p>
+                        <div id="modal-non-form-list">
                             <div class="row">
                                 <div class="col-3 pe-0">
                                     <span class="mt-2 fw-bold">Booking ID:</span>
@@ -175,8 +178,13 @@
                                     <span id="status-" class="mt-2 text-center"></span>
                                 </div>
                             </div>
+                            <div class="row" hidden>
+                                <div class="col-12">
+                                    <textarea class="form-control" id="comments" rows="4"></textarea>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-center my-2">Are you sure you want to <b id="areyousure">cancel</b> this booking?
+                        <p class="text-center my-2" id="areyousure">Are you sure you want to <b>cancel</b> this booking?
                         </p>
                     </div>
                     <div class="modal-footer">
@@ -227,7 +235,46 @@
     let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
     let cancelButtons = document.querySelectorAll('.cancel-btn')
     let editButtons = document.querySelectorAll('.edit-btn')
+    let commentButtons =document.querySelectorAll('.comment-btn')
     let bookingSlotPk
+
+    for (let i of commentButtons){
+        i.onclick = function (e) {
+            domStartPoint = i.parentNode.parentElement
+            bookingSlotPk = domStartPoint.children[0].innerHTML
+            bookingComment = domStartPoint.children[7].innerHTML
+            comments = document.querySelector('#comments')
+            comments.innerHTML = bookingComment
+            areYouSure = document.querySelector('#areyousure')
+            areYouSure.innerHTML = 'Are you sure you want to <b>edit</b> the booking comment?'
+
+
+            modalNonForm = document.querySelector('#modal-non-form')
+            modalForm = document.querySelector('#modal-form')
+            modalTitle = document.querySelector('#myModalLabel')
+            modalNonForm.hidden = false
+            modalForm.hidden = true
+            modalTitle.innerHTML = 'Booking Comments'
+
+            modalNonFormHead = document.querySelector('.non-form-head')
+            modalNonFormHead.hidden = true
+
+            modalButton = document.querySelector('.modal-submit')
+            modalButton.innerHTML = "Save Booking Comments"
+            modalButton.classList.add("btn-success")
+            modalButton.classList.remove("btn-danger")
+
+            modalList = document.querySelector('#modal-non-form-list').children
+            for (m of modalList) {
+                m.hidden = true
+            }
+            
+            modalList[modalList.length - 1].hidden = false
+            modalSubmitBtn = document.querySelector('.modal-submit')
+            modalSubmitBtn.id = `${bookingSlotPk}`
+            myModal.show();
+        }
+    }
 
     for (let i of editButtons) {
         i.onclick = function (e) {
@@ -338,6 +385,12 @@
 
     for (let b of cancelButtons) {
         b.onclick = function (e) {
+            modalList = document.querySelector('#modal-non-form-list').children
+            for (m of modalList) {
+                m.hidden = false
+            }
+            modalList[modalList.length - 1].hidden = true
+            
             domStartPoint = b.parentNode.parentElement
             bookingSlotPk = domStartPoint.children[0].innerHTML
             bookingSlotDate = domStartPoint.children[1].innerHTML
@@ -384,11 +437,18 @@
     for (let i of submitModal) {
         i.onclick = function (e) {
             modalForm = document.querySelector('#modal-form')
-            if (modalForm.hidden == true) {
+            modalTitle = document.querySelector('#myModalLabel').innerHTML
+            if (modalForm.hidden == true && modalTitle == 'Cancel Booking') {
                 let type = 'non-form'
-                fetchRequest(i.id, type)
+                // fetchRequest(i.id, type)
+            } else if (modalForm.hidden == true && modalTitle == 'Booking Comments') {
+                let type = 'form-comments'
+                let comments = document.querySelector('#comments').value
+                console.log(i.id, 'iddd')
+                list = [i.id, comments]
+                console.log(list)
+                fetchRequest(list, type)
             } else {
-                modalTitle = document.querySelector('#myModalLabel')
                 let type
                 if (modalTitle.innerHTML == 'Edit Booking') {
                     type = 'edit-form'
@@ -422,7 +482,7 @@
                 // console.log(type)
                 // console.log(bookingDate,tableChoice,timeSlot,statusValue,bookingStatusValue)
                 let list = [firstName, lastName, email, bookingSlotId]
-                fetchRequest(list, type)
+                // fetchRequest(list, type)
                 // tableNum = parseInt(document.querySelector('#tablenumber').value)
                 // tableCap = parseInt(document.querySelector('#tablecapacity').value)
                 // tablePk = i.id
@@ -578,10 +638,12 @@
             if (type == 'non-form') {
                 bookingId = data.split('cancel_')[1];
                 url = `/dashboard/bookings/cancel/${bookingId}`
+            } else if (type == 'form-comments') {
+                url = `/dashboard/bookings/edit/`
             } else if (type == 'add-form') {
                 url = `/dashboard/bookings/add/`
             } else if (type == 'edit-form') {
-                url = `/dashboard/schedule/edit/`
+                url = `/dashboard/bookings/edit/`
                 bookingSlotPkValue = data[5].split('edit_')[1];
                 data[5] = bookingSlotPkValue
             }
