@@ -87,12 +87,12 @@
                         </div>
                         <div>
                             <label for="table-select">Table</label>
-                            <select class="form-select form-select-md" aria-label=".form-select-md Table Select" id="table-select" required>
+                            <select class="form-select form-select-md" aria-label=".form-select-md Table Select" id="table-select" required disabled>
                             </select>
                         </div>
                         <div>
                             <label for="time-select">Time</label> 
-                            <select class="form-select form-select-md" aria-label=".form-select-md Time Slot Select" id="time-select" required>
+                            <select class="form-select form-select-md" aria-label=".form-select-md Time Slot Select" id="time-select" required disabled>
                             </select>
                         </div>
                         <div>
@@ -175,7 +175,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger modal-submit">Delete Booking Slot</button>
+                        <button type="button" class="btn btn-danger modal-submit" disabled>Delete Booking Slot</button>
                     </div>
             </form>
 
@@ -257,9 +257,9 @@
             // tableNumberValue.value = tableNumber
             // tableCapacityValue.value = tableCapacity
 
+        if (tablesObj.length != 0) {
+            let tableSelector = document.querySelector('#table-select')
             for (t of tablesObj) {
-                let tableSelector = document.querySelector('#table-select')
-
                 let tableNum = t.fields.table_id
                 let tableCap = t.fields.table_capacity
                 let tablePk = t.pk
@@ -273,24 +273,25 @@
 
                 }
             }
+            tableSelector.disabled = false
+        }
 
+        if (timesObj.length != 0) {
+            let timesSelector = document.querySelector('#time-select')
             for (to of timesObj) {
-                let timesSelector = document.querySelector('#time-select')
                 let timeStart = to.fields.startTime
                 let timeEnd = to.fields.endTime
-                console.log(timeStart)
                 let timePk = to.pk
 
                 time = bookingSlotTime.split(':')
                 suffix = time[1].split(' ')
                 if (suffix[1] == 'a.m.' && time[0] < 10){
-                time[0] = `0${time[0]}`
+                    time[0] = `0${time[0]}`
                 } else if(suffix[1] == 'p.m.'){
-                time[0] = parseInt(time[0]) + 12
+                    time[0] = parseInt(time[0]) + 12
                 }
 
                 formattedBookingSlotTime = `${time[0]}:${suffix[0]}:00`
-                console.log(formattedBookingSlotTime)
 
                 let optionText = `${timeStart} - ${timeEnd}`
                 newOptionAdd(optionText, timePk, timesSelector)
@@ -302,6 +303,12 @@
 
                 }
             }
+            timesSelector.disabled = false
+        }
+
+        if (tablesObj.length != 0 && timesObj.length !=0) {
+            modalButton.disabled = false
+        }
 
             if (bookingSlotPub == 'Published') {
                 bookingSlotPubVal.checked = true
@@ -369,9 +376,9 @@
             modalButton.innerHTML = "Delete Booking Slot"
             modalButton.classList.remove("btn-success")
             modalButton.classList.add("btn-danger")
+            modalButton.disabled = false
             myModal.show();
-            modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `remove_${bookingSlotPk}`
+            modalButton.id = `remove_${bookingSlotPk}`
         }
     }
 
@@ -428,32 +435,46 @@
     };
 
     let addButton = document.querySelector('#add-button')
+    modalButton = document.querySelector('.modal-submit')
 
     addButton.onclick = function (e) {
         optionRemove()
-        
-        for (t of tablesObj) {
+        console.log(timesObj)
+        if (tablesObj.length != 0) {
             let tableSelector = document.querySelector('#table-select')
-            let tableNum = t.fields.table_id
-            let tableCap = t.fields.table_capacity
-            let tablePk = t.pk
-            let optionText = `Table:${tableNum} | Capacity:${tableCap}`
-            newOptionAdd(optionText, tablePk, tableSelector)
+            for (t of tablesObj) {
+                let tableNum = t.fields.table_id
+                let tableCap = t.fields.table_capacity
+                let tablePk = t.pk
+                let optionText = `Table:${tableNum} | Capacity:${tableCap}`
+                newOptionAdd(optionText, tablePk, tableSelector)
+            }
+            tableSelector.disabled = false
         }
 
-        for (i of timesObj) {
+        if (timesObj.length != 0) {
             let timesSelector = document.querySelector('#time-select')
-            let timeStart = i.fields.startTime
-            let timeEnd = i.fields.endTime
-            let timePk = i.pk
-            let optionText = `${timeStart} - ${timeEnd}`
-            newOptionAdd(optionText, timePk, timesSelector)
+            for (i of timesObj) {
+                let timeStart = i.fields.startTime
+                let splitTimeStart = timeStart.split(':')
+                let newTimeStart = `${splitTimeStart[0]}:${splitTimeStart[1]}`
+                let timeEnd = i.fields.endTime
+                let splitTimeEnd = timeEnd.split(':')
+                let newTimeEnd = `${splitTimeEnd[0]}:${splitTimeEnd[1]}`
+                let timePk = i.pk
+                let optionText = `${newTimeStart} - ${newTimeEnd}`
+                newOptionAdd(optionText, timePk, timesSelector)
+            }
+            timesSelector.disabled = false
+        }
+
+        if (tablesObj.length != 0 && timesObj.length !=0) {
+            modalButton.disabled = false
         }
 
         modalNonForm = document.querySelector('#modal-non-form')
         modalForm = document.querySelector('#modal-form')
         modalTitle = document.querySelector('#myModalLabel')
-        modalButton = document.querySelector('.modal-submit')
         modalButton.innerHTML = "Add Booking Slot"
         modalButton.classList.remove("btn-danger")
         modalButton.classList.add("btn-success")
