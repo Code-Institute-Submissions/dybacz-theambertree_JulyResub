@@ -230,12 +230,18 @@ class DashboardBookings(View):
                 booking_slot.save()
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
-                booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=post_data[3])
+                new_booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=post_data[3])
                 booking = shortcuts.get_object_or_404(models.Booking, pk=post_data[4])
+                originalBookingSlotId = booking.timeslot.all()[0].pk
+
+                originalBookingSlot = shortcuts.get_object_or_404(models.BookingSlot, pk=originalBookingSlotId)
+                originalBookingSlot.booking_status = 1
+                originalBookingSlot.save()
+
                 booking.timeslot.clear()
-                booking.timeslot.add(booking_slot)
-                booking_slot.booking_status = 0
-                booking_slot.save()
+                booking.timeslot.add(new_booking_slot)
+                new_booking_slot.booking_status = 0
+                new_booking_slot.save()
                 return HttpResponse(status=200)
 
 
@@ -250,8 +256,6 @@ class DashboardBookings(View):
                 # booking_slot.status = post_data[3]
                 # booking_slot.booking_status = post_data[4]
                 # booking_slot.save()
-
-                return HttpResponse(status=200)
             elif post_type == 'non-form':
                 bookingId = kwargs['booking_id']
                 print('message', bookingId)
