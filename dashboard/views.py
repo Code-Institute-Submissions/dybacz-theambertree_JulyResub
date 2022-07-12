@@ -1,8 +1,8 @@
 from django import shortcuts
 from django.views import generic, View
 from . import models
-from bookingsys import models
-from menu import models
+from bookingsys import models as bookingmodels
+from menu import models as menumodels
 from django.http import HttpResponse, JsonResponse
 import json
 from django.core.serializers import serialize
@@ -19,7 +19,7 @@ class DashboardHome(View):
         current_date = datetime.now().date()
         try:
             list_today_bookings = shortcuts.get_list_or_404(
-                models.Booking.objects.filter(status=0))
+                bookingmodels.Booking.objects.filter(status=0))
             for i in list_today_bookings:
                 time_slot = (i.timeslot.all())
                 time_slot_date = (time_slot[0].date)
@@ -51,14 +51,14 @@ class DashboardTables(View):
             post_type = data_from_post[0]
             post_data = data_from_post[1]
             if post_type == 'add-form':
-                models.Table.objects.create(
+                bookingmodels.Table.objects.create(
                     table_id=post_data[0],
                     table_capacity=post_data[1],
                 )
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
                 table_pk = post_data[2]
-                table = shortcuts.get_object_or_404(models.Table, pk=table_pk)
+                table = shortcuts.get_object_or_404(bookingmodels.Table, pk=table_pk)
                 table.table_id = post_data[0]
                 table.table_capacity = post_data[1]
                 table.save()
@@ -66,7 +66,7 @@ class DashboardTables(View):
                 return HttpResponse(status=200)
             elif post_type == 'non-form':
                 tableId = kwargs['table_id']
-                table = shortcuts.get_object_or_404(models.Table, pk=tableId)
+                table = shortcuts.get_object_or_404(bookingmodels.Table, pk=tableId)
                 table.delete()
                 return HttpResponse(status=200)
         else:
@@ -76,7 +76,7 @@ class DashboardTables(View):
         page_title = 'Tables | Dashboard'
         page_type = 'dashboard'
 
-        table_objects = models.Table.objects.all()
+        table_objects = bookingmodels.Table.objects.all()
 
         if request.user.is_staff:
             return shortcuts.render(
@@ -101,14 +101,14 @@ class DashboardTimes(View):
                 time_format = '%H:%M'
                 datetime_object = datetime.strptime(time_str, time_format)
                 end_time = datetime_object + timedelta(minutes=90)
-                models.TimeSlot.objects.create(
+                bookingmodels.TimeSlot.objects.create(
                     startTime=post_data[0],
                     endTime=end_time,
                 )
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
                 table_pk = post_data[1]
-                table = shortcuts.get_object_or_404(models.TimeSlot,
+                table = shortcuts.get_object_or_404(bookingmodels.TimeSlot,
                                                     pk=table_pk)
                 time_str = post_data[0]
                 time_format = '%H:%M'
@@ -122,7 +122,7 @@ class DashboardTimes(View):
                 return HttpResponse(status=200)
             elif post_type == 'non-form':
                 timeslotId = kwargs['timeslot_id']
-                timeslot = shortcuts.get_object_or_404(models.TimeSlot,
+                timeslot = shortcuts.get_object_or_404(bookingmodels.TimeSlot,
                                                        pk=timeslotId)
                 timeslot.delete()
                 return HttpResponse(status=200)
@@ -132,7 +132,7 @@ class DashboardTimes(View):
     def get(self, request, *args, **kwargs):
         page_title = 'Times | Dashboard'
         page_type = 'dashboard'
-        timeslot_objects = models.TimeSlot.objects.all()
+        timeslot_objects = bookingmodels.TimeSlot.objects.all()
 
         if request.user.is_staff:
             return shortcuts.render(
@@ -155,9 +155,9 @@ class DashboardSchedule(View):
             post_data = data_from_post[1]
 
             if post_type == 'add-form':
-                table = shortcuts.get_object_or_404(models.Table, pk=post_data[1])
-                timeslot = shortcuts.get_object_or_404(models.TimeSlot, pk=post_data[2])
-                models.BookingSlot.objects.create(
+                table = shortcuts.get_object_or_404(bookingmodels.Table, pk=post_data[1])
+                timeslot = shortcuts.get_object_or_404(bookingmodels.TimeSlot, pk=post_data[2])
+                bookingmodels.BookingSlot.objects.create(
                     date=post_data[0],
                     table=table,
                     time_slot=timeslot,
@@ -167,9 +167,9 @@ class DashboardSchedule(View):
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
                 booking_slot_pk = post_data[5]
-                booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=booking_slot_pk)
-                timeslot = shortcuts.get_object_or_404(models.TimeSlot, pk=post_data[2])
-                table = shortcuts.get_object_or_404(models.Table, pk=post_data[1])
+                booking_slot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=booking_slot_pk)
+                timeslot = shortcuts.get_object_or_404(bookingmodels.TimeSlot, pk=post_data[2])
+                table = shortcuts.get_object_or_404(bookingmodels.Table, pk=post_data[1])
                 booking_slot.table = table
                 booking_slot.date = post_data[0]
                 booking_slot.time_slot = timeslot
@@ -181,7 +181,7 @@ class DashboardSchedule(View):
             elif post_type == 'non-form':
                 bookingSlotId = kwargs['bookingslot_id']
                 print('message', bookingSlotId)
-                bookingSlot = shortcuts.get_object_or_404(models.BookingSlot, pk=bookingSlotId)
+                bookingSlot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=bookingSlotId)
                 bookingSlot.delete()
                 return HttpResponse(status=200)
         else:
@@ -191,9 +191,9 @@ class DashboardSchedule(View):
         page_title = 'Schedule | Dashboard'
         page_type = 'dashboard'
 
-        schedule_objects = models.BookingSlot.objects.all()
-        tables = serialize('json', models.Table.objects.all())
-        times = serialize('json', models.TimeSlot.objects.all())
+        schedule_objects = bookingmodels.BookingSlot.objects.all()
+        tables = serialize('json', bookingmodels.Table.objects.all())
+        times = serialize('json', bookingmodels.TimeSlot.objects.all())
 
 
         if request.user.is_staff:
@@ -220,8 +220,8 @@ class DashboardBookings(View):
             print(post_type, post_data)
 
             if post_type == 'add-form':
-                booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=post_data[3])
-                booking = models.Booking.objects.create(
+                booking_slot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=post_data[3])
+                booking = bookingmodels.Booking.objects.create(
                     first_name=post_data[0],
                     last_name=post_data[1],
                     email=post_data[2],
@@ -231,11 +231,11 @@ class DashboardBookings(View):
                 booking_slot.save()
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
-                new_booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=post_data[3])
-                booking = shortcuts.get_object_or_404(models.Booking, pk=post_data[4])
+                new_booking_slot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=post_data[3])
+                booking = shortcuts.get_object_or_404(bookingmodels.Booking, pk=post_data[4])
                 originalBookingSlotId = booking.timeslot.all()[0].pk
 
-                originalBookingSlot = shortcuts.get_object_or_404(models.BookingSlot, pk=originalBookingSlotId)
+                originalBookingSlot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=originalBookingSlotId)
                 originalBookingSlot.booking_status = 1
                 originalBookingSlot.save()
 
@@ -248,9 +248,9 @@ class DashboardBookings(View):
 
 
                 # booking_slot_pk = post_data[5]
-                # booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=booking_slot_pk)
-                # timeslot = shortcuts.get_object_or_404(models.TimeSlot, pk=post_data[2])
-                # table = shortcuts.get_object_or_404(models.Table, pk=post_data[1])
+                # booking_slot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=booking_slot_pk)
+                # timeslot = shortcuts.get_object_or_404(bookingmodels.TimeSlot, pk=post_data[2])
+                # table = shortcuts.get_object_or_404(bookingmodels.Table, pk=post_data[1])
                 # booking_slot.table = table
                 # booking_slot.date = post_data[0]
                 # booking_slot.time_slot = timeslot
@@ -260,18 +260,18 @@ class DashboardBookings(View):
             elif post_type == 'non-form':
                 bookingId = kwargs['booking_id']
                 print('message', bookingId)
-                booking = shortcuts.get_object_or_404(models.Booking, pk=bookingId)
+                booking = shortcuts.get_object_or_404(bookingmodels.Booking, pk=bookingId)
                 booking.status = 1
                 booking.save()
                 bookingSlotId = booking.timeslot.all()[0].pk
                 print(bookingSlotId)
-                bookingSlot = shortcuts.get_object_or_404(models.BookingSlot, pk=bookingSlotId)
+                bookingSlot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=bookingSlotId)
                 bookingSlot.booking_status = 1
                 bookingSlot.save()
                 return HttpResponse(status=200)
             elif post_type == 'form-comments':
                 bookingId = post_data[0]
-                booking = shortcuts.get_object_or_404(models.Booking, pk=bookingId)
+                booking = shortcuts.get_object_or_404(bookingmodels.Booking, pk=bookingId)
                 booking.comments = post_data[1]
                 booking.save()
                 return HttpResponse(status=200)
@@ -282,8 +282,8 @@ class DashboardBookings(View):
         page_title = 'Bookings | Dashboard'
         page_type = 'dashboard'
 
-        booking_objects = models.Booking.objects.all()
-        times = serialize('json', models.TimeSlot.objects.all())
+        booking_objects = bookingmodels.Booking.objects.all()
+        times = serialize('json', bookingmodels.TimeSlot.objects.all())
 
         if request.user.is_staff:
             return shortcuts.render(
@@ -303,7 +303,7 @@ class DashboardFood(View):
         page_title = 'Food Menu | Dashboard'
         page_type = 'dashboard'
 
-        menu_objects = models.Item.objects.filter(group='1')
+        menu_objects = menumodels.Item.objects.filter(group='1')
 
 
         if request.user.is_staff:
@@ -322,7 +322,7 @@ class DashboardDrinks(View):
         page_title = 'Food Menu | Dashboard'
         page_type = 'dashboard'
 
-        menu_objects = models.Item.objects.filter(group='2')
+        menu_objects = menumodels.Item.objects.filter(group='2')
 
 
         if request.user.is_staff:
