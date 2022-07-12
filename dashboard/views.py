@@ -216,6 +216,7 @@ class DashboardBookings(View):
             data_from_post = json.load(request)['post_data']
             post_type = data_from_post[0]
             post_data = data_from_post[1]
+            print(post_type, post_data)
 
             if post_type == 'add-form':
                 booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=post_data[3])
@@ -241,11 +242,22 @@ class DashboardBookings(View):
             #     booking_slot.save()
 
             #     return HttpResponse(status=200)
-            if post_type == 'non-form':
+            elif post_type == 'non-form':
                 bookingId = kwargs['booking_id']
                 print('message', bookingId)
                 booking = shortcuts.get_object_or_404(models.Booking, pk=bookingId)
                 booking.status = 1
+                booking.save()
+                bookingSlotId = booking.timeslot.all()[0].pk
+                print(bookingSlotId)
+                bookingSlot = shortcuts.get_object_or_404(models.BookingSlot, pk=bookingSlotId)
+                bookingSlot.booking_status = 1
+                bookingSlot.save()
+                return HttpResponse(status=200)
+            elif post_type == 'form-comments':
+                bookingId = post_data[0]
+                booking = shortcuts.get_object_or_404(models.Booking, pk=bookingId)
+                booking.comments = post_data[1]
                 booking.save()
                 return HttpResponse(status=200)
         else:
