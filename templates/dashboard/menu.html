@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+    {% include 'includes/navbars/dashboard_nav.html' %}
+    <div class="col-12 pt-4 px-0 px-sm-4">
+        <div class="container-fluid mt-5 general-container" style="min-height:85vh;">
+            <div class="row">
+                <div class="col-12 mb-3 mt-3 general-block" style="min-height:81vh;">
+                    <h2 class="mx-auto mt-2">Dashboard</h2>
+                    <div class="row">
+                        {% include 'includes/navbars/dashboard_subnav.html' %}
+                    </div>
+                    {% include 'includes/dashboard/header.html' %}
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-10 text-end">
+                            <button class="btn btn-lg btn-success text-end" id="add-button">
+                                <i class="fa-solid fa-plus"></i>
+                                New Item
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center pt-3">
+                        <div class="col-12 col-md-10 menu-scroll dash-block">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Group</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                    <tr>
+                                        <td class="align-middle">{{ item.pk }}</td>
+                                        <td class="align-middle">{{ item.name }}</td>
+                                        <td class="align-middle">{{ item.group }}</td>
+                                        <td class="align-middle">{{ item.category }}</td>
+                                        <td class="align-middle">{{ item.description }}</td>
+                                        <td class="align-middle">£{{ item.price }}</td>
+                                        <td hidden>{{table.pk}}</td>
+                                        <td class="align-middle">
+                                            <button type="button" class="btn btn-success rounded-circle edit-btn"
+                                                style="height:30px; width: 30px; padding:0">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger cancel-btn rounded-circle"
+                                                style="height:30px; width: 30px; padding:0">
+                                                <i class="fa-solid fa-x mt-1 fs-6"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Delete Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="modal-body pb-1">
+                    <div id="modal-form" hidden>
+                        <div>
+                            <label for="tablenumber">Table Number</label>
+                            <input class="form-control" type="number" min="1" value="" id="tablenumber"
+                                name="tablenumber" aria-label="Input Table Number" required>
+                        </div>
+                        <div>
+                            <label for="tablecapcity">Table Capacity</label>
+                            <input class="form-control" type="number" min="1" name="tablecapacity" value=""
+                                id="tablecapacity" aria-label="Input Table Capacity" required>
+                        </div>
+                    </div>
+                    <div id="modal-non-form">
+                        <p class="mb-1">Current Item:</p>
+                        <div>
+                            <div class="row">
+                                <div class="col-3 pe-0">
+                                    <span class="mt-2 fw-bold">Id:</span>
+                                </div>
+                                <div class="col-9 ps-0">
+                                    <span id="item-id" class="mt-2 text-center"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 pe-0">
+                                    <span class="mt-2 fw-bold">Name:</span>
+                                </div>
+                                <div class="col-9 ps-0">
+                                    <span id="item-name" class="mt-2 text-center"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 pe-0">
+                                    <span class="mt-2 fw-bold">Group:</span>
+                                </div>
+                                <div class="col-9 ps-0">
+                                    <span id="item-group" class="mt-2 text-center"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 pe-0">
+                                    <span class="mt-2 fw-bold">Category:</span>
+                                </div>
+                                <div class="col-9 ps-0">
+                                    <span id="item-category" class="mt-2 text-center"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 pe-0">
+                                    <span class="mt-2 fw-bold">Description:</span>
+                                </div>
+                                <div class="col-9 ps-0">
+                                    <span id="item-description" class="mt-2 text-center"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 pe-0">
+                                    <span class="mt-2 fw-bold">Price:</span>
+                                </div>
+                                <div class="col-9 ps-0">
+                                    <span id="item-price" class="mt-2 text-center"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this item?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger modal-submit">Delete item</button>
+                    </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block postload_js %}
+{% include 'includes/dashboard/sub_nav_script.html' %}
+<script type="text/javascript">
+    let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+    let cancelButtons = document.querySelectorAll('.cancel-btn')
+    let editButtons = document.querySelectorAll('.edit-btn')
+    let tablePk
+
+    for (let i of editButtons) {
+        i.onclick = function (e) {
+            tableNumberValue = document.querySelector('#tablenumber')
+            tableCapacityValue = document.querySelector('#tablecapacity')
+            domStartPoint = i.parentNode.parentElement
+            tableNumber = domStartPoint.children[0].innerHTML
+            tableCapacity = domStartPoint.children[1].innerHTML
+            tablePk = domStartPoint.children[2].innerHTML
+
+            tableNumberValue.value = tableNumber
+            tableCapacityValue.value = tableCapacity
+
+            modalNonForm = document.querySelector('#modal-non-form')
+            modalForm = document.querySelector('#modal-form')
+            modalTitle = document.querySelector('#myModalLabel')
+            modalButton = document.querySelector('.modal-submit')
+            modalButton.innerHTML = "Edit Table"
+            modalButton.classList.remove("btn-danger")
+            modalButton.classList.add("btn-success")
+            modalNonForm.hidden = true
+            modalForm.hidden = false
+            modalTitle.innerHTML = 'Edit Table'
+            myModal.show();
+            modalSubmitBtn = document.querySelector('.modal-submit')
+            modalSubmitBtn.id = `edit_${tablePk}`
+        }
+    }
+
+    for (let b of cancelButtons) {
+        b.onclick = function (e) {
+            domStartPoint = b.parentNode.parentElement
+            itemId = domStartPoint.children[0].innerHTML
+            itemName = domStartPoint.children[1].innerHTML
+            itemGroup = domStartPoint.children[2].innerHTML
+            itemCategory = domStartPoint.children[3].innerHTML
+            itemDescription = domStartPoint.children[4].innerHTML
+            itemPrice = domStartPoint.children[5].innerHTML
+
+            modalNonForm = document.querySelector('#modal-non-form')
+            modalForm = document.querySelector('#modal-form')
+            modalTitle = document.querySelector('#myModalLabel')
+            modalNonForm.hidden = false
+            modalForm.hidden = true
+            modalTitle.innerHTML = 'Delete Item'
+            modalItemId = document.getElementById("item-id")
+            modalItemName = document.getElementById("item-name")
+            modalItemGroup = document.getElementById("item-group")
+            modalItemCategory = document.getElementById("item-category")
+            modalItemDescription = document.getElementById("item-description")
+            modalItemPrice = document.getElementById("item-price")
+
+            modalItemId.innerHTML = itemId
+            modalItemName.innerHTML = itemName
+            modalItemGroup.innerHTML = itemGroup
+            modalItemCategory.innerHTML = itemCategory
+            modalItemDescription.innerHTML = itemDescription
+            modalItemPrice.innerHTML = itemPrice
+
+
+            // modalTableNumber.innerHTML = `${tableNumber}`
+            // modalTableCapacity = document.getElementById("table-capacity")
+            // modalTableCapacity.innerHTML = `${tableCapacity}`
+            // modalButton = document.querySelector('.modal-submit')
+            // modalButton.innerHTML = "Delete Item"
+            // modalButton.classList.remove("btn-success")
+            // modalButton.classList.add("btn-danger")
+            myModal.show();
+            // modalSubmitBtn = document.querySelector('.modal-submit')
+            // modalSubmitBtn.id = `remove_${tablePk}`
+        }
+    }
+
+    let submitModal = document.querySelectorAll('.modal-submit');
+
+    for (let i of submitModal) {
+        i.onclick = function (e) {
+            modalForm = document.querySelector('#modal-form')
+            if (modalForm.hidden == true) {
+                let type = 'non-form'
+                fetchRequest(i.id, type)
+            } else {
+                modalTitle = document.querySelector('#myModalLabel')
+                let type
+                if (modalTitle.innerHTML == 'Edit Table') {
+                    type = 'edit-form'
+                } else {
+                    type = 'add-form'
+                }
+                tableNum = parseInt(document.querySelector('#tablenumber').value)
+                tableCap = parseInt(document.querySelector('#tablecapacity').value)
+                tablePk = i.id
+                if (tableNum > 0 && tableCap > 0) {
+                    let list = [tableNum, tableCap, tablePk]
+                    fetchRequest(list, type)
+                }
+                else {
+                    alert('Values entered must be greater than or equal to 1')
+                }
+            }
+        }
+    };
+
+    let addButton = document.querySelector('#add-button')
+
+    addButton.onclick = function (e) {
+        modalNonForm = document.querySelector('#modal-non-form')
+        modalForm = document.querySelector('#modal-form')
+        modalTitle = document.querySelector('#myModalLabel')
+        modalButton = document.querySelector('.modal-submit')
+        modalButton.innerHTML = "Add Item"
+        modalButton.classList.remove("btn-danger")
+        modalButton.classList.add("btn-success")
+        modalNonForm.hidden = true
+        modalForm.hidden = false
+        modalTitle.innerHTML = 'Add Item'
+        myModal.show();
+    }
+
+    try {
+        function fetchRequest(data, type) {
+            let csrfToken = "{{ csrf_token }}";
+            let tableId
+            let url
+            if (type == 'non-form') {
+                tableId = data.split('remove_')[1];
+                url = `/dashboard/tables/remove/${tableId}`
+            } else if (type == 'add-form') {
+                url = `/dashboard/tables/add/`
+            } else if (type == 'edit-form') {
+                url = `/dashboard/tables/edit/`
+                tablePkValue = data[2].split('edit_')[1];
+                data[2] = tablePkValue
+            }
+            fetch(url, {
+                method: "POST",
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': csrfToken },
+                body: JSON.stringify({ 'post_data': [type, data] })
+            }).then(res => {
+                location.reload();
+            });
+        }
+    } catch (e) {
+        Console.log(`The data you have requested is not available from the server. Error:${e}`)
+    }
+</script>
+{% endblock %}
