@@ -190,7 +190,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger modal-submit">Cancel Booking Slot</button>
+                        <button type="button" class="btn btn-danger modal-submit" disabled>Cancel Booking Slot</button>
                     </div>
             </form>
 
@@ -315,7 +315,8 @@
             lastName.value = bookingSlotName.split(' ')[1]
             email.value = bookingSlotEmail
             console.log(time.disabled , 'child len')
-
+            let warning = time.previousElementSibling
+            warning.innerHTML = 'Time'
 
 
             let list = [firstName, lastName, email]
@@ -332,7 +333,7 @@
                 newOptionAdd(bookingSlotTab, '', table)
                 warning = time.previousElementSibling
                 warningText = warning.innerHTML
-                warning.innerHTML = warningText + ' (No times for this date)'
+                warning.innerHTML = warningText + ' (No availble times for this date)'
             }
             }
 
@@ -585,8 +586,8 @@
 
     addButton.onclick = function (e) {
         clearDisableAll()
-        let submitButton = document.querySelector('.modal-submit')
-        submitButton.disabled = false
+        // let submitButton = document.querySelector('.modal-submit')
+        // submitButton.disabled = false
         modalNonForm = document.querySelector('#modal-non-form')
         modalForm = document.querySelector('#modal-form')
         modalTitle = document.querySelector('#myModalLabel')
@@ -671,8 +672,10 @@
         let lastName = document.querySelector('#lastname')
         let email = document.querySelector('#email')
         let list = [firstName, lastName, email]
-        let submitButton = document.querySelector('.modal-submit')
-        submitButton.disabled = false
+        email.onchange = function () {
+            let submitButton = document.querySelector('.modal-submit')
+            submitButton.disabled = false
+        }
         if (firstName.value == '' && lastName.value == '' && email.value == ''){
             for (l of list){
             l.disabled = false
@@ -733,9 +736,11 @@
                 method: "POST",
                 headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': csrfToken },
                 body: JSON.stringify({ 'post_data': [type, data] })
-            }).then(res => {
-                location.reload();
-            });
+            }).then(response => {
+                if (response.status == 200){
+                    return location.reload();
+                }
+            })
         }
     } catch (e) {
         Console.log(`The data you have requested is not available from the server. Error:${e}`)
