@@ -434,3 +434,15 @@ h5 {
 .dash-block {
     height: 42vh;
 }
+  
+.nav-item a:visited {
+    color: var(--color1);
+}
+  
+.nav-item a:hover {
+    color: var(--color3);
+}
+  
+.nav-item a:active {
+    color: var(--color4);
+}
