@@ -440,7 +440,7 @@
             modalTitle = document.querySelector('#myModalLabel').innerHTML
             if (modalForm.hidden == true && modalTitle == 'Cancel Booking') {
                 let type = 'non-form'
-                // fetchRequest(i.id, type)
+                fetchRequest(i.id, type)
             } else if (modalForm.hidden == true && modalTitle == 'Booking Comments') {
                 let type = 'form-comments'
                 let comments = document.querySelector('#comments').value
@@ -482,7 +482,7 @@
                 // console.log(type)
                 // console.log(bookingDate,tableChoice,timeSlot,statusValue,bookingStatusValue)
                 let list = [firstName, lastName, email, bookingSlotId]
-                // fetchRequest(list, type)
+                fetchRequest(list, type)
                 // tableNum = parseInt(document.querySelector('#tablenumber').value)
                 // tableCap = parseInt(document.querySelector('#tablecapacity').value)
                 // tablePk = i.id
