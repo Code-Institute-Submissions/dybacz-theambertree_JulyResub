@@ -229,19 +229,29 @@ class DashboardBookings(View):
                 booking_slot.booking_status = 0
                 booking_slot.save()
                 return HttpResponse(status=200)
-            # elif post_type == 'edit-form':
-            #     booking_slot_pk = post_data[5]
-            #     booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=booking_slot_pk)
-            #     timeslot = shortcuts.get_object_or_404(models.TimeSlot, pk=post_data[2])
-            #     table = shortcuts.get_object_or_404(models.Table, pk=post_data[1])
-            #     booking_slot.table = table
-            #     booking_slot.date = post_data[0]
-            #     booking_slot.time_slot = timeslot
-            #     booking_slot.status = post_data[3]
-            #     booking_slot.booking_status = post_data[4]
-            #     booking_slot.save()
+            elif post_type == 'edit-form':
+                booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=post_data[3])
+                booking = shortcuts.get_object_or_404(models.Booking, pk=post_data[4])
+                booking.timeslot.clear()
+                booking.timeslot.add(booking_slot)
+                booking_slot.booking_status = 0
+                booking_slot.save()
+                return HttpResponse(status=200)
 
-            #     return HttpResponse(status=200)
+
+
+                # booking_slot_pk = post_data[5]
+                # booking_slot = shortcuts.get_object_or_404(models.BookingSlot, pk=booking_slot_pk)
+                # timeslot = shortcuts.get_object_or_404(models.TimeSlot, pk=post_data[2])
+                # table = shortcuts.get_object_or_404(models.Table, pk=post_data[1])
+                # booking_slot.table = table
+                # booking_slot.date = post_data[0]
+                # booking_slot.time_slot = timeslot
+                # booking_slot.status = post_data[3]
+                # booking_slot.booking_status = post_data[4]
+                # booking_slot.save()
+
+                return HttpResponse(status=200)
             elif post_type == 'non-form':
                 bookingId = kwargs['booking_id']
                 print('message', bookingId)
