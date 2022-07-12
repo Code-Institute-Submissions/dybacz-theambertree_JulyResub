@@ -73,7 +73,6 @@
         </div>
     </div>
     </div>
-    {{ tables|json_script:"tables" }}
     {{ times|json_script:"times" }}
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -182,7 +181,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger modal-submit">Cancel Booking Slot</button>
+                        <button type="button" class="btn btn-danger modal-submit">Cancel Booking Slot</button>
                     </div>
             </form>
 
@@ -214,16 +213,14 @@
         selectorElement.add(newOption,undefined)
     }
 
-    function optionRemove() {
-        let options = document.querySelectorAll('option')
+    function optionRemove(optionId) {
+        let options = document.querySelectorAll(`${optionId}option`)
         for (o of options) {
             o.remove()
         }
     }
     
-    let tables = JSON.parse(document.getElementById('tables').textContent);
     let times = JSON.parse(document.getElementById('times').textContent);
-    let tablesObj = JSON.parse(tables) 
     let timesObj = JSON.parse(times)
     // console.log(tablesObj)
 
@@ -393,32 +390,38 @@
             } else {
                 modalTitle = document.querySelector('#myModalLabel')
                 let type
-                if (modalTitle.innerHTML == 'Edit Booking Slot') {
+                if (modalTitle.innerHTML == 'Edit Booking') {
                     type = 'edit-form'
                 } else {
                     type = 'add-form'
                 }
-                bookingSlotPk = i.id
-                bookingDate = document.querySelector('#bookingslotdate').value
-                tableChoice = parseInt(document.querySelector('#table-select').value)
-                timeSlot = parseInt(document.querySelector('#time-select').value)
-                
-                publishStatus = document.querySelector('#bookingslotstatus')
-                if (publishStatus.checked == true) {
-                    statusValue = 1
-                } else {
-                    statusValue = 0
-                }
 
-                bookingStatus = document.querySelector('#bookingslotbookingstatus')
-                if (bookingStatus.checked == true) {
-                    bookingStatusValue = 1
-                } else {
-                    bookingStatusValue = 0
-                }
-                console.log(type)
-                console.log(bookingDate,tableChoice,timeSlot,statusValue,bookingStatusValue)
-                let list = [bookingDate,tableChoice,timeSlot,statusValue,bookingStatusValue,bookingSlotPk]
+                firstName = document.querySelector('#firstname').value
+                lastName = document.querySelector('#lastname').value
+                email = document.querySelector('#email').value
+                bookingSlotId = document.querySelector('#tableselect').value
+
+                // bookingSlotPk = i.id
+                // bookingDate = document.querySelector('#bookingslotdate').value
+                // tableChoice = parseInt(document.querySelector('#table-select').value)
+                // timeSlot = parseInt(document.querySelector('#time-select').value)
+                
+                // publishStatus = document.querySelector('#bookingslotstatus')
+                // if (publishStatus.checked == true) {
+                //     statusValue = 1
+                // } else {
+                //     statusValue = 0
+                // }
+
+                // bookingStatus = document.querySelector('#bookingslotbookingstatus')
+                // if (bookingStatus.checked == true) {
+                //     bookingStatusValue = 1
+                // } else {
+                //     bookingStatusValue = 0
+                // }
+                // console.log(type)
+                // console.log(bookingDate,tableChoice,timeSlot,statusValue,bookingStatusValue)
+                let list = [firstName, lastName, email, bookingSlotId]
                 fetchRequest(list, type)
                 // tableNum = parseInt(document.querySelector('#tablenumber').value)
                 // tableCap = parseInt(document.querySelector('#tablecapacity').value)
@@ -434,27 +437,23 @@
         }
     };
 
+    function clearDisableAll () {
+        optionRemove('')
+        let timesSelector = document.querySelector('#timeselect')
+        let tableSelector = document.querySelector('#tableselect')
+        let firstName = document.querySelector('#firstname')
+        let lastName = document.querySelector('#lastname')
+        let email = document.querySelector('#email')
+        let list = [timesSelector, tableSelector, firstName, lastName, email]
+        for (l of list){
+            l.disabled = true
+        }
+    }
+    
     let addButton = document.querySelector('#add-button')
 
     addButton.onclick = function (e) {
-        
-        // for (t of tablesObj) {
-        //     let tableSelector = document.querySelector('#table-select')
-        //     let tableNum = t.fields.table_id
-        //     let tableCap = t.fields.table_capacity
-        //     let tablePk = t.pk
-        //     let optionText = `Table:${tableNum} | Capacity:${tableCap}`
-        //     newOptionAdd(optionText, tablePk, tableSelector)
-        // }
-
-        // for (i of timesObj) {
-            // let timesSelector = document.querySelector('#time-select')
-            // let timeStart = i.fields.startTime
-            // let timeEnd = i.fields.endTime
-            // let timePk = i.pk
-            // let optionText = `${timeStart} - ${timeEnd}`
-            // newOptionAdd(optionText, timePk, timesSelector)
-        // }
+        clearDisableAll()
 
         modalNonForm = document.querySelector('#modal-non-form')
         modalForm = document.querySelector('#modal-form')
@@ -475,34 +474,69 @@
             console.log('change')
             let date = modalDate.value
             console.log(date)
+            clearDisableAll()
             fetchRequestDates(date)
         }
 
+
     function addTimes(timeSlots, tables) {
+        let timesSelector = document.querySelector('#timeselect')
         for (let i of timeSlots) {
+            bookingSlotPk = i.pk
             let time = i.fields.time_slot.toString()
-            console.log(time)
+            console.log(time, 'time')
             for (o of timesObj) {
-                let timesSelector = document.querySelector('#timeselect')
                 let timeStart = o.fields.startTime
                 let timeEnd = o.fields.endTime
                 let timePk = o.pk
-                console.log(timePk, o)
+                console.log(timePk, time, bookingSlotPk, 'i')
                 if (timePk == time) {
                     timesSelector.disabled = false
                     let optionText = `${timeStart} - ${timeEnd}`
                     newOptionAdd(optionText, timePk, timesSelector)
-                    let tableSelector = document.querySelector('#tableselect')
-                    tableSelector.disabled = false
+                    
+                }
+            }
+        }
+        addTables(timeSlots, tables)
+        timesSelector.onchange = function () {
+            optionRemove('#tableselect ')
+            addTables(timeSlots, tables)
+        }
+    }
+    
+    function addTables(timeSlots, tables) {
+        let tableSelector = document.querySelector('#tableselect')
+        let timeValue = document.querySelector('#timeselect').value
+        console.log(tableSelector, 'table', timeValue)
 
-                    timesSelector.onchange = function () {
-
+        for (let i of timeSlots) {
+            let table = i.fields.table.toString()
+            let timeSlot = i.fields.time_slot.toString()
+            console.log(table, 'table', tables, timeSlot)
+            if (timeSlot == timeValue) {
+                console.log(i, table)
+                for (o of tables) {
+                    let tableId = o.fields.table_id
+                    let tableCapacity = o.fields.table_capacity
+                    let tablePk = o.pk
+                    if (tablePk == table) {
+                        console.log(tablePk, table)
+                        tableSelector.disabled = false
+                        let optionText = `Table:${tableId} | Capacity:${tableCapacity}`
+                        newOptionAdd(optionText, bookingSlotPk, tableSelector)
                     }
                 }
             }
         }
+        let firstName = document.querySelector('#firstname')
+        let lastName = document.querySelector('#lastname')
+        let email = document.querySelector('#email')
+        let list = [firstName, lastName, email]
+        for (l of list){
+            l.disabled = false
+        }
     }
-    
 
     function fetchRequestDates(data) {
         let csrfToken = "{{ csrf_token }}";
@@ -545,7 +579,7 @@
                 bookingId = data.split('cancel_')[1];
                 url = `/dashboard/bookings/cancel/${bookingId}`
             } else if (type == 'add-form') {
-                url = `/dashboard/schedule/add/`
+                url = `/dashboard/bookings/add/`
             } else if (type == 'edit-form') {
                 url = `/dashboard/schedule/edit/`
                 bookingSlotPkValue = data[5].split('edit_')[1];
