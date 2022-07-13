@@ -1,7 +1,6 @@
 from . import views
 from django.urls import path
 
-
 urlpatterns = [
     path('', views.DashboardHome.as_view(), name='dashboard_home'),
     path('tables/', views.DashboardTables.as_view(), name='dashboard_tables'),
@@ -12,11 +11,16 @@ urlpatterns = [
     path('times/remove/<timeslot_id>', views.DashboardTimes.as_view()),
     path('times/add/', views.DashboardTimes.as_view()),
     path('times/edit/', views.DashboardTimes.as_view()),
-    path('schedule/', views.DashboardSchedule.as_view(), name='dashboard_schedule'),
-    path('schedule/remove/<bookingslot_id>', views.DashboardSchedule.as_view()),
+    path('schedule/',
+         views.DashboardSchedule.as_view(),
+         name='dashboard_schedule'),
+    path('schedule/remove/<bookingslot_id>',
+         views.DashboardSchedule.as_view()),
     path('schedule/add/', views.DashboardSchedule.as_view()),
     path('schedule/edit/', views.DashboardSchedule.as_view()),
-    path('bookings/', views.DashboardBookings.as_view(), name='dashboard_bookings'),
+    path('bookings/',
+         views.DashboardBookings.as_view(),
+         name='dashboard_bookings'),
     path('bookings/cancel/<booking_id>', views.DashboardBookings.as_view()),
     path('bookings/add/', views.DashboardBookings.as_view()),
     path('bookings/edit/', views.DashboardBookings.as_view()),
@@ -28,7 +32,8 @@ urlpatterns = [
     path('drinks/remove/<item_id>', views.DashboardDrinks.as_view()),
     path('drinks/add/', views.DashboardDrinks.as_view()),
     path('drinks/edit/', views.DashboardDrinks.as_view()),
-    path('messages/', views.DashboardMessages.as_view(), name='dashboard_messages'),
+    path('messages/',
+         views.DashboardMessages.as_view(),
+         name='dashboard_messages'),
     path('help/', views.DashboardHelp.as_view(), name='dashboard_help'),
-
 ]

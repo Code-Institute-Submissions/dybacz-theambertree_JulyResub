@@ -1,31 +1,29 @@
 {% extends "base.html" %}
 
-
-
 {% block content %}
     {% include 'includes/navbars/dashboard_nav.html' %}
-    <div class="col-12 pt-4 px-0 px-sm-4">
-        <div class="container-fluid mt-5 general-container" style="min-height:85vh;">
-            <div class="row">
-                <div class="col-12 mb-3 mt-3 general-block" style="min-height:81vh;">
-                    <h2 class="mx-auto mt-2">Dashboard</h2>
-                    <div class="row">
-                        {% include 'includes/navbars/dashboard_subnav.html' %}
-                    </div>
-                    {% include 'includes/dashboard/header.html' %}
-                    <div class="row">
-                        <p>Number of bookings for today: <span class="fw-bold">{{ bookings_len }}</p>
-                        <p>Number of bookings made today: <span class="fw-bold">{{ bookings_len }}</p>
-                        <p>Number of bookings cancelled today: <span class="fw-bold">{{ bookings_len }}</p>
-                        <p>Unread Contact Form Messages: <span class="fw-bold">{{ bookings_len }}</p>
+        <div class="col-12 pt-4 px-0 px-sm-4">
+            <div class="container-fluid mt-5 general-container" style="min-height:85vh;">
+                <div class="row">
+                    <div class="col-12 mb-3 mt-3 general-block" style="min-height:81vh;">
+                        <h2 class="mx-auto mt-2">Dashboard</h2>
+                        <div class="row">
+                            {% include 'includes/navbars/dashboard_subnav.html' %}
+                        </div>
+                        {% include 'includes/dashboard/header.html' %}
+                        <div class="row">
+                            <p>Number of bookings for today: <span class="fw-bold">{{ bookings_len }}</p>
+                            <p>Number of bookings made today: <span class="fw-bold">{{ bookings_len }}</p>
+                            <p>Number of bookings cancelled today: <span class="fw-bold">{{ bookings_len }}</p>
+                            <p>Unread Contact Form Messages: <span class="fw-bold">{{ bookings_len }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block postload_js %}
-{% include 'includes/dashboard/sub_nav_script.html' %}
+    {% include 'includes/dashboard/sub_nav_script.html' %}
 {% endblock %}

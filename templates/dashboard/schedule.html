@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 
-
-
 {% block content %}
-    {% include 'includes/navbars/dashboard_nav.html' %}
+{% include 'includes/navbars/dashboard_nav.html' %}
     <div class="col-12 pt-4 px-0 px-sm-4">
         <div class="container-fluid mt-5 general-container" style="min-height:85vh;">
             <div class="row">
@@ -69,447 +67,439 @@
     </div>
     {{ tables|json_script:"tables" }}
     {{ times|json_script:"times" }}
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Delete Booking Slot</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Delete Booking Slot</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                    <div class="modal-body pb-1">
+                        <div id="modal-form" hidden>
+                            <div>
+                                <label for="bookingslotdate">Date</label>
+                                <input class="form-control" type="date" name="bookingslotdate" value="" id="bookingslotdate"
+                                    aria-label="Input Table Capacity" required>
+                            </div>
+                            <div>
+                                <label for="table-select">Table</label>
+                                <select class="form-select form-select-md" aria-label=".form-select-md Table Select"
+                                    id="table-select" required disabled>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="time-select">Time</label>
+                                <select class="form-select form-select-md" aria-label=".form-select-md Time Slot Select"
+                                    id="time-select" required disabled>
+                                </select>
+                            </div>
+                            <div>
+                                <div class="form-check form-switch my-2">
+                                    <input class="form-check-input" type="checkbox" name="bookingslotstatus" value=""
+                                        id="bookingslotstatus" aria-label="Input Booking Slot Status">
+                                    <label class="form-check-label" for="bookingslotstatus">Published</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-check form-switch my-2">
+                                    <input class="form-check-input" type="checkbox" name="bookingslotbookingstatus" value=""
+                                        id="bookingslotbookingstatus" aria-label="Input Table Capacity">
+                                    <label class="form-check-label" for="bookingslotbookingstatus">Available</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="modal-non-form">
+                            <p class="mb-1">Current Booking:</p>
+                            <div>
+                                <div class="row">
+                                    <div class="col-4 pe-0">
+                                        <span class="mt-2 fw-bold">Booking Slot ID:</span>
+                                    </div>
+                                    <div class="col-8 ps-0">
+                                        <span id="booking-slot-id" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 pe-0">
+                                        <span class="mt-2 fw-bold">Table Number:</span>
+                                    </div>
+                                    <div class="col-8 ps-0">
+                                        <span id="table-number" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 pe-0">
+                                        <span class="mt-2 fw-bold">Table Capacity:</span>
+                                    </div>
+                                    <div class="col-8 ps-0">
+                                        <span id="table-capacity" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Date:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="date-" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Time:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="time-" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Published:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="published-" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Status:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="status-" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this booking
+                                slot?
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger modal-submit" disabled>Delete Booking Slot</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <form>
-                <div class="modal-body pb-1">
-                    <div id="modal-form" hidden>
-                        <div>
-                            <label for="bookingslotdate">Date</label>
-                            <input class="form-control" type="date" name="bookingslotdate" value=""
-                                id="bookingslotdate" aria-label="Input Table Capacity" required>
-                        </div>
-                        <div>
-                            <label for="table-select">Table</label>
-                            <select class="form-select form-select-md" aria-label=".form-select-md Table Select" id="table-select" required disabled>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="time-select">Time</label> 
-                            <select class="form-select form-select-md" aria-label=".form-select-md Time Slot Select" id="time-select" required disabled>
-                            </select>
-                        </div>
-                        <div>
-                            <div class="form-check form-switch my-2">
-                                <input class="form-check-input" type="checkbox" name="bookingslotstatus" value=""
-                                id="bookingslotstatus" aria-label="Input Booking Slot Status">
-                                <label class="form-check-label" for="bookingslotstatus">Published</label>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="form-check form-switch my-2">
-                                <input class="form-check-input" type="checkbox" name="bookingslotbookingstatus" value=""
-                                id="bookingslotbookingstatus" aria-label="Input Table Capacity">
-                                <label class="form-check-label" for="bookingslotbookingstatus">Available</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="modal-non-form">
-                        <p class="mb-1">Current Booking:</p>
-                        <div>
-                            <div class="row">
-                                <div class="col-4 pe-0">
-                                    <span class="mt-2 fw-bold">Booking Slot ID:</span>
-                                </div>
-                                <div class="col-8 ps-0">
-                                    <span id="booking-slot-id" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4 pe-0">
-                                    <span class="mt-2 fw-bold">Table Number:</span>
-                                </div>
-                                <div class="col-8 ps-0">
-                                    <span id="table-number" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4 pe-0">
-                                    <span class="mt-2 fw-bold">Table Capacity:</span>
-                                </div>
-                                <div class="col-8 ps-0">
-                                    <span id="table-capacity" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Date:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="date-" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Time:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="time-" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Published:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="published-" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Status:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="status-" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this booking slot?
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger modal-submit" disabled>Delete Booking Slot</button>
-                    </div>
-            </form>
-
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block postload_js %}
-{% include 'includes/dashboard/sub_nav_script.html' %}
-<script type="text/javascript">
-
-    function getDates() {
-        let dateControl = document.querySelector('input[type="date"]');
-        let today = new Date();
-        let dd = String(today.getDate()).padStart(2, '0');
-        let mm = String(today.getMonth() + 1).padStart(2, '0'); 
-        let mmPlusone = String(today.getMonth() + 2).padStart(2, '0');
-        let yyyy = today.getFullYear();
-        today = yyyy + '-' + mm + '-' + dd
-        todayPlusMonth = yyyy + '-' + mmPlusone + '-' + dd
-        dateControl.value = today;
-        dateControl.min = today;
-        dateControl.max = todayPlusMonth;
+    {% include 'includes/dashboard/sub_nav_script.html' %}
+    <script type="text/javascript">
+        function getDates() {
+            let dateControl = document.querySelector('input[type="date"]');
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, "0");
+            let mm = String(today.getMonth() + 1).padStart(2, "0");
+            let mmPlusone = String(today.getMonth() + 2).padStart(2, "0");
+            let yyyy = today.getFullYear();
+            today = yyyy + "-" + mm + "-" + dd;
+            todayPlusMonth = yyyy + "-" + mmPlusone + "-" + dd;
+            dateControl.value = today;
+            dateControl.min = today;
+            dateControl.max = todayPlusMonth;
         }
-    
-    function newOptionAdd(optionText, optionValue, selectorElement) {
-        let newOption = new Option(optionText,optionValue);
-        selectorElement.add(newOption,undefined)
-    }
 
-    function optionRemove() {
-        let options = document.querySelectorAll('option')
-        for (o of options) {
-            o.remove()
+        function newOptionAdd(optionText, optionValue, selectorElement) {
+            let newOption = new Option(optionText, optionValue);
+            selectorElement.add(newOption, undefined);
         }
-    }
-    
-    let tables = JSON.parse(document.getElementById('tables').textContent);
-    let times = JSON.parse(document.getElementById('times').textContent);
-    let tablesObj = JSON.parse(tables) 
-    let timesObj = JSON.parse(times)
-    // console.log(tablesObj)
 
-    let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
-    let cancelButtons = document.querySelectorAll('.cancel-btn')
-    let editButtons = document.querySelectorAll('.edit-btn')
-    let bookingSlotPk
+        function optionRemove() {
+            let options = document.querySelectorAll("option");
+            for (o of options) {
+                o.remove();
+            }
+        }
 
-    for (let i of editButtons) {
-        i.onclick = function (e) {
-            getDates()
-            optionRemove()
-            bookingSlotPkVal = document.querySelector('#booking-slot-id')
-            // bookingSlotNumVal = document.querySelector('#table-number')
-            // bookingSlotCapVal = document.querySelector('#table-capacity')
-            bookingSlotDateVal = document.querySelector('input[type="date"]')
-            // bookingSlotTimeVal = document.querySelector('#tablenumber')
-            bookingSlotPubVal = document.querySelector('#bookingslotstatus')
-            bookingSlotStatusVal =document.querySelector('#bookingslotbookingstatus')
-            // tableNumberValue = document.querySelector('#tablenumber')
-            // tableCapacityValue = document.querySelector('#tablecapacity')
-            domStartPoint = i.parentNode.parentElement
-            bookingSlotPk = domStartPoint.children[0].innerHTML
-            bookingSlotNum = domStartPoint.children[2].innerHTML
-            bookingSlotCap = domStartPoint.children[3].innerHTML
-            bookingSlotDate = domStartPoint.children[1].innerHTML
-            let splitDate = bookingSlotDate.split('/')
-            newBookingSlotDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
-            bookingSlotTime = domStartPoint.children[4].innerHTML
-            console.log(bookingSlotTime)
-            bookingSlotPub = domStartPoint.children[5].innerHTML
-            bookingSlotStatus = domStartPoint.children[6].innerHTML
-            // bookingSlotTablePk = domStartPoint.children[7].innerHTML
-            // bookingSlotTimePk = domStartPoint.children[8].innerHTML
-            // console.log(bookingSlotDateVal, bookingSlotDate, newBookingSlotDate)
-            bookingSlotDateVal.value = newBookingSlotDate
-            console.log(bookingSlotDateVal.value)
-            // tableNumberValue.value = tableNumber
-            // tableCapacityValue.value = tableCapacity
+        let tables = JSON.parse(document.getElementById("tables").textContent);
+        let times = JSON.parse(document.getElementById("times").textContent);
+        let tablesObj = JSON.parse(tables);
+        let timesObj = JSON.parse(times);
 
-        if (tablesObj.length != 0) {
-            let tableSelector = document.querySelector('#table-select')
-            for (t of tablesObj) {
-                let tableNum = t.fields.table_id
-                let tableCap = t.fields.table_capacity
-                let tablePk = t.pk
-                let optionText = `Table:${tableNum} | Capacity:${tableCap}`
-                newOptionAdd(optionText, tablePk, tableSelector)
-                let options = document.querySelectorAll('option')
-                for (o of options) {
-                    if (o.innerHTML == `Table:${bookingSlotNum} | Capacity:${bookingSlotCap}`) {
-                        o.selected = true
+        let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+        let cancelButtons = document.querySelectorAll(".cancel-btn");
+        let editButtons = document.querySelectorAll(".edit-btn");
+        let bookingSlotPk;
+
+        for (let i of editButtons) {
+            i.onclick = function (e) {
+                getDates();
+                optionRemove();
+                bookingSlotPkVal = document.querySelector("#booking-slot-id");
+                bookingSlotDateVal = document.querySelector('input[type="date"]');
+                bookingSlotPubVal = document.querySelector("#bookingslotstatus");
+                bookingSlotStatusVal = document.querySelector("#bookingslotbookingstatus");
+
+                domStartPoint = i.parentNode.parentElement;
+                bookingSlotPk = domStartPoint.children[0].innerHTML;
+                bookingSlotNum = domStartPoint.children[2].innerHTML;
+                bookingSlotCap = domStartPoint.children[3].innerHTML;
+                bookingSlotDate = domStartPoint.children[1].innerHTML;
+                let splitDate = bookingSlotDate.split("/");
+                newBookingSlotDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
+                bookingSlotTime = domStartPoint.children[4].innerHTML;
+                bookingSlotPub = domStartPoint.children[5].innerHTML;
+                bookingSlotStatus = domStartPoint.children[6].innerHTML;
+                bookingSlotDateVal.value = newBookingSlotDate;
+
+                if (tablesObj.length != 0) {
+                    let tableSelector = document.querySelector("#table-select");
+                    for (t of tablesObj) {
+                        let tableNum = t.fields.table_id;
+                        let tableCap = t.fields.table_capacity;
+                        let tablePk = t.pk;
+                        let optionText = `Table:${tableNum} | Capacity:${tableCap}`;
+                        newOptionAdd(optionText, tablePk, tableSelector);
+                        let options = document.querySelectorAll("option");
+                        for (o of options) {
+                            if (
+                                o.innerHTML ==
+                                `Table:${bookingSlotNum} | Capacity:${bookingSlotCap}`
+                            ) {
+                                o.selected = true;
+                            }
+                        }
+                    }
+                    tableSelector.disabled = false;
+                }
+
+                if (timesObj.length != 0) {
+                    let timesSelector = document.querySelector("#time-select");
+                    for (to of timesObj) {
+                        let timeStart = to.fields.startTime;
+                        let timeEnd = to.fields.endTime;
+                        let timePk = to.pk;
+
+                        time = bookingSlotTime.split(":");
+                        suffix = time[1].split(" ");
+                        if (suffix[1] == "a.m." && time[0] < 10) {
+                            time[0] = `0${time[0]}`;
+                        } else if (suffix[1] == "p.m.") {
+                            time[0] = parseInt(time[0]) + 12;
+                        }
+
+                        formattedBookingSlotTime = `${time[0]}:${suffix[0]}:00`;
+
+                        let optionText = `${timeStart} - ${timeEnd}`;
+                        newOptionAdd(optionText, timePk, timesSelector);
+                        let options = document.querySelectorAll("option");
+                        for (o of options) {
+                            if (o.innerHTML == `${formattedBookingSlotTime} - ${timeEnd}`) {
+                                o.selected = true;
+                            }
+                        }
+                    }
+                    timesSelector.disabled = false;
+                }
+
+                if (tablesObj.length != 0 && timesObj.length != 0) {
+                    modalButton.disabled = false;
+                }
+
+                if (bookingSlotPub == "Published") {
+                    bookingSlotPubVal.checked = true;
+                } else {
+                    bookingSlotPubVal.checked = false;
+                }
+
+                if (bookingSlotStatus == "Available") {
+                    bookingSlotStatusVal.checked = true;
+                } else {
+                    bookingSlotStatusVal.checked = false;
+                }
+
+                modalNonForm = document.querySelector("#modal-non-form");
+                modalForm = document.querySelector("#modal-form");
+                modalTitle = document.querySelector("#myModalLabel");
+                modalButton = document.querySelector(".modal-submit");
+                modalButton.innerHTML = "Edit Booking Slot";
+                modalButton.classList.remove("btn-danger");
+                modalButton.classList.add("btn-success");
+                modalNonForm.hidden = true;
+                modalForm.hidden = false;
+                modalTitle.innerHTML = "Edit Booking Slot";
+                myModal.show();
+                modalSubmitBtn = document.querySelector(".modal-submit");
+                modalSubmitBtn.id = `edit_${bookingSlotPk}`;
+            };
+        }
+
+        for (let b of cancelButtons) {
+            b.onclick = function (e) {
+                domStartPoint = b.parentNode.parentElement;
+                bookingSlotPk = domStartPoint.children[0].innerHTML;
+                bookingSlotNum = domStartPoint.children[2].innerHTML;
+                bookingSlotCap = domStartPoint.children[3].innerHTML;
+                bookingSlotDate = domStartPoint.children[1].innerHTML;
+                bookingSlotTime = domStartPoint.children[4].innerHTML;
+                bookingSlotPub = domStartPoint.children[5].innerHTML;
+                bookingSlotStatus = domStartPoint.children[6].innerHTML;
+
+                modalNonForm = document.querySelector("#modal-non-form");
+                modalForm = document.querySelector("#modal-form");
+                modalTitle = document.querySelector("#myModalLabel");
+                modalNonForm.hidden = false;
+                modalForm.hidden = true;
+                modalTitle.innerHTML = "Delete Booking Slot";
+
+                modalBslotPk = document.getElementById("booking-slot-id");
+                modalBslotPk.innerHTML = `${bookingSlotPk}`;
+                modalTableNum = document.getElementById("table-number");
+                modalTableNum.innerHTML = `${bookingSlotNum}`;
+                modalTableCap = document.getElementById("table-capacity");
+                modalTableCap.innerHTML = `${bookingSlotNum}`;
+                modalTableDate = document.getElementById("date-");
+                modalTableDate.innerHTML = `${bookingSlotDate}`;
+                modalTableTime = document.getElementById("time-");
+                modalTableTime.innerHTML = `${bookingSlotTime}`;
+                modalTablePub = document.getElementById("published-");
+                modalTablePub.innerHTML = `${bookingSlotPub}`;
+                modalTableStat = document.getElementById("status-");
+                modalTableStat.innerHTML = `${bookingSlotStatus}`;
+
+                modalButton = document.querySelector(".modal-submit");
+                modalButton.innerHTML = "Delete Booking Slot";
+                modalButton.classList.remove("btn-success");
+                modalButton.classList.add("btn-danger");
+                modalButton.disabled = false;
+                myModal.show();
+                modalButton.id = `remove_${bookingSlotPk}`;
+            };
+        }
+
+        let submitModal = document.querySelectorAll(".modal-submit");
+
+        for (let i of submitModal) {
+            i.onclick = function (e) {
+                modalForm = document.querySelector("#modal-form");
+                if (modalForm.hidden == true) {
+                    let type = "non-form";
+                    fetchRequest(i.id, type);
+                } else {
+                    modalTitle = document.querySelector("#myModalLabel");
+                    let type;
+                    if (modalTitle.innerHTML == "Edit Booking Slot") {
+                        type = "edit-form";
+                    } else {
+                        type = "add-form";
+                    }
+                    bookingSlotPk = i.id;
+                    bookingDate = document.querySelector("#bookingslotdate").value;
+                    tableChoice = parseInt(document.querySelector("#table-select").value);
+                    timeSlot = parseInt(document.querySelector("#time-select").value);
+
+                    publishStatus = document.querySelector("#bookingslotstatus");
+                    if (publishStatus.checked == true) {
+                        statusValue = 1;
+                    } else {
+                        statusValue = 0;
                     }
 
-                }
-            }
-            tableSelector.disabled = false
-        }
-
-        if (timesObj.length != 0) {
-            let timesSelector = document.querySelector('#time-select')
-            for (to of timesObj) {
-                let timeStart = to.fields.startTime
-                let timeEnd = to.fields.endTime
-                let timePk = to.pk
-
-                time = bookingSlotTime.split(':')
-                suffix = time[1].split(' ')
-                if (suffix[1] == 'a.m.' && time[0] < 10){
-                    time[0] = `0${time[0]}`
-                } else if(suffix[1] == 'p.m.'){
-                    time[0] = parseInt(time[0]) + 12
-                }
-
-                formattedBookingSlotTime = `${time[0]}:${suffix[0]}:00`
-
-                let optionText = `${timeStart} - ${timeEnd}`
-                newOptionAdd(optionText, timePk, timesSelector)
-                let options = document.querySelectorAll('option')
-                for (o of options) {
-                    if (o.innerHTML == `${formattedBookingSlotTime} - ${timeEnd}`) {
-                        o.selected = true
+                    bookingStatus = document.querySelector("#bookingslotbookingstatus");
+                    if (bookingStatus.checked == true) {
+                        bookingStatusValue = 1;
+                    } else {
+                        bookingStatusValue = 0;
                     }
-
+                    let list = [
+                        bookingDate,
+                        tableChoice,
+                        timeSlot,
+                        statusValue,
+                        bookingStatusValue,
+                        bookingSlotPk,
+                    ];
+                    fetchRequest(list, type);
                 }
-            }
-            timesSelector.disabled = false
+            };
         }
 
-        if (tablesObj.length != 0 && timesObj.length !=0) {
-            modalButton.disabled = false
-        }
+        let addButton = document.querySelector("#add-button");
+        modalButton = document.querySelector(".modal-submit");
 
-            if (bookingSlotPub == 'Published') {
-                bookingSlotPubVal.checked = true
-            } else {
-                bookingSlotPubVal.checked = false
+        addButton.onclick = function (e) {
+            optionRemove();
+            if (tablesObj.length != 0) {
+                let tableSelector = document.querySelector("#table-select");
+                for (t of tablesObj) {
+                    let tableNum = t.fields.table_id;
+                    let tableCap = t.fields.table_capacity;
+                    let tablePk = t.pk;
+                    let optionText = `Table:${tableNum} | Capacity:${tableCap}`;
+                    newOptionAdd(optionText, tablePk, tableSelector);
+                }
+                tableSelector.disabled = false;
             }
 
-            if (bookingSlotStatus == 'Available') {
-                bookingSlotStatusVal.checked = true
-            } else {
-                bookingSlotStatusVal.checked = false
+            if (timesObj.length != 0) {
+                let timesSelector = document.querySelector("#time-select");
+                for (i of timesObj) {
+                    let timeStart = i.fields.startTime;
+                    let splitTimeStart = timeStart.split(":");
+                    let newTimeStart = `${splitTimeStart[0]}:${splitTimeStart[1]}`;
+                    let timeEnd = i.fields.endTime;
+                    let splitTimeEnd = timeEnd.split(":");
+                    let newTimeEnd = `${splitTimeEnd[0]}:${splitTimeEnd[1]}`;
+                    let timePk = i.pk;
+                    let optionText = `${newTimeStart} - ${newTimeEnd}`;
+                    newOptionAdd(optionText, timePk, timesSelector);
+                }
+                timesSelector.disabled = false;
             }
 
+            if (tablesObj.length != 0 && timesObj.length != 0) {
+                modalButton.disabled = false;
+            }
 
-            modalNonForm = document.querySelector('#modal-non-form')
-            modalForm = document.querySelector('#modal-form')
-            modalTitle = document.querySelector('#myModalLabel')
-            modalButton = document.querySelector('.modal-submit')
-            modalButton.innerHTML = "Edit Booking Slot"
-            modalButton.classList.remove("btn-danger")
-            modalButton.classList.add("btn-success")
-            modalNonForm.hidden = true
-            modalForm.hidden = false
-            modalTitle.innerHTML = 'Edit Booking Slot'
+            modalNonForm = document.querySelector("#modal-non-form");
+            modalForm = document.querySelector("#modal-form");
+            modalTitle = document.querySelector("#myModalLabel");
+            modalButton.innerHTML = "Add Booking Slot";
+            modalButton.classList.remove("btn-danger");
+            modalButton.classList.add("btn-success");
+            modalNonForm.hidden = true;
+            modalForm.hidden = false;
+            modalTitle.innerHTML = "Add Booking Slot";
+            getDates();
             myModal.show();
-            modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `edit_${bookingSlotPk}`
-        }
-    }
+        };
 
-    for (let b of cancelButtons) {
-        b.onclick = function (e) {
-            domStartPoint = b.parentNode.parentElement
-            bookingSlotPk = domStartPoint.children[0].innerHTML
-            bookingSlotNum = domStartPoint.children[2].innerHTML
-            bookingSlotCap = domStartPoint.children[3].innerHTML
-            bookingSlotDate = domStartPoint.children[1].innerHTML
-            bookingSlotTime = domStartPoint.children[4].innerHTML
-            bookingSlotPub = domStartPoint.children[5].innerHTML
-            bookingSlotStatus = domStartPoint.children[6].innerHTML
-
-            modalNonForm = document.querySelector('#modal-non-form')
-            modalForm = document.querySelector('#modal-form')
-            modalTitle = document.querySelector('#myModalLabel')
-            modalNonForm.hidden = false
-            modalForm.hidden = true
-            modalTitle.innerHTML = 'Delete Booking Slot'
-
-            modalBslotPk = document.getElementById("booking-slot-id")
-            modalBslotPk.innerHTML = `${bookingSlotPk}`
-            modalTableNum = document.getElementById("table-number")
-            modalTableNum.innerHTML = `${bookingSlotNum}`
-            modalTableCap = document.getElementById("table-capacity")
-            modalTableCap.innerHTML = `${bookingSlotNum}`
-            modalTableDate = document.getElementById("date-")
-            modalTableDate.innerHTML = `${bookingSlotDate}`
-            modalTableTime = document.getElementById("time-")
-            modalTableTime.innerHTML = `${bookingSlotTime}`
-            modalTablePub = document.getElementById("published-")
-            modalTablePub.innerHTML = `${bookingSlotPub}`
-            modalTableStat = document.getElementById("status-")
-            modalTableStat.innerHTML = `${bookingSlotStatus}`
-
-            modalButton = document.querySelector('.modal-submit')
-            modalButton.innerHTML = "Delete Booking Slot"
-            modalButton.classList.remove("btn-success")
-            modalButton.classList.add("btn-danger")
-            modalButton.disabled = false
-            myModal.show();
-            modalButton.id = `remove_${bookingSlotPk}`
-        }
-    }
-
-    let submitModal = document.querySelectorAll('.modal-submit');
-
-    for (let i of submitModal) {
-        i.onclick = function (e) {
-            modalForm = document.querySelector('#modal-form')
-            if (modalForm.hidden == true) {
-                let type = 'non-form'
-                fetchRequest(i.id, type)
-            } else {
-                modalTitle = document.querySelector('#myModalLabel')
-                let type
-                if (modalTitle.innerHTML == 'Edit Booking Slot') {
-                    type = 'edit-form'
-                } else {
-                    type = 'add-form'
+        try {
+            function fetchRequest(data, type) {
+                let csrfToken = "{{ csrf_token }}";
+                let tableId;
+                let url;
+                if (type == "non-form") {
+                    bookingSlotId = data.split("remove_")[1];
+                    url = `/dashboard/schedule/remove/${bookingSlotId}`;
+                } else if (type == "add-form") {
+                    url = `/dashboard/schedule/add/`;
+                } else if (type == "edit-form") {
+                    url = `/dashboard/schedule/edit/`;
+                    bookingSlotPkValue = data[5].split("edit_")[1];
+                    data[5] = bookingSlotPkValue;
                 }
-                bookingSlotPk = i.id
-                bookingDate = document.querySelector('#bookingslotdate').value
-                tableChoice = parseInt(document.querySelector('#table-select').value)
-                timeSlot = parseInt(document.querySelector('#time-select').value)
-                
-                publishStatus = document.querySelector('#bookingslotstatus')
-                if (publishStatus.checked == true) {
-                    statusValue = 1
-                } else {
-                    statusValue = 0
-                }
-
-                bookingStatus = document.querySelector('#bookingslotbookingstatus')
-                if (bookingStatus.checked == true) {
-                    bookingStatusValue = 1
-                } else {
-                    bookingStatusValue = 0
-                }
-                console.log(type)
-                console.log(bookingDate,tableChoice,timeSlot,statusValue,bookingStatusValue)
-                let list = [bookingDate,tableChoice,timeSlot,statusValue,bookingStatusValue,bookingSlotPk]
-                fetchRequest(list, type)
-                // tableNum = parseInt(document.querySelector('#tablenumber').value)
-                // tableCap = parseInt(document.querySelector('#tablecapacity').value)
-                // tablePk = i.id
-                // if (tableNum > 0 && tableCap > 0) {
-                //     let list = [tableNum, tableCap, tablePk]
-                //     // fetchRequest(list, type)
-                // }
-                // else {
-                //     alert('Values entered must be greater than or equal to 1')
-                // }
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": csrfToken,
+                    },
+                    body: JSON.stringify({
+                        post_data: [type, data]
+                    }),
+                }).then((res) => {
+                    location.reload();
+                });
             }
+        } catch (e) {
+            Console.log(
+                `The data you have requested is not available from the server. Error:${e}`
+            );
         }
-    };
-
-    let addButton = document.querySelector('#add-button')
-    modalButton = document.querySelector('.modal-submit')
-
-    addButton.onclick = function (e) {
-        optionRemove()
-        console.log(timesObj)
-        if (tablesObj.length != 0) {
-            let tableSelector = document.querySelector('#table-select')
-            for (t of tablesObj) {
-                let tableNum = t.fields.table_id
-                let tableCap = t.fields.table_capacity
-                let tablePk = t.pk
-                let optionText = `Table:${tableNum} | Capacity:${tableCap}`
-                newOptionAdd(optionText, tablePk, tableSelector)
-            }
-            tableSelector.disabled = false
-        }
-
-        if (timesObj.length != 0) {
-            let timesSelector = document.querySelector('#time-select')
-            for (i of timesObj) {
-                let timeStart = i.fields.startTime
-                let splitTimeStart = timeStart.split(':')
-                let newTimeStart = `${splitTimeStart[0]}:${splitTimeStart[1]}`
-                let timeEnd = i.fields.endTime
-                let splitTimeEnd = timeEnd.split(':')
-                let newTimeEnd = `${splitTimeEnd[0]}:${splitTimeEnd[1]}`
-                let timePk = i.pk
-                let optionText = `${newTimeStart} - ${newTimeEnd}`
-                newOptionAdd(optionText, timePk, timesSelector)
-            }
-            timesSelector.disabled = false
-        }
-
-        if (tablesObj.length != 0 && timesObj.length !=0) {
-            modalButton.disabled = false
-        }
-
-        modalNonForm = document.querySelector('#modal-non-form')
-        modalForm = document.querySelector('#modal-form')
-        modalTitle = document.querySelector('#myModalLabel')
-        modalButton.innerHTML = "Add Booking Slot"
-        modalButton.classList.remove("btn-danger")
-        modalButton.classList.add("btn-success")
-        modalNonForm.hidden = true
-        modalForm.hidden = false
-        modalTitle.innerHTML = 'Add Booking Slot'
-        getDates();
-        myModal.show();
-    }
-
-    try {
-        function fetchRequest(data, type) {
-            let csrfToken = "{{ csrf_token }}";
-            let tableId
-            let url
-            if (type == 'non-form') {
-                bookingSlotId = data.split('remove_')[1];
-                url = `/dashboard/schedule/remove/${bookingSlotId}`
-            } else if (type == 'add-form') {
-                url = `/dashboard/schedule/add/`
-            } else if (type == 'edit-form') {
-                url = `/dashboard/schedule/edit/`
-                bookingSlotPkValue = data[5].split('edit_')[1];
-                data[5] = bookingSlotPkValue
-            }
-            fetch(url, {
-                method: "POST",
-                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': csrfToken },
-                body: JSON.stringify({ 'post_data': [type, data] })
-            }).then(res => {
-                location.reload();
-            });
-        }
-    } catch (e) {
-        Console.log(`The data you have requested is not available from the server. Error:${e}`)
-    }
-</script>
+    </script>
 {% endblock %}

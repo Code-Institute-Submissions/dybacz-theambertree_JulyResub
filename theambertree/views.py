@@ -3,11 +3,7 @@ from django.views import generic, View
 from menu import models
 
 
-# Class index(request):
-#     return render(request, '../templates/index.html')
-
 class Index(View):
-
     def get(self, request, *args, **kwargs):
         page_type = 'home'
         page_title = 'The Amber Tree | Restaurant & Bar'
@@ -23,5 +19,4 @@ class Index(View):
                 'page_type': page_type,
                 'page_title': page_title,
                 'menu': menu,
-            }
-        )
+            })

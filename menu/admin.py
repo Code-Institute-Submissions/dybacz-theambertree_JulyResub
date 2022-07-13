@@ -11,6 +11,7 @@ class CategoryAdmin(admin.ModelAdmin):
         'name',
     )
 
+
 @admin.register(models.Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
@@ -18,6 +19,7 @@ class CategoryAdmin(admin.ModelAdmin):
         'friendly_name',
         'name',
     )
+
 
 @admin.register(models.Item)
 class ItemAdmin(admin.ModelAdmin):
@@ -30,4 +32,4 @@ class ItemAdmin(admin.ModelAdmin):
         'image',
     )
 
-    ordering = ('name',)
+    ordering = ('name', )

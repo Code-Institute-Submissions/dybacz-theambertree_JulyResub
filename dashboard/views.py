@@ -58,15 +58,16 @@ class DashboardTables(View):
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
                 table_pk = post_data[2]
-                table = shortcuts.get_object_or_404(bookingmodels.Table, pk=table_pk)
+                table = shortcuts.get_object_or_404(bookingmodels.Table,
+                                                    pk=table_pk)
                 table.table_id = post_data[0]
                 table.table_capacity = post_data[1]
                 table.save()
-
                 return HttpResponse(status=200)
             elif post_type == 'non-form':
                 tableId = kwargs['table_id']
-                table = shortcuts.get_object_or_404(bookingmodels.Table, pk=tableId)
+                table = shortcuts.get_object_or_404(bookingmodels.Table,
+                                                    pk=tableId)
                 table.delete()
                 return HttpResponse(status=200)
         else:
@@ -118,7 +119,6 @@ class DashboardTimes(View):
                 table.startTime = post_data[0]
                 table.endTime = end_time
                 table.save()
-
                 return HttpResponse(status=200)
             elif post_type == 'non-form':
                 timeslotId = kwargs['timeslot_id']
@@ -147,7 +147,6 @@ class DashboardTimes(View):
 
 
 class DashboardSchedule(View):
-
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             data_from_post = json.load(request)['post_data']
@@ -155,8 +154,10 @@ class DashboardSchedule(View):
             post_data = data_from_post[1]
 
             if post_type == 'add-form':
-                table = shortcuts.get_object_or_404(bookingmodels.Table, pk=post_data[1])
-                timeslot = shortcuts.get_object_or_404(bookingmodels.TimeSlot, pk=post_data[2])
+                table = shortcuts.get_object_or_404(bookingmodels.Table,
+                                                    pk=post_data[1])
+                timeslot = shortcuts.get_object_or_404(bookingmodels.TimeSlot,
+                                                       pk=post_data[2])
                 bookingmodels.BookingSlot.objects.create(
                     date=post_data[0],
                     table=table,
@@ -167,21 +168,24 @@ class DashboardSchedule(View):
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
                 booking_slot_pk = post_data[5]
-                booking_slot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=booking_slot_pk)
-                timeslot = shortcuts.get_object_or_404(bookingmodels.TimeSlot, pk=post_data[2])
-                table = shortcuts.get_object_or_404(bookingmodels.Table, pk=post_data[1])
+                booking_slot = shortcuts.get_object_or_404(
+                    bookingmodels.BookingSlot, pk=booking_slot_pk)
+                timeslot = shortcuts.get_object_or_404(bookingmodels.TimeSlot,
+                                                       pk=post_data[2])
+                table = shortcuts.get_object_or_404(bookingmodels.Table,
+                                                    pk=post_data[1])
                 booking_slot.table = table
                 booking_slot.date = post_data[0]
                 booking_slot.time_slot = timeslot
                 booking_slot.status = post_data[3]
                 booking_slot.booking_status = post_data[4]
                 booking_slot.save()
-
                 return HttpResponse(status=200)
             elif post_type == 'non-form':
                 bookingSlotId = kwargs['bookingslot_id']
                 print('message', bookingSlotId)
-                bookingSlot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=bookingSlotId)
+                bookingSlot = shortcuts.get_object_or_404(
+                    bookingmodels.BookingSlot, pk=bookingSlotId)
                 bookingSlot.delete()
                 return HttpResponse(status=200)
         else:
@@ -194,7 +198,6 @@ class DashboardSchedule(View):
         schedule_objects = bookingmodels.BookingSlot.objects.all()
         tables = serialize('json', bookingmodels.Table.objects.all())
         times = serialize('json', bookingmodels.TimeSlot.objects.all())
-
 
         if request.user.is_staff:
             return shortcuts.render(
@@ -211,7 +214,6 @@ class DashboardSchedule(View):
 
 
 class DashboardBookings(View):
-
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             data_from_post = json.load(request)['post_data']
@@ -220,7 +222,8 @@ class DashboardBookings(View):
             print(post_type, post_data)
 
             if post_type == 'add-form':
-                booking_slot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=post_data[3])
+                booking_slot = shortcuts.get_object_or_404(
+                    bookingmodels.BookingSlot, pk=post_data[3])
                 booking = bookingmodels.Booking.objects.create(
                     first_name=post_data[0],
                     last_name=post_data[1],
@@ -231,47 +234,38 @@ class DashboardBookings(View):
                 booking_slot.save()
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
-                new_booking_slot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=post_data[3])
-                booking = shortcuts.get_object_or_404(bookingmodels.Booking, pk=post_data[4])
+                new_booking_slot = shortcuts.get_object_or_404(
+                    bookingmodels.BookingSlot, pk=post_data[3])
+                booking = shortcuts.get_object_or_404(bookingmodels.Booking,
+                                                      pk=post_data[4])
                 originalBookingSlotId = booking.timeslot.all()[0].pk
-
-                originalBookingSlot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=originalBookingSlotId)
+                originalBookingSlot = shortcuts.get_object_or_404(
+                    bookingmodels.BookingSlot, pk=originalBookingSlotId)
                 originalBookingSlot.booking_status = 1
                 originalBookingSlot.save()
-
                 booking.timeslot.clear()
                 booking.timeslot.add(new_booking_slot)
                 new_booking_slot.booking_status = 0
                 new_booking_slot.save()
                 return HttpResponse(status=200)
-
-
-
-                # booking_slot_pk = post_data[5]
-                # booking_slot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=booking_slot_pk)
-                # timeslot = shortcuts.get_object_or_404(bookingmodels.TimeSlot, pk=post_data[2])
-                # table = shortcuts.get_object_or_404(bookingmodels.Table, pk=post_data[1])
-                # booking_slot.table = table
-                # booking_slot.date = post_data[0]
-                # booking_slot.time_slot = timeslot
-                # booking_slot.status = post_data[3]
-                # booking_slot.booking_status = post_data[4]
-                # booking_slot.save()
             elif post_type == 'non-form':
                 bookingId = kwargs['booking_id']
                 print('message', bookingId)
-                booking = shortcuts.get_object_or_404(bookingmodels.Booking, pk=bookingId)
+                booking = shortcuts.get_object_or_404(bookingmodels.Booking,
+                                                      pk=bookingId)
                 booking.status = 1
                 booking.save()
                 bookingSlotId = booking.timeslot.all()[0].pk
                 print(bookingSlotId)
-                bookingSlot = shortcuts.get_object_or_404(bookingmodels.BookingSlot, pk=bookingSlotId)
+                bookingSlot = shortcuts.get_object_or_404(
+                    bookingmodels.BookingSlot, pk=bookingSlotId)
                 bookingSlot.booking_status = 1
                 bookingSlot.save()
                 return HttpResponse(status=200)
             elif post_type == 'form-comments':
                 bookingId = post_data[0]
-                booking = shortcuts.get_object_or_404(bookingmodels.Booking, pk=bookingId)
+                booking = shortcuts.get_object_or_404(bookingmodels.Booking,
+                                                      pk=bookingId)
                 booking.comments = post_data[1]
                 booking.save()
                 return HttpResponse(status=200)
@@ -282,7 +276,8 @@ class DashboardBookings(View):
         page_title = 'Bookings | Dashboard'
         page_type = 'dashboard'
 
-        booking_objects = bookingmodels.Booking.objects.filter(timeslot__isnull=False)
+        booking_objects = bookingmodels.Booking.objects.filter(
+            timeslot__isnull=False)
         times = serialize('json', bookingmodels.TimeSlot.objects.all())
 
         if request.user.is_staff:
@@ -306,26 +301,27 @@ class DashboardFood(View):
             post_data = data_from_post[1]
             if post_type == 'add-form':
                 group = shortcuts.get_object_or_404(menumodels.Group, pk=1)
-                category = shortcuts.get_object_or_404(menumodels.Category, pk=post_data[1])
+                category = shortcuts.get_object_or_404(menumodels.Category,
+                                                       pk=post_data[1])
                 item = menumodels.Item.objects.create(
-                    group = group,
-                    name = post_data[0],
-                    category = category,
-                    description = post_data[2],
-                    price = post_data[3],
+                    group=group,
+                    name=post_data[0],
+                    category=category,
+                    description=post_data[2],
+                    price=post_data[3],
                 )
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
                 print(post_data)
                 item_pk = post_data[4]
-                category = shortcuts.get_object_or_404(menumodels.Category, pk=post_data[1])
+                category = shortcuts.get_object_or_404(menumodels.Category,
+                                                       pk=post_data[1])
                 item = shortcuts.get_object_or_404(menumodels.Item, pk=item_pk)
                 item.category = category
                 item.name = post_data[0]
                 item.description = post_data[2]
                 item.price = post_data[3]
                 item.save()
-
                 return HttpResponse(status=200)
             elif post_type == 'non-form':
                 itemId = kwargs['item_id']
@@ -341,7 +337,6 @@ class DashboardFood(View):
 
         menu_objects = menumodels.Item.objects.filter(group='1')
 
-
         if request.user.is_staff:
             return shortcuts.render(
                 request, "dashboard/food.html", {
@@ -353,8 +348,8 @@ class DashboardFood(View):
         else:
             return shortcuts.redirect("account_login")
 
-class DashboardDrinks(View):
 
+class DashboardDrinks(View):
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             data_from_post = json.load(request)['post_data']
@@ -362,26 +357,27 @@ class DashboardDrinks(View):
             post_data = data_from_post[1]
             if post_type == 'add-form':
                 group = shortcuts.get_object_or_404(menumodels.Group, pk=2)
-                category = shortcuts.get_object_or_404(menumodels.Category, pk=post_data[1])
+                category = shortcuts.get_object_or_404(menumodels.Category,
+                                                       pk=post_data[1])
                 item = menumodels.Item.objects.create(
-                    group = group,
-                    name = post_data[0],
-                    category = category,
-                    description = post_data[2],
-                    price = post_data[3],
+                    group=group,
+                    name=post_data[0],
+                    category=category,
+                    description=post_data[2],
+                    price=post_data[3],
                 )
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
                 print(post_data)
                 item_pk = post_data[4]
-                category = shortcuts.get_object_or_404(menumodels.Category, pk=post_data[1])
+                category = shortcuts.get_object_or_404(menumodels.Category,
+                                                       pk=post_data[1])
                 item = shortcuts.get_object_or_404(menumodels.Item, pk=item_pk)
                 item.category = category
                 item.name = post_data[0]
                 item.description = post_data[2]
                 item.price = post_data[3]
                 item.save()
-
                 return HttpResponse(status=200)
             elif post_type == 'non-form':
                 itemId = kwargs['item_id']
@@ -391,13 +387,11 @@ class DashboardDrinks(View):
         else:
             return shortcuts.redirect("account_login")
 
-    
     def get(self, request, *args, **kwargs):
         page_title = 'Food Menu | Dashboard'
         page_type = 'dashboard'
 
         menu_objects = menumodels.Item.objects.filter(group='2')
-
 
         if request.user.is_staff:
             return shortcuts.render(

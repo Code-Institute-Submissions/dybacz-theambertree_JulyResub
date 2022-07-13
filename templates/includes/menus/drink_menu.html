@@ -18,9 +18,9 @@
         {% for i in menu %}
             {% if i.group.pk == 2 and i.category.pk == 8 %}
                 <div class="col-12 col-sm-6 col-xl-4 text-center menu-item d-flex flex-column justify-content-between">
-                        <h6 class="fw-bold text-decoration-underline">{{ i.name }}</h6>
-                        <p class=" fst-italic">{{ i.description }}</p>
-                        <p class="fw-bold">£{{ i.price }}</p>
+                    <h6 class="fw-bold text-decoration-underline">{{ i.name }}</h6>
+                    <p class=" fst-italic">{{ i.description }}</p>
+                    <p class="fw-bold">£{{ i.price }}</p>
                 </div>
             {% endif %}
         {% endfor %}
@@ -50,9 +50,9 @@
         {% for i in menu %}
             {% if i.group.pk == 2 and i.category.pk == 6 %}
                 <div class="col-12 col-sm-6 col-xl-4 text-center menu-item d-flex flex-column justify-content-between">
-                        <h6 class="fw-bold text-decoration-underline">{{ i.name }}</h6>
-                        <p class="fst-italic">{{ i.description }}</p>
-                        <p class="fw-bold">£{{ i.price }}</p>
+                    <h6 class="fw-bold text-decoration-underline">{{ i.name }}</h6>
+                    <p class="fst-italic">{{ i.description }}</p>
+                    <p class="fw-bold">£{{ i.price }}</p>
                 </div>
             {% endif %}
         {% endfor %}
@@ -67,14 +67,14 @@
         </div>
         <div class="row">
             {% for i in menu %}
-            {% if i.group.pk == 2 and i.category.pk == 9 %}
-                <div class="col-12 col-sm-6 text-center menu-item d-flex flex-column justify-content-between">
+                {% if i.group.pk == 2 and i.category.pk == 9 %}
+                    <div class="col-12 col-sm-6 text-center menu-item d-flex flex-column justify-content-between">
                         <h6 class="fw-bold text-decoration-underline">{{ i.name }}</h6>
                         <p class="fst-italic">{{ i.description }}</p>
                         <p class="fw-bold">£{{ i.price }}</p>
-                </div>
-            {% endif %}
-        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
     <div class="col-xxl-4 col-10 mx-auto d-flex flex-column">
@@ -84,8 +84,8 @@
         {% for i in menu %}
             {% if i.group.pk == 2 and i.category.pk == 10 %}
                 <div class="col text-center menu-item">
-                        <h6 class="fw-bold mb-1">{{ i.name }}</h6>
-                        <p class="mb-1">£{{ i.price }}</p>
+                    <h6 class="fw-bold mb-1">{{ i.name }}</h6>
+                    <p class="mb-1">£{{ i.price }}</p>
                 </div>
             {% endif %}
         {% endfor %}

@@ -5,7 +5,7 @@
 
 {% block head_title %}My Bookings | The Amber Tree{% endblock %}
 
-  {% block content %}
+{% block content %}
   <div class="col-12 col-xxl-6 offset-xxl-4 pt-4 px-0 px-sm-4">
     <div class="container mt-5 general-container">
       <div class="row">
@@ -32,20 +32,21 @@
               </thead>
               <tbody>
                 {% for booking in bookings %}
-                <tr>
-                  <th class="align-middle">{{ booking.first_name }} {{ booking.last_name }}</th>
-                  {% for slot in booking.timeslot.all %}
-                    <td class="align-middle">{{slot.date}}</td>
-                    <td class="align-middle time-format">{{slot.time_slot}}</td>
-                    <td class="align-middle">{{slot.table}}</td>
-                    <td hidden>{{booking.pk}}</td>
-                  {% endfor %}
-                  <td class="align-middle">
-                    <button type="button" class="btn btn-danger cancel-btn rounded-circle" style="height:30px; width: 30px; padding:0">
-                      <i class="fa-solid fa-x mt-1 fs-6"></i>
-                    </button>
-                  </td>
-                </tr>
+                  <tr>
+                    <th class="align-middle">{{ booking.first_name }} {{ booking.last_name }}</th>
+                    {% for slot in booking.timeslot.all %}
+                      <td class="align-middle">{{slot.date}}</td>
+                      <td class="align-middle time-format">{{slot.time_slot}}</td>
+                      <td class="align-middle">{{slot.table}}</td>
+                      <td hidden>{{booking.pk}}</td>
+                    {% endfor %}
+                    <td class="align-middle">
+                      <button type="button" class="btn btn-danger cancel-btn rounded-circle"
+                        style="height:30px; width: 30px; padding:0">
+                        <i class="fa-solid fa-x mt-1 fs-6"></i>
+                      </button>
+                    </td>
+                  </tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -58,124 +59,125 @@
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="myModalLabel">Cancel Booking</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body pb-1">
-              <p class="mb-1">Current Booking:</p>
-              <div>
-                <div class="row">
-                  <div class="col-2 pe-0">
-                    <span class="mt-2 fw-bold">Date:</span>
-                  </div>
-                  <div class="col-10 ps-0">
-                    <span id="booking-date" class="mt-2 text-center"></span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-2 pe-0">
-                    <span class="mt-2 fw-bold">Time:</span>
-                  </div>
-                  <div class="col-10 ps-0">
-                    <span id="booking-time" class="mt-2 text-center"></span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-2 pe-0">
-                    <span class="mt-2 fw-bold">Table:</span>
-                  </div>
-                  <div class="col-10 ps-0">
-                    <span id="booking-table" class="mt-2 text-center"></span>
-                  </div>
-                </div>
-              <p class="text-center my-2">Are you sure you want to <b>cancel</b> this booking?</p> 
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger remove-booking">Cancel booking</button>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">Cancel Booking</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="modal-body pb-1">
+        <p class="mb-1">Current Booking:</p>
+        <div>
+          <div class="row">
+            <div class="col-2 pe-0">
+              <span class="mt-2 fw-bold">Date:</span>
+            </div>
+            <div class="col-10 ps-0">
+              <span id="booking-date" class="mt-2 text-center"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2 pe-0">
+              <span class="mt-2 fw-bold">Time:</span>
+            </div>
+            <div class="col-10 ps-0">
+              <span id="booking-time" class="mt-2 text-center"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2 pe-0">
+              <span class="mt-2 fw-bold">Table:</span>
+            </div>
+            <div class="col-10 ps-0">
+              <span id="booking-table" class="mt-2 text-center"></span>
+            </div>
+          </div>
+          <p class="text-center my-2">Are you sure you want to <b>cancel</b> this booking?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger remove-booking">Cancel booking</button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-
 {% endblock %}
 
-
 {% block postload_js %}
-<script type="text/javascript">
-  let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+  <script type="text/javascript">
+    let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
 
-  let cancelButtons = document.querySelectorAll('.cancel-btn')
-  let bookingPk
+    let cancelButtons = document.querySelectorAll('.cancel-btn')
+    let bookingPk
 
-  let times = document.querySelectorAll('.time-format')
+    let times = document.querySelectorAll('.time-format')
 
-  for (let t of times) {
-    let currentTime = t.innerHTML
-    let currentTimeSplit = currentTime.split('-')
-    let list = []
-    for (let c of currentTimeSplit){
-      list.push(c.split(':'))
-    }
-    let newTime = `${list[0][0]}:${list[0][1]} - ${list[1][0]}:${list[1][1]}`
-    t.innerHTML = newTime
-  }
-  
-
-  for (let b of cancelButtons){
-    b.onclick = function(e){
-      let domStartPoint = b.parentNode.parentElement
-      let bookingDate = domStartPoint.children[1].innerHTML
-      let bookingTime = domStartPoint.children[2].innerHTML
-      let bookingTable = domStartPoint.children[3].innerHTML
-      let bookingPk = domStartPoint.children[4].innerHTML
-
-      let newBookingTimeSplit = bookingTime.split('-')
+    for (let t of times) {
+      let currentTime = t.innerHTML
+      let currentTimeSplit = currentTime.split('-')
       let list = []
-      for (let i of newBookingTimeSplit){
-        list.push(i.split(':'))
+      for (let c of currentTimeSplit) {
+        list.push(c.split(':'))
       }
-      console.log(list)
-      let newBookingTime = `${list[0][0]}:${list[0][1]} - ${list[1][0]}:${list[1][1]}`
-      modalDate = document.getElementById("booking-date")
-      modalDate.innerHTML = `${bookingDate}`
-      modalTime = document.getElementById("booking-time")
-      modalTime.innerHTML = `${newBookingTime}`
-      modalTable = document.getElementById("booking-table")
-      modalTable.innerHTML = `${bookingTable}`
-
-      myModal.show();
-      let modalSubmitBtn = document.querySelector('.remove-booking')
-      modalSubmitBtn.id = `remove_${bookingPk}`
+      let newTime = `${list[0][0]}:${list[0][1]} - ${list[1][0]}:${list[1][1]}`
+      t.innerHTML = newTime
     }
-  }
-
-  removeBooking = document.querySelectorAll('.remove-booking');
-  for (let i of removeBooking){
-    i.onclick = function(e){
-      fetchRequest(i.id)
-    }
-  };
 
 
-      try {
-        function fetchRequest(data) {
-                let csrfToken = "{{ csrf_token }}";
-                let bookingId = data.split('remove_')[1];
-                let url = `/bookings/my-bookings/remove/${bookingId}`
-                fetch(url, {
-                method: "POST",
-                headers: {'Accept': 'application/json' , 'X-Requested-With': 'XMLHttpRequest','X-CSRFToken': csrfToken},
-                body: JSON.stringify(data)
-                }).then(res => {
-                    location.reload();
-                });
+    for (let b of cancelButtons) {
+      b.onclick = function (e) {
+        let domStartPoint = b.parentNode.parentElement
+        let bookingDate = domStartPoint.children[1].innerHTML
+        let bookingTime = domStartPoint.children[2].innerHTML
+        let bookingTable = domStartPoint.children[3].innerHTML
+        let bookingPk = domStartPoint.children[4].innerHTML
+
+        let newBookingTimeSplit = bookingTime.split('-')
+        let list = []
+        for (let i of newBookingTimeSplit) {
+          list.push(i.split(':'))
         }
-    } catch (e) {
-        // error caught when basket is empty
-    }
-</script>
+        console.log(list)
+        let newBookingTime = `${list[0][0]}:${list[0][1]} - ${list[1][0]}:${list[1][1]}`
+        modalDate = document.getElementById("booking-date")
+        modalDate.innerHTML = `${bookingDate}`
+        modalTime = document.getElementById("booking-time")
+        modalTime.innerHTML = `${newBookingTime}`
+        modalTable = document.getElementById("booking-table")
+        modalTable.innerHTML = `${bookingTable}`
 
+        myModal.show();
+        let modalSubmitBtn = document.querySelector('.remove-booking')
+        modalSubmitBtn.id = `remove_${bookingPk}`
+      }
+    }
+
+    removeBooking = document.querySelectorAll('.remove-booking');
+    for (let i of removeBooking) {
+      i.onclick = function (e) {
+        fetchRequest(i.id)
+      }
+    };
+
+
+    try {
+      function fetchRequest(data) {
+        let csrfToken = "{{ csrf_token }}";
+        let bookingId = data.split('remove_')[1];
+        let url = `/bookings/my-bookings/remove/${bookingId}`
+        fetch(url, {
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': csrfToken
+          },
+          body: JSON.stringify(data)
+        }).then(res => {
+          location.reload();
+        });
+      }
+    } catch (e) {
+      // error caught when basket is empty
+    }
+  </script>
 {% endblock %}

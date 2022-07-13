@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-
-
 {% block content %}
     {% include 'includes/navbars/dashboard_nav.html' %}
     <div class="col-12 pt-4 px-0 px-sm-4">
@@ -33,21 +31,21 @@
                                 </thead>
                                 <tbody>
                                     {% for table in tables %}
-                                    <tr>
-                                        <th class="align-middle">{{ table.table_id }}</th>
-                                        <td class="align-middle">{{ table.table_capacity }}</td>
-                                        <td hidden>{{table.pk}}</td>
-                                        <td class="align-middle">
-                                            <button type="button" class="btn btn-success rounded-circle edit-btn"
-                                                style="height:30px; width: 30px; padding:0">
-                                                <i class="fa-regular fa-pen-to-square"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger cancel-btn rounded-circle"
-                                                style="height:30px; width: 30px; padding:0">
-                                                <i class="fa-solid fa-x mt-1 fs-6"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <th class="align-middle">{{ table.table_id }}</th>
+                                            <td class="align-middle">{{ table.table_capacity }}</td>
+                                            <td hidden>{{table.pk}}</td>
+                                            <td class="align-middle">
+                                                <button type="button" class="btn btn-success rounded-circle edit-btn"
+                                                    style="height:30px; width: 30px; padding:0">
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger cancel-btn rounded-circle"
+                                                    style="height:30px; width: 30px; padding:0">
+                                                    <i class="fa-solid fa-x mt-1 fs-6"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -59,195 +57,202 @@
     </div>
     </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Delete Table</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Delete Table</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                    <div class="modal-body pb-1">
+                        <div id="modal-form" hidden>
+                            <div>
+                                <label for="tablenumber">Table Number</label>
+                                <input class="form-control" type="number" min="1" value="" id="tablenumber"
+                                    name="tablenumber" aria-label="Input Table Number" required>
+                            </div>
+                            <div>
+                                <label for="tablecapcity">Table Capacity</label>
+                                <input class="form-control" type="number" min="1" name="tablecapacity" value=""
+                                    id="tablecapacity" aria-label="Input Table Capacity" required>
+                            </div>
+                        </div>
+                        <div id="modal-non-form">
+                            <p class="mb-1">Current Table:</p>
+                            <div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Table Number:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="table-number" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2 pe-0">
+                                        <span class="mt-2 fw-bold">Capacity:</span>
+                                    </div>
+                                    <div class="col-10 ps-0">
+                                        <span id="table-capacity" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this table?
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger modal-submit">Delete table</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <form>
-                <div class="modal-body pb-1">
-                    <div id="modal-form" hidden>
-                        <div>
-                            <label for="tablenumber">Table Number</label>
-                            <input class="form-control" type="number" min="1" value="" id="tablenumber"
-                                name="tablenumber" aria-label="Input Table Number" required>
-                        </div>
-                        <div>
-                            <label for="tablecapcity">Table Capacity</label>
-                            <input class="form-control" type="number" min="1" name="tablecapacity" value=""
-                                id="tablecapacity" aria-label="Input Table Capacity" required>
-                        </div>
-                    </div>
-                    <div id="modal-non-form">
-                        <p class="mb-1">Current Table:</p>
-                        <div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Table Number:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="table-number" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-2 pe-0">
-                                    <span class="mt-2 fw-bold">Capacity:</span>
-                                </div>
-                                <div class="col-10 ps-0">
-                                    <span id="table-capacity" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this table?
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger modal-submit">Delete table</button>
-                    </div>
-            </form>
-
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block postload_js %}
-{% include 'includes/dashboard/sub_nav_script.html' %}
-<script type="text/javascript">
-    let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
-    let cancelButtons = document.querySelectorAll('.cancel-btn')
-    let editButtons = document.querySelectorAll('.edit-btn')
-    let tablePk
+    {% include 'includes/dashboard/sub_nav_script.html' %}
+    <script type="text/javascript">
+        let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+        let cancelButtons = document.querySelectorAll(".cancel-btn");
+        let editButtons = document.querySelectorAll(".edit-btn");
+        let tablePk;
 
-    for (let i of editButtons) {
-        i.onclick = function (e) {
-            tableNumberValue = document.querySelector('#tablenumber')
-            tableCapacityValue = document.querySelector('#tablecapacity')
-            domStartPoint = i.parentNode.parentElement
-            tableNumber = domStartPoint.children[0].innerHTML
-            tableCapacity = domStartPoint.children[1].innerHTML
-            tablePk = domStartPoint.children[2].innerHTML
+        for (let i of editButtons) {
+            i.onclick = function (e) {
+                tableNumberValue = document.querySelector("#tablenumber");
+                tableCapacityValue = document.querySelector("#tablecapacity");
+                domStartPoint = i.parentNode.parentElement;
+                tableNumber = domStartPoint.children[0].innerHTML;
+                tableCapacity = domStartPoint.children[1].innerHTML;
+                tablePk = domStartPoint.children[2].innerHTML;
 
-            tableNumberValue.value = tableNumber
-            tableCapacityValue.value = tableCapacity
+                tableNumberValue.value = tableNumber;
+                tableCapacityValue.value = tableCapacity;
 
-            modalNonForm = document.querySelector('#modal-non-form')
-            modalForm = document.querySelector('#modal-form')
-            modalTitle = document.querySelector('#myModalLabel')
-            modalButton = document.querySelector('.modal-submit')
-            modalButton.innerHTML = "Edit Table"
-            modalButton.classList.remove("btn-danger")
-            modalButton.classList.add("btn-success")
-            modalNonForm.hidden = true
-            modalForm.hidden = false
-            modalTitle.innerHTML = 'Edit Table'
-            myModal.show();
-            modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `edit_${tablePk}`
+                modalNonForm = document.querySelector("#modal-non-form");
+                modalForm = document.querySelector("#modal-form");
+                modalTitle = document.querySelector("#myModalLabel");
+                modalButton = document.querySelector(".modal-submit");
+                modalButton.innerHTML = "Edit Table";
+                modalButton.classList.remove("btn-danger");
+                modalButton.classList.add("btn-success");
+                modalNonForm.hidden = true;
+                modalForm.hidden = false;
+                modalTitle.innerHTML = "Edit Table";
+                myModal.show();
+                modalSubmitBtn = document.querySelector(".modal-submit");
+                modalSubmitBtn.id = `edit_${tablePk}`;
+            };
         }
-    }
 
-    for (let b of cancelButtons) {
-        b.onclick = function (e) {
-            domStartPoint = b.parentNode.parentElement
-            tableNumber = domStartPoint.children[0].innerHTML
-            tableCapacity = domStartPoint.children[1].innerHTML
-            tablePk = domStartPoint.children[2].innerHTML
-            modalNonForm = document.querySelector('#modal-non-form')
-            modalForm = document.querySelector('#modal-form')
-            modalTitle = document.querySelector('#myModalLabel')
-            modalNonForm.hidden = false
-            modalForm.hidden = true
-            modalTitle.innerHTML = 'Delete Table'
-            modalTableNumber = document.getElementById("table-number")
-            modalTableNumber.innerHTML = `${tableNumber}`
-            modalTableCapacity = document.getElementById("table-capacity")
-            modalTableCapacity.innerHTML = `${tableCapacity}`
-            modalButton = document.querySelector('.modal-submit')
-            modalButton.innerHTML = "Delete Table"
-            modalButton.classList.remove("btn-success")
-            modalButton.classList.add("btn-danger")
-            myModal.show();
-            modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `remove_${tablePk}`
+        for (let b of cancelButtons) {
+            b.onclick = function (e) {
+                domStartPoint = b.parentNode.parentElement;
+                tableNumber = domStartPoint.children[0].innerHTML;
+                tableCapacity = domStartPoint.children[1].innerHTML;
+                tablePk = domStartPoint.children[2].innerHTML;
+                modalNonForm = document.querySelector("#modal-non-form");
+                modalForm = document.querySelector("#modal-form");
+                modalTitle = document.querySelector("#myModalLabel");
+                modalNonForm.hidden = false;
+                modalForm.hidden = true;
+                modalTitle.innerHTML = "Delete Table";
+                modalTableNumber = document.getElementById("table-number");
+                modalTableNumber.innerHTML = `${tableNumber}`;
+                modalTableCapacity = document.getElementById("table-capacity");
+                modalTableCapacity.innerHTML = `${tableCapacity}`;
+                modalButton = document.querySelector(".modal-submit");
+                modalButton.innerHTML = "Delete Table";
+                modalButton.classList.remove("btn-success");
+                modalButton.classList.add("btn-danger");
+                myModal.show();
+                modalSubmitBtn = document.querySelector(".modal-submit");
+                modalSubmitBtn.id = `remove_${tablePk}`;
+            };
         }
-    }
 
-    let submitModal = document.querySelectorAll('.modal-submit');
+        let submitModal = document.querySelectorAll(".modal-submit");
 
-    for (let i of submitModal) {
-        i.onclick = function (e) {
-            modalForm = document.querySelector('#modal-form')
-            if (modalForm.hidden == true) {
-                let type = 'non-form'
-                fetchRequest(i.id, type)
-            } else {
-                modalTitle = document.querySelector('#myModalLabel')
-                let type
-                if (modalTitle.innerHTML == 'Edit Table') {
-                    type = 'edit-form'
+        for (let i of submitModal) {
+            i.onclick = function (e) {
+                modalForm = document.querySelector("#modal-form");
+                if (modalForm.hidden == true) {
+                    let type = "non-form";
+                    fetchRequest(i.id, type);
                 } else {
-                    type = 'add-form'
+                    modalTitle = document.querySelector("#myModalLabel");
+                    let type;
+                    if (modalTitle.innerHTML == "Edit Table") {
+                        type = "edit-form";
+                    } else {
+                        type = "add-form";
+                    }
+                    tableNum = parseInt(document.querySelector("#tablenumber").value);
+                    tableCap = parseInt(document.querySelector("#tablecapacity").value);
+                    tablePk = i.id;
+                    if (tableNum > 0 && tableCap > 0) {
+                        let list = [tableNum, tableCap, tablePk];
+                        fetchRequest(list, type);
+                    } else {
+                        alert("Values entered must be greater than or equal to 1");
+                    }
                 }
-                tableNum = parseInt(document.querySelector('#tablenumber').value)
-                tableCap = parseInt(document.querySelector('#tablecapacity').value)
-                tablePk = i.id
-                if (tableNum > 0 && tableCap > 0) {
-                    let list = [tableNum, tableCap, tablePk]
-                    fetchRequest(list, type)
-                }
-                else {
-                    alert('Values entered must be greater than or equal to 1')
-                }
-            }
+            };
         }
-    };
 
-    let addButton = document.querySelector('#add-button')
+        let addButton = document.querySelector("#add-button");
 
-    addButton.onclick = function (e) {
-        modalNonForm = document.querySelector('#modal-non-form')
-        modalForm = document.querySelector('#modal-form')
-        modalTitle = document.querySelector('#myModalLabel')
-        modalButton = document.querySelector('.modal-submit')
-        modalButton.innerHTML = "Add Table"
-        modalButton.classList.remove("btn-danger")
-        modalButton.classList.add("btn-success")
-        modalNonForm.hidden = true
-        modalForm.hidden = false
-        modalTitle.innerHTML = 'Add Table'
-        myModal.show();
-    }
+        addButton.onclick = function (e) {
+            modalNonForm = document.querySelector("#modal-non-form");
+            modalForm = document.querySelector("#modal-form");
+            modalTitle = document.querySelector("#myModalLabel");
+            modalButton = document.querySelector(".modal-submit");
+            modalButton.innerHTML = "Add Table";
+            modalButton.classList.remove("btn-danger");
+            modalButton.classList.add("btn-success");
+            modalNonForm.hidden = true;
+            modalForm.hidden = false;
+            modalTitle.innerHTML = "Add Table";
+            myModal.show();
+        };
 
-    try {
-        function fetchRequest(data, type) {
-            let csrfToken = "{{ csrf_token }}";
-            let tableId
-            let url
-            if (type == 'non-form') {
-                tableId = data.split('remove_')[1];
-                url = `/dashboard/tables/remove/${tableId}`
-            } else if (type == 'add-form') {
-                url = `/dashboard/tables/add/`
-            } else if (type == 'edit-form') {
-                url = `/dashboard/tables/edit/`
-                tablePkValue = data[2].split('edit_')[1];
-                data[2] = tablePkValue
+        try {
+            function fetchRequest(data, type) {
+                let csrfToken = "{{ csrf_token }}";
+                let tableId;
+                let url;
+                if (type == "non-form") {
+                    tableId = data.split("remove_")[1];
+                    url = `/dashboard/tables/remove/${tableId}`;
+                } else if (type == "add-form") {
+                    url = `/dashboard/tables/add/`;
+                } else if (type == "edit-form") {
+                    url = `/dashboard/tables/edit/`;
+                    tablePkValue = data[2].split("edit_")[1];
+                    data[2] = tablePkValue;
+                }
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": csrfToken,
+                    },
+                    body: JSON.stringify({
+                        post_data: [type, data]
+                    }),
+                }).then((res) => {
+                    location.reload();
+                });
             }
-            fetch(url, {
-                method: "POST",
-                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': csrfToken },
-                body: JSON.stringify({ 'post_data': [type, data] })
-            }).then(res => {
-                location.reload();
-            });
+        } catch (e) {
+            Console.log(
+                `The data you have requested is not available from the server. Error:${e}`
+            );
         }
-    } catch (e) {
-        Console.log(`The data you have requested is not available from the server. Error:${e}`)
-    }
-</script>
+    </script>
 {% endblock %}

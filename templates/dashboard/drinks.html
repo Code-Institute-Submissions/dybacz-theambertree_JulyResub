@@ -1,69 +1,67 @@
 {% extends "base.html" %}
 
-
-
 {% block content %}
     {% include 'includes/navbars/dashboard_nav.html' %}
-    <div class="col-12 pt-4 px-0 px-sm-4">
-        <div class="container-fluid mt-5 general-container" style="min-height:85vh;">
-            <div class="row">
-                <div class="col-12 mb-3 mt-3 general-block" style="min-height:81vh;">
-                    <h2 class="mx-auto mt-2">Dashboard</h2>
-                    <div class="row">
-                        {% include 'includes/navbars/dashboard_subnav.html' %}
-                    </div>
-                    {% include 'includes/dashboard/header.html' %}
-                    <div class="row justify-content-center">
-                        <div class="col-12 col-md-10 text-end">
-                            <button class="btn btn-lg btn-success text-end" id="add-button">
-                                <i class="fa-solid fa-plus"></i>
-                                New Item
-                            </button>
+        <div class="col-12 pt-4 px-0 px-sm-4">
+            <div class="container-fluid mt-5 general-container" style="min-height:85vh;">
+                <div class="row">
+                    <div class="col-12 mb-3 mt-3 general-block" style="min-height:81vh;">
+                        <h2 class="mx-auto mt-2">Dashboard</h2>
+                        <div class="row">
+                            {% include 'includes/navbars/dashboard_subnav.html' %}
                         </div>
-                    </div>
-                    <div class="row justify-content-center pt-3">
-                        <div class="col-12 col-md-10 menu-scroll dash-block">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Group</th>
-                                        <th scope="col">Category</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for item in items %}
-                                    <tr>
-                                        <td class="align-middle">{{ item.pk }}</td>
-                                        <td class="align-middle">{{ item.name }}</td>
-                                        <td class="align-middle">{{ item.group }}</td>
-                                        <td class="align-middle">{{ item.category }}</td>
-                                        <td class="align-middle">{{ item.description }}</td>
-                                        <td class="align-middle">£{{ item.price }}</td>
-                                        <td class="align-middle">
-                                            <button type="button" class="btn btn-success rounded-circle edit-btn my-2"
-                                                style="height:30px; width: 30px; padding:0">
-                                                <i class="fa-regular fa-pen-to-square"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger cancel-btn rounded-circle my-2"
-                                                style="height:30px; width: 30px; padding:0">
-                                                <i class="fa-solid fa-x mt-1 fs-6"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+                        {% include 'includes/dashboard/header.html' %}
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-10 text-end">
+                                <button class="btn btn-lg btn-success text-end" id="add-button">
+                                    <i class="fa-solid fa-plus"></i>
+                                    New Item
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center pt-3">
+                            <div class="col-12 col-md-10 menu-scroll dash-block">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Group</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in items %}
+                                            <tr>
+                                                <td class="align-middle">{{ item.pk }}</td>
+                                                <td class="align-middle">{{ item.name }}</td>
+                                                <td class="align-middle">{{ item.group }}</td>
+                                                <td class="align-middle">{{ item.category }}</td>
+                                                <td class="align-middle">{{ item.description }}</td>
+                                                <td class="align-middle">£{{ item.price }}</td>
+                                                <td class="align-middle">
+                                                    <button type="button" class="btn btn-success rounded-circle edit-btn my-2"
+                                                        style="height:30px; width: 30px; padding:0">
+                                                        <i class="fa-regular fa-pen-to-square"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger cancel-btn rounded-circle my-2"
+                                                        style="height:30px; width: 30px; padding:0">
+                                                        <i class="fa-solid fa-x mt-1 fs-6"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     
     <!-- Modal -->
@@ -164,174 +162,181 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-danger modal-submit">Delete item</button>
                         </div>
+                    </div>
                 </form>
-    
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block postload_js %}
-{% include 'includes/dashboard/sub_nav_script.html' %}
-<script type="text/javascript">
-    let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
-    let cancelButtons = document.querySelectorAll('.cancel-btn')
-    let editButtons = document.querySelectorAll('.edit-btn')
-    let tablePk
+    {% include 'includes/dashboard/sub_nav_script.html' %}
+    <script type="text/javascript">
+        let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+        let cancelButtons = document.querySelectorAll(".cancel-btn");
+        let editButtons = document.querySelectorAll(".edit-btn");
+        let tablePk;
 
-    for (let i of editButtons) {
-        i.onclick = function (e) {
-            modalItemName = document.querySelector('#itemname')
-            modalItemCategory = document.querySelector('#itemcategory')
-            modalItemDescription = document.querySelector('#itemdescription')
-            modalItemPrice = document.querySelector('#itemprice')
+        for (let i of editButtons) {
+            i.onclick = function (e) {
+                modalItemName = document.querySelector("#itemname");
+                modalItemCategory = document.querySelector("#itemcategory");
+                modalItemDescription = document.querySelector("#itemdescription");
+                modalItemPrice = document.querySelector("#itemprice");
 
-            domStartPoint = i.parentNode.parentElement
-            itemId = domStartPoint.children[0].innerHTML
-            itemName = domStartPoint.children[1].innerHTML
-            itemCategory = domStartPoint.children[3].innerHTML
-            itemDescription = domStartPoint.children[4].innerHTML
-            itemPrice = domStartPoint.children[5].innerHTML
-            newItemPrice = itemPrice.split('£')[1]
-            console.log(newItemPrice)
+                domStartPoint = i.parentNode.parentElement;
+                itemId = domStartPoint.children[0].innerHTML;
+                itemName = domStartPoint.children[1].innerHTML;
+                itemCategory = domStartPoint.children[3].innerHTML;
+                itemDescription = domStartPoint.children[4].innerHTML;
+                itemPrice = domStartPoint.children[5].innerHTML;
+                newItemPrice = itemPrice.split("£")[1];
 
-            newItemCategory = itemCategory.charAt(0).toUpperCase() + itemCategory.slice(1)
+                newItemCategory =
+                    itemCategory.charAt(0).toUpperCase() + itemCategory.slice(1);
 
-            let options = document.querySelectorAll('option')
-            for (o of options) {
-                console.log(o.innerHTML, newItemCategory, o.selected)
-                if (o.innerHTML == itemCategory) {
-                    o.selected = true
+                let options = document.querySelectorAll("option");
+                for (o of options) {
+                    if (o.innerHTML == newItemCategory) {
+                        o.selected = true;
+                    }
                 }
-            }
-            modalItemName.value = itemName
-            modalItemDescription.value = itemDescription
-            modalItemPrice.value = newItemPrice
+                modalItemName.value = itemName;
+                modalItemDescription.value = itemDescription;
+                modalItemPrice.value = newItemPrice;
 
-            modalNonForm = document.querySelector('#modal-non-form')
-            modalForm = document.querySelector('#modal-form')
-            modalTitle = document.querySelector('#myModalLabel')
-            modalButton = document.querySelector('.modal-submit')
-            modalButton.innerHTML = "Edit Item"
-            modalButton.classList.remove("btn-danger")
-            modalButton.classList.add("btn-success")
-            modalNonForm.hidden = true
-            modalForm.hidden = false
-            modalTitle.innerHTML = 'Edit Item'
-            myModal.show();
-            modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `edit_${itemId}`
+                modalNonForm = document.querySelector("#modal-non-form");
+                modalForm = document.querySelector("#modal-form");
+                modalTitle = document.querySelector("#myModalLabel");
+                modalButton = document.querySelector(".modal-submit");
+                modalButton.innerHTML = "Edit Item";
+                modalButton.classList.remove("btn-danger");
+                modalButton.classList.add("btn-success");
+                modalNonForm.hidden = true;
+                modalForm.hidden = false;
+                modalTitle.innerHTML = "Edit Item";
+                myModal.show();
+                modalSubmitBtn = document.querySelector(".modal-submit");
+                modalSubmitBtn.id = `edit_${itemId}`;
+            };
         }
-    }
 
-    for (let b of cancelButtons) {
-        b.onclick = function (e) {
-            domStartPoint = b.parentNode.parentElement
-            itemId = domStartPoint.children[0].innerHTML
-            itemName = domStartPoint.children[1].innerHTML
-            itemGroup = domStartPoint.children[2].innerHTML
-            itemCategory = domStartPoint.children[3].innerHTML
-            itemDescription = domStartPoint.children[4].innerHTML
-            itemPrice = domStartPoint.children[5].innerHTML
+        for (let b of cancelButtons) {
+            b.onclick = function (e) {
+                domStartPoint = b.parentNode.parentElement;
+                itemId = domStartPoint.children[0].innerHTML;
+                itemName = domStartPoint.children[1].innerHTML;
+                itemGroup = domStartPoint.children[2].innerHTML;
+                itemCategory = domStartPoint.children[3].innerHTML;
+                itemDescription = domStartPoint.children[4].innerHTML;
+                itemPrice = domStartPoint.children[5].innerHTML;
 
-            modalNonForm = document.querySelector('#modal-non-form')
-            modalForm = document.querySelector('#modal-form')
-            modalTitle = document.querySelector('#myModalLabel')
-            modalNonForm.hidden = false
-            modalForm.hidden = true
-            modalTitle.innerHTML = 'Delete Item'
-            modalItemId = document.getElementById("item-id")
-            modalItemName = document.getElementById("item-name")
-            modalItemGroup = document.getElementById("item-group")
-            modalItemCategory = document.getElementById("item-category")
-            modalItemDescription = document.getElementById("item-description")
-            modalItemPrice = document.getElementById("item-price")
+                modalNonForm = document.querySelector("#modal-non-form");
+                modalForm = document.querySelector("#modal-form");
+                modalTitle = document.querySelector("#myModalLabel");
+                modalNonForm.hidden = false;
+                modalForm.hidden = true;
+                modalTitle.innerHTML = "Delete Item";
+                modalItemId = document.getElementById("item-id");
+                modalItemName = document.getElementById("item-name");
+                modalItemGroup = document.getElementById("item-group");
+                modalItemCategory = document.getElementById("item-category");
+                modalItemDescription = document.getElementById("item-description");
+                modalItemPrice = document.getElementById("item-price");
 
-            modalItemId.innerHTML = itemId
-            modalItemName.innerHTML = itemName
-            modalItemGroup.innerHTML = itemGroup
-            modalItemCategory.innerHTML = itemCategory
-            modalItemDescription.innerHTML = itemDescription
-            modalItemPrice.innerHTML = itemPrice
+                modalItemId.innerHTML = itemId;
+                modalItemName.innerHTML = itemName;
+                modalItemGroup.innerHTML = itemGroup;
+                modalItemCategory.innerHTML = itemCategory;
+                modalItemDescription.innerHTML = itemDescription;
+                modalItemPrice.innerHTML = itemPrice;
 
-            modalButton = document.querySelector('.modal-submit')
-            modalButton.innerHTML = "Delete Item"
-            modalButton.classList.remove("btn-success")
-            modalButton.classList.add("btn-danger")
-            myModal.show();
-            modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `remove_${itemId}`
+                modalButton = document.querySelector(".modal-submit");
+                modalButton.innerHTML = "Delete Item";
+                modalButton.classList.remove("btn-success");
+                modalButton.classList.add("btn-danger");
+                myModal.show();
+                modalSubmitBtn = document.querySelector(".modal-submit");
+                modalSubmitBtn.id = `remove_${itemId}`;
+            };
         }
-    }
 
-    let submitModal = document.querySelectorAll('.modal-submit');
+        let submitModal = document.querySelectorAll(".modal-submit");
 
-    for (let i of submitModal) {
-        i.onclick = function (e) {
-            modalForm = document.querySelector('#modal-form')
-            if (modalForm.hidden == true) {
-                let type = 'non-form'
-                fetchRequest(i.id, type)
-            } else {
-                modalTitle = document.querySelector('#myModalLabel')
-                let type
-                if (modalTitle.innerHTML == 'Edit Item') {
-                    type = 'edit-form'
+        for (let i of submitModal) {
+            i.onclick = function (e) {
+                modalForm = document.querySelector("#modal-form");
+                if (modalForm.hidden == true) {
+                    let type = "non-form";
+                    fetchRequest(i.id, type);
                 } else {
-                    type = 'add-form'
+                    modalTitle = document.querySelector("#myModalLabel");
+                    let type;
+                    if (modalTitle.innerHTML == "Edit Item") {
+                        type = "edit-form";
+                    } else {
+                        type = "add-form";
+                    }
+                    itemId = i.id;
+                    itemName = document.querySelector("#itemname").value;
+                    itemCategory = document.querySelector("#itemcategory").value;
+                    itemDescription = document.querySelector("#itemdescription").value;
+                    itemPrice = parseFloat(document.querySelector("#itemprice").value);
+                    let list = [itemName, itemCategory, itemDescription, itemPrice, itemId];
+                    fetchRequest(list, type);
                 }
-                itemId = i.id
-                itemName = document.querySelector('#itemname').value
-                itemCategory = document.querySelector('#itemcategory').value
-                itemDescription = document.querySelector('#itemdescription').value
-                itemPrice = parseFloat(document.querySelector('#itemprice').value)
-                let list = [itemName, itemCategory, itemDescription, itemPrice, itemId]
-                fetchRequest(list, type)
-            }
+            };
         }
-    };
 
-    let addButton = document.querySelector('#add-button')
+        let addButton = document.querySelector("#add-button");
 
-    addButton.onclick = function (e) {
-        modalNonForm = document.querySelector('#modal-non-form')
-        modalForm = document.querySelector('#modal-form')
-        modalTitle = document.querySelector('#myModalLabel')
-        modalButton = document.querySelector('.modal-submit')
-        modalButton.innerHTML = "Add Item"
-        modalButton.classList.remove("btn-danger")
-        modalButton.classList.add("btn-success")
-        modalNonForm.hidden = true
-        modalForm.hidden = false
-        modalTitle.innerHTML = 'Add Item'
-        myModal.show();
-    }
+        addButton.onclick = function (e) {
+            modalNonForm = document.querySelector("#modal-non-form");
+            modalForm = document.querySelector("#modal-form");
+            modalTitle = document.querySelector("#myModalLabel");
+            modalButton = document.querySelector(".modal-submit");
+            modalButton.innerHTML = "Add Item";
+            modalButton.classList.remove("btn-danger");
+            modalButton.classList.add("btn-success");
+            modalNonForm.hidden = true;
+            modalForm.hidden = false;
+            modalTitle.innerHTML = "Add Item";
+            myModal.show();
+        };
 
-    try {
-        function fetchRequest(data, type) {
-            let csrfToken = "{{ csrf_token }}";
-            let tableId
-            let url
-            if (type == 'non-form') {
-                itemId = data.split('remove_')[1];
-                url = `/dashboard/drinks/remove/${itemId}`
-            } else if (type == 'add-form') {
-                url = `/dashboard/drinks/add/`
-            } else if (type == 'edit-form') {
-                url = `/dashboard/drinks/edit/`
-                tablePkValue = data[4].split('edit_')[1];
-                data[4] = tablePkValue
+        try {
+            function fetchRequest(data, type) {
+                let csrfToken = "{{ csrf_token }}";
+                let tableId;
+                let url;
+                if (type == "non-form") {
+                    itemId = data.split("remove_")[1];
+                    url = `/dashboard/drinks/remove/${itemId}`;
+                } else if (type == "add-form") {
+                    url = `/dashboard/drinks/add/`;
+                } else if (type == "edit-form") {
+                    url = `/dashboard/drinks/edit/`;
+                    tablePkValue = data[4].split("edit_")[1];
+                    data[4] = tablePkValue;
+                }
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": csrfToken,
+                    },
+                    body: JSON.stringify({
+                        post_data: [type, data]
+                    }),
+                }).then((res) => {
+                    location.reload();
+                });
             }
-            fetch(url, {
-                method: "POST",
-                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': csrfToken },
-                body: JSON.stringify({ 'post_data': [type, data] })
-            }).then(res => {
-                location.reload();
-            });
+        } catch (e) {
+            Console.log(
+                `The data you have requested is not available from the server. Error:${e}`
+            );
         }
-    } catch (e) {
-        Console.log(`The data you have requested is not available from the server. Error:${e}`)
-    }
-</script>
+    </script>
 {% endblock %}

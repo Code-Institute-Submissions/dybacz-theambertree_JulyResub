@@ -1,176 +1,183 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<!-- {% load crispy_forms_tags %} -->
-    <div class="col-12 col-xxl-6 offset-xxl-4 px-0 px-sm-4">
-        <div class="container general-container mt-5" id="form-container">
-            <div class="row">
-                <div class="col-12 mt-3 mb-3 general-block menu-scroll" id="form-block">
-                    <h2 class="mx-auto mt-2">Make a booking</h2>
-                    <div class="row pt-5" id="form-row-top">
-                        <div class="col-12">
-                            <h3 class="mb-3 fancy-font">
-                                <i class="fa-regular fa-calendar-days ms-1"></i>
-                                Select date
-                            </h3>
-                            <input type="date" class="ms-4" name="date" id="date" value="2017-06-01" min="2018-01-01" max="2018-12-31">
-                        </div>
-                        <div class="col-12 mt-3">
-                            <div class="row justify-content-center">
-                                <h3 class="mb-0 fancy-font">
-                                    <i class="fa-regular fa-clock ms-1"></i>
-                                    Select time
+        <div class="col-12 col-xxl-6 offset-xxl-4 px-0 px-sm-4">
+            <div class="container general-container mt-5" id="form-container">
+                <div class="row">
+                    <div class="col-12 mt-3 mb-3 general-block menu-scroll" id="form-block">
+                        <h2 class="mx-auto mt-2">Make a booking</h2>
+                        <div class="row pt-5" id="form-row-top">
+                            <div class="col-12">
+                                <h3 class="mb-3 fancy-font">
+                                    <i class="fa-regular fa-calendar-days ms-1"></i>
+                                    Select date
                                 </h3>
-                                <span class="text-muted fst-italic ps-3 mb-2" style="font-size: 16px !important">Booking duration: 90 mins</span>
-                                <div class="text-center text-md-start">
-                                    {% for timeslot in timeslots %}
-                                    <div class="form-check form-check-inline px-0 mx-0">
-                                    <input type="radio" id="btn-{{ timeslot.pk }}" name="btn-timeslot" value="{{ timeslot.pk }}"
-                                        class="btn-check timeslots" required disabled>
-                                    <label for="btn-{{ timeslot.pk }}" class="btn btn-primary form-check-label time-slot m-1">
-                                        <b>{{timeslot.startTime }}</b>
-                                    </label>
-                                </div>
-                                {%if forloop.counter|divisibleby:4 %}
-                                    {% endif %}
-                                    {% endfor %}
+                                <input type="date" class="ms-4" name="date" id="date" value="2017-06-01" min="2018-01-01"
+                                    max="2018-12-31">
+                            </div>
+                            <div class="col-12 mt-3">
+                                <div class="row justify-content-center">
+                                    <h3 class="mb-0 fancy-font">
+                                        <i class="fa-regular fa-clock ms-1"></i>
+                                        Select time
+                                    </h3>
+                                    <span class="text-muted fst-italic ps-3 mb-2" style="font-size: 16px !important">Booking
+                                        duration: 90 mins</span>
+                                    <div class="text-center text-md-start">
+                                        {% for timeslot in timeslots %}
+                                        <div class="form-check form-check-inline px-0 mx-0">
+                                            <input type="radio" id="btn-{{ timeslot.pk }}" name="btn-timeslot"
+                                                value="{{ timeslot.pk }}" class="btn-check timeslots" required disabled>
+                                            <label for="btn-{{ timeslot.pk }}"
+                                                class="btn btn-primary form-check-label time-slot m-1">
+                                                <b>{{timeslot.startTime }}</b>
+                                            </label>
+                                        </div>
+                                        {%if forloop.counter|divisibleby:4 %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 mt-3">
-                            <div class="row justify-content-center">
-                                <h3 class="fancy-font">
-                                    <i class="fa-solid fa-utensils ms-1"></i>
-                                    Select Table
-                                </h3>
-                                <span class="text-muted fst-italic ps-3 mb-2" style="font-size: 16px !important">One table per booking</span>
-                                <div class="text-center text-md-start">
-                                    <form method="POST">
-                                        {% csrf_token %}
-                                        <div class="row pb-4">
+                        <div class="row">
+                            <div class="col-12 mt-3">
+                                <div class="row justify-content-center">
+                                    <h3 class="fancy-font">
+                                        <i class="fa-solid fa-utensils ms-1"></i>
+                                        Select Table
+                                    </h3>
+                                    <span class="text-muted fst-italic ps-3 mb-2" style="font-size: 16px !important">One table
+                                        per booking</span>
+                                    <div class="text-center text-md-start">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <div class="row pb-4">
                                                 <div class="text-center text-md-start">
                                                     {% for bookingslot in bookingslots %}
                                                     <div class="form-check form-check-inline px-0 mx-0">
-                                                        <input type="radio" id="table-btn-{{ bookingslot.pk }}" name="bookingslot"
-                                                        value="" class="btn-check tables" required disabled>
+                                                        <input type="radio" id="table-btn-{{ bookingslot.pk }}"
+                                                            name="bookingslot" value="" class="btn-check tables" required
+                                                            disabled>
                                                         <label for="table-btn-{{ bookingslot.pk }}"
-                                                        class="btn btn-booking-slot form-check-label booking-slot m-1">
-                                                        <b>Table: {{ bookingslot.table_id }}</b>
-                                                        |
-                                                        <b>Capacity: {{ bookingslot.table_capacity }}</b>
+                                                            class="btn btn-booking-slot form-check-label booking-slot m-1">
+                                                            <b>Table: {{ bookingslot.table_id }}</b>
+                                                            |
+                                                            <b>Capacity: {{ bookingslot.table_capacity }}</b>
                                                         </label>
                                                     </div>
-                
-                                                {%if forloop.counter|divisibleby:4 %}
+
+                                                    {%if forloop.counter|divisibleby:4 %}
                                                     {% endif %}
                                                     {% endfor %}
                                                 </div>
-                                        </div>
-                                        <div class="row" id="form-row-bot">
-                                            <h3 class="fancy-font">
-                                                <i class="fa-regular fa-address-card"></i>
-                                                Enter details
-                                            </h3>
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-floating">
-                                                    <input class="form-control mt-3 form-text" type="text" value="{{ user.first_name }}" id="firstname" name="firstname"
-                                                        placeholder="First Name" aria-label="Input First Name" required disabled>
-                                                    <label for="firstname">First Name</label>
+                                            </div>
+                                            <div class="row" id="form-row-bot">
+                                                <h3 class="fancy-font">
+                                                    <i class="fa-regular fa-address-card"></i>
+                                                    Enter details
+                                                </h3>
+                                                <div class="col-12 col-md-6">
+                                                    <div class="form-floating">
+                                                        <input class="form-control mt-3 form-text" type="text"
+                                                            value="{{ user.first_name }}" id="firstname" name="firstname"
+                                                            placeholder="First Name" aria-label="Input First Name" required
+                                                            disabled>
+                                                        <label for="firstname">First Name</label>
+                                                    </div>
+                                                    <div class="form-floating">
+                                                        <input class="form-control mt-4 form-text" type="text"
+                                                            value="{{ user.last_name }}" id="lastname" name="lastname"
+                                                            placeholder="Last Name" aria-label=" Input Last Name" required
+                                                            disabled>
+                                                        <label for="lasttname">Last Name</label>
+                                                    </div>
+                                                    <div class="form-floating">
+                                                        <input class="form-control mt-4 form-text" type="email" name="email"
+                                                            value="{{ user.email }}" id="email" aria-label="Input Email"
+                                                            placeholder="Email" required disabled>
+                                                        <label for="email">Email</label>
+                                                    </div>
                                                 </div>
-                                                <div class="form-floating">
-                                                    <input class="form-control mt-4 form-text" type="text" value="{{ user.last_name }}" id="lastname" name="lastname"
-                                                        placeholder="Last Name" aria-label=" Input Last Name" required disabled>
-                                                    <label for="lasttname">Last Name</label>
-                                                </div>
-                                                <div class="form-floating">
-                                                    <input class="form-control mt-4 form-text" type="email" name="email" value="{{ user.email }}" id="email"
-                                                        aria-label="Input Email" placeholder="Email" required disabled>
-                                                    <label for="email">Email</label>
+                                                <div class="col-12 col-md-6 pb-3">
+                                                    <div class="form-floating">
+                                                        <textarea class="form-control mt-3 form-text" id="comments"
+                                                            name="comments" placeholder="Additional Comments"
+                                                            aria-label="additional comments" style="height: 222px"
+                                                            maxlength="200" disabled></textarea>
+                                                        <label for="comments">Comments</label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6 pb-3">
-                                                <div class="form-floating">
-                                                    <textarea class="form-control mt-3 form-text" id="comments" name="comments" placeholder="Additional Comments"
-                                                        aria-label="additional comments" style="height: 222px" maxlength="200" disabled></textarea>
-                                                    <label for="comments">Comments</label>
+                                            <div class="row justify-content-evenly mt-3">
+                                                <div class="col-auto mt-2 mb-4">
+                                                    <button type="submit" class="btn btn-submit" id="book-btn" value="Book Now"
+                                                        disabled>
+                                                        <i class="fa-regular fa-calendar-plus ms-1"></i>
+                                                        Book Now
+                                                    </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row justify-content-evenly mt-3">
-                                            <div class="col-auto mt-2 mb-4">
-                                                <button type="submit" class="btn btn-submit" id="book-btn" value="Book Now" disabled>
-                                                    <i class="fa-regular fa-calendar-plus ms-1"></i>
-                                                    Book Now
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <!-- {{ booking_form | crispy }} -->
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">We are sorry!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Unfortunately there are no tables available for the date you have selected.
-                Please try an alternative date, Thank you. 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">We are sorry!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Unfortunately there are no tables available for the date you have selected.
+                    Please try an alternative date, Thank you.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
 {% endblock %}
 
 {% block postload_js %}
     <script type="text/javascript">
-        var myModal = document.getElementById('myModal')
-        var myInput = document.getElementById('myInput')
+        var myModal = document.getElementById("myModal");
+        var myInput = document.getElementById("myInput");
 
-        calendar = document.querySelector('#date')
-        timeSlots = document.querySelectorAll('.timeslots')
-        formText = document.querySelectorAll('.form-text')
-        tables = document.querySelectorAll('.tables')
-        bookBtn = document.querySelector('#book-btn')
+        calendar = document.querySelector("#date");
+        timeSlots = document.querySelectorAll(".timeslots");
+        formText = document.querySelectorAll(".form-text");
+        tables = document.querySelectorAll(".tables");
+        bookBtn = document.querySelector("#book-btn");
 
         function enableTimeSlots(data, tablenums) {
             for (let i of data) {
-                let time = i.fields.time_slot.toString()
+                let time = i.fields.time_slot.toString();
                 for (let t of timeSlots) {
                     if (t.value == time) {
-                        t.disabled = false
+                        t.disabled = false;
                         t.onchange = function () {
-                            enableFormText(data, t.value, tablenums)
-                            enableTables(data, t.value, tablenums)
+                            enableFormText(data, t.value, tablenums);
+                            enableTables(data, t.value, tablenums);
                             for (let tab of tables) {
                                 if (tab.disabled == false) {
-                                    tab.disabled = true
-                                    tab.checked = false
-                                    bookBtn.disabled = true
-                                    enableTables(data, t.value, tablenums)
+                                    tab.disabled = true;
+                                    tab.checked = false;
+                                    bookBtn.disabled = true;
+                                    enableTables(data, t.value, tablenums);
                                 }
                             }
-
-                        }
+                        };
                     }
                 }
             }
@@ -178,118 +185,111 @@
 
         function enableFormText(data, timeslot, tablenums) {
             for (let t of formText) {
-                t.disabled = false
+                t.disabled = false;
                 t.onchange = function () {
-                    enableTables(data, timeslot, tablenums)
-                }
+                    enableTables(data, timeslot, tablenums);
+                };
             }
         }
 
         function enableTables(data, timeslot, tablenums) {
             for (let i of data) {
-                let prk = i.fields.table
-                let tableNum
-                let tableTime = i.fields.time_slot.toString()
+                let prk = i.fields.table;
+                let tableNum;
+                let tableTime = i.fields.time_slot.toString();
                 for (let x of tablenums) {
                     if (prk == x.pk) {
-                        tableNum = x.pk
+                        tableNum = x.pk;
                     }
                 }
                 //check against time
                 for (let t of tables) {
-                    if (t.id == `table-btn-${tableNum}` & tableTime == timeslot) {
-                        t.disabled = false
+                    if ((t.id == `table-btn-${tableNum}`) & (tableTime == timeslot)) {
+                        t.disabled = false;
                         t.onchange = function () {
-                            enableBook(data)
-                        }
+                            enableBook(data);
+                        };
                     }
                 }
             }
         }
 
         function enableBook(data) {
-            let bookBtn = document.querySelector('#book-btn')
-            bookBtn.disabled = false
-            let time
-            let table
+            let bookBtn = document.querySelector("#book-btn");
+            bookBtn.disabled = false;
+            let time;
+            let table;
             for (let t of timeSlots) {
-                if (t.checked == true)
-                    time = t.value
-                console.log(time, '1')
+                if (t.checked == true) time = t.value;
             }
             for (let t of tables) {
-                if (t.checked == true)
-                    table = t.id.split("-")
-                console.log(table, '2')
+                if (t.checked == true) table = t.id.split("-");
             }
             for (let i of data) {
-                let timeslot = i.fields.time_slot.toString()
-                let tablenum = i.fields.table.toString()
-                console.log(time,timeslot,tablenum, table[2])
-                if (timeslot == time & tablenum == table[2]) {
-                    console.log(i, 'lol')
+                let timeslot = i.fields.time_slot.toString();
+                let tablenum = i.fields.table.toString();
+                if ((timeslot == time) & (tablenum == table[2])) {
                     for (let t of tables) {
-                        if (t.checked == true)
-                            t.value = i.pk
-
+                        if (t.checked == true) t.value = i.pk;
                     }
                 }
             }
         }
 
         calendar.onchange = function () {
-            console.log('change')
-            let date = calendar.value
-            fetchRequest(date)
-        }
+            let date = calendar.value;
+            fetchRequest(date);
+        };
 
         function disableAll() {
-            bookBtn.disabled = true
+            bookBtn.disabled = true;
             for (let slot of timeSlots) {
                 if (slot.disabled == false) {
-                    slot.disabled = true
+                    slot.disabled = true;
                 }
             }
             for (let tab of tables) {
                 if (tab.disabled == false) {
-                    tab.disabled = true
+                    tab.disabled = true;
                 }
             }
-
         }
 
         function fetchRequest(data) {
             let csrfToken = "{{ csrf_token }}";
-            let dataRequest = 'timeslots';
-            let url = `/bookings/ajax/${dataRequest}/`
-            // let data = {'product_size': size}
+            let dataRequest = "timeslots";
+            let url = `/bookings/ajax/${dataRequest}/`;
             fetch(url, {
-                method: "POST",
-                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': csrfToken },
-                body: JSON.stringify({ 'post_data': data })
-            }).then(response => {
-                return response.json() //Convert response to JSON
-            })
-                .then(data => {
-                    console.log(data, 'tree')
-                    if ('nodata' in data) {
-                        console.log(data, "hello")
-                        let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": csrfToken,
+                    },
+                    body: JSON.stringify({
+                        post_data: data
+                    }),
+                })
+                .then((response) => {
+                    return response.json(); //Convert response to JSON
+                })
+                .then((data) => {
+                    if ("nodata" in data) {
+                        let myModal = new bootstrap.Modal(
+                            document.getElementById("myModal"), {}
+                        );
                         myModal.show();
                         disableAll();
                     } else {
-                        let newdata = data.data
-                        let tables = data.tables
-                        console.log(newdata, 'ff', tables)
-
-                        enableTimeSlots(newdata, tables)
+                        let newdata = data.data;
+                        let tables = data.tables;
+                        enableTimeSlots(newdata, tables);
                     }
                 })
-                .catch(err => {
+                .catch((err) => {
                     // Do something for an error here
                     console.log("Error Reading data");
                 });
         }
-
     </script>
 {% endblock %}

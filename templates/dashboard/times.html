@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-
-
 {% block content %}
     {% include 'includes/navbars/dashboard_nav.html' %}
     <div class="col-12 pt-4 px-0 px-sm-4">
@@ -33,21 +31,21 @@
                                 </thead>
                                 <tbody>
                                     {% for timeslot in timeslots %}
-                                    <tr>
-                                        <th class="align-middle">{{ timeslot.startTime|time:"g:i a" }}</th>
-                                        <td class="align-middle">{{ timeslot.endTime|time:"g:i a" }}</td>
-                                        <td hidden>{{timeslot.pk}}</td>
-                                        <td class="align-middle">
-                                            <button type="button" class="btn btn-success rounded-circle edit-btn"
-                                                style="height:30px; width: 30px; padding:0">
-                                                <i class="fa-regular fa-pen-to-square"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger cancel-btn rounded-circle"
-                                                style="height:30px; width: 30px; padding:0">
-                                                <i class="fa-solid fa-x mt-1 fs-6"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <th class="align-middle">{{ timeslot.startTime|time:"g:i a" }}</th>
+                                            <td class="align-middle">{{ timeslot.endTime|time:"g:i a" }}</td>
+                                            <td hidden>{{timeslot.pk}}</td>
+                                            <td class="align-middle">
+                                                <button type="button" class="btn btn-success rounded-circle edit-btn"
+                                                    style="height:30px; width: 30px; padding:0">
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger cancel-btn rounded-circle"
+                                                    style="height:30px; width: 30px; padding:0">
+                                                    <i class="fa-solid fa-x mt-1 fs-6"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -59,196 +57,202 @@
     </div>
     </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Delete Table</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Delete Table</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                    <div class="modal-body pb-1">
+                        <div id="modal-form" hidden>
+                            <div>
+                                <label for="starttime">Start Time</label>
+                                <input class="form-control" type="time" value="" id="starttime" name="starttime"
+                                    aria-label="Input Start Time" required>
+                            </div>
+                            <div>
+                                <p>All Time Slots are currently set to 90 minuite sessions.</p>
+                            </div>
+                        </div>
+                        <div id="modal-non-form">
+                            <p class="mb-1">Current Time:</p>
+                            <div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Start Time:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="start-time" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">End Time:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="end-time" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this time
+                                slot?
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger modal-submit">Delete Time Slot</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <form>
-                <div class="modal-body pb-1">
-                    <div id="modal-form" hidden>
-                        <div>
-                            <label for="starttime">Start Time</label>
-                            <input class="form-control" type="time" value="" id="starttime"
-                                name="starttime" aria-label="Input Start Time" required>
-                        </div>
-                        <div>
-                            <p>All Time Slots are currently set to 90 minuite sessions.</p>
-                        </div>
-                    </div>
-                    <div id="modal-non-form">
-                        <p class="mb-1">Current Time:</p>
-                        <div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Start Time:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="start-time" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">End Time:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="end-time" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this time slot?
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger modal-submit">Delete Time Slot</button>
-                    </div>
-            </form>
-
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block postload_js %}
-{% include 'includes/dashboard/sub_nav_script.html' %}
-<script type="text/javascript">
-    let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
-    let cancelButtons = document.querySelectorAll('.cancel-btn')
-    let editButtons = document.querySelectorAll('.edit-btn')
-    let timeslotPk
+    {% include 'includes/dashboard/sub_nav_script.html' %}
+    <script type="text/javascript">
+        let myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+        let cancelButtons = document.querySelectorAll(".cancel-btn");
+        let editButtons = document.querySelectorAll(".edit-btn");
+        let timeslotPk;
 
-    for (let i of editButtons) {
-        i.onclick = function (e) {
-            startTimeValue = document.querySelector('#starttime')
-            domStartPoint = i.parentNode.parentElement
-            console.log(i)
-            startTime = domStartPoint.children[0].innerHTML
-            timeslotPk = domStartPoint.children[2].innerHTML
+        for (let i of editButtons) {
+            i.onclick = function (e) {
+                startTimeValue = document.querySelector("#starttime");
+                domStartPoint = i.parentNode.parentElement;
+                startTime = domStartPoint.children[0].innerHTML;
+                timeslotPk = domStartPoint.children[2].innerHTML;
 
-            time = startTime.split(':')
-            suffix = time[1].split(' ')
-            if (suffix[1] == 'a.m.' && time[0] < 10){
-              time[0] = `0${time[0]}`
-            } else if(suffix[1] == 'p.m.'){
-              time[0] = parseInt(time[0]) + 12
-            }
-
-            formattedStartTime = `${time[0]}:${suffix[0]}`
-
-            startTimeValue.value = formattedStartTime
-
-            modalNonForm = document.querySelector('#modal-non-form')
-            modalForm = document.querySelector('#modal-form')
-            modalTitle = document.querySelector('#myModalLabel')
-            modalButton = document.querySelector('.modal-submit')
-            modalButton.innerHTML = "Edit Time Slot"
-            modalButton.classList.remove("btn-danger")
-            modalButton.classList.add("btn-success")
-            modalNonForm.hidden = true
-            modalForm.hidden = false
-            modalTitle.innerHTML = 'Edit Time Slot'
-            myModal.show();
-            modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `edit_${timeslotPk}`
-        }
-    }
-
-    for (let b of cancelButtons) {
-        b.onclick = function (e) {
-            domStartPoint = b.parentNode.parentElement
-            startTime = domStartPoint.children[0].innerHTML
-            endTime = domStartPoint.children[1].innerHTML
-            timeslotPk = domStartPoint.children[2].innerHTML
-            modalNonForm = document.querySelector('#modal-non-form')
-            modalForm = document.querySelector('#modal-form')
-            modalTitle = document.querySelector('#myModalLabel')
-            modalNonForm.hidden = false
-            modalForm.hidden = true
-            modalTitle.innerHTML = 'Current Time Slot'
-            modalStartTime = document.getElementById("start-time")
-            modalStartTime.innerHTML = `${startTime}`
-            modalEndTime = document.getElementById("end-time")
-            modalEndTime.innerHTML = `${endTime}`
-            modalButton = document.querySelector('.modal-submit')
-            modalButton.innerHTML = "Delete Time Slot"
-            modalButton.classList.remove("btn-success")
-            modalButton.classList.add("btn-danger")
-            myModal.show();
-            modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `remove_${timeslotPk}`
-        }
-    }
-
-    let submitModal = document.querySelectorAll('.modal-submit');
-
-    for (let i of submitModal) {
-        i.onclick = function (e) {
-            modalForm = document.querySelector('#modal-form')
-            if (modalForm.hidden == true) {
-                let type = 'non-form'
-                fetchRequest(i.id, type)
-            } else {
-                modalTitle = document.querySelector('#myModalLabel')
-                let type
-                if (modalTitle.innerHTML == 'Edit Time Slot') {
-                    type = 'edit-form'
-                } else {
-                    type = 'add-form'
+                time = startTime.split(":");
+                suffix = time[1].split(" ");
+                if (suffix[1] == "a.m." && time[0] < 10) {
+                    time[0] = `0${time[0]}`;
+                } else if (suffix[1] == "p.m.") {
+                    time[0] = parseInt(time[0]) + 12;
                 }
-                startTime = document.querySelector('#starttime').value
-                timeslotPk = i.id
-                let list = [startTime, timeslotPk]
-                console.log(list)
-                fetchRequest(list, type)
-            }
+
+                formattedStartTime = `${time[0]}:${suffix[0]}`;
+
+                startTimeValue.value = formattedStartTime;
+
+                modalNonForm = document.querySelector("#modal-non-form");
+                modalForm = document.querySelector("#modal-form");
+                modalTitle = document.querySelector("#myModalLabel");
+                modalButton = document.querySelector(".modal-submit");
+                modalButton.innerHTML = "Edit Time Slot";
+                modalButton.classList.remove("btn-danger");
+                modalButton.classList.add("btn-success");
+                modalNonForm.hidden = true;
+                modalForm.hidden = false;
+                modalTitle.innerHTML = "Edit Time Slot";
+                myModal.show();
+                modalSubmitBtn = document.querySelector(".modal-submit");
+                modalSubmitBtn.id = `edit_${timeslotPk}`;
+            };
         }
-    };
 
-    let addButton = document.querySelector('#add-button')
-
-    addButton.onclick = function (e) {
-        modalNonForm = document.querySelector('#modal-non-form')
-        modalForm = document.querySelector('#modal-form')
-        modalTitle = document.querySelector('#myModalLabel')
-        modalButton = document.querySelector('.modal-submit')
-        modalButton.innerHTML = "Add Time Slot"
-        modalButton.classList.remove("btn-danger")
-        modalButton.classList.add("btn-success")
-        modalNonForm.hidden = true
-        modalForm.hidden = false
-        modalTitle.innerHTML = 'Add Time Slot'
-        myModal.show();
-    }
-
-    try {
-        function fetchRequest(data, type) {
-            let csrfToken = "{{ csrf_token }}";
-            let timeslotId
-            let url
-            if (type == 'non-form') {
-                timeslotId = data.split('remove_')[1];
-                url = `/dashboard/times/remove/${timeslotId}`
-            } else if (type == 'add-form') {
-                url = `/dashboard/times/add/`
-            } else if (type == 'edit-form') {
-                url = `/dashboard/times/edit/`
-                timeslotPkValue = data[1].split('edit_')[1];
-                data[1] = timeslotPkValue
-            }
-            fetch(url, {
-                method: "POST",
-                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': csrfToken },
-                body: JSON.stringify({ 'post_data': [type, data] })
-            }).then(res => {
-                location.reload();
-            });
+        for (let b of cancelButtons) {
+            b.onclick = function (e) {
+                domStartPoint = b.parentNode.parentElement;
+                startTime = domStartPoint.children[0].innerHTML;
+                endTime = domStartPoint.children[1].innerHTML;
+                timeslotPk = domStartPoint.children[2].innerHTML;
+                modalNonForm = document.querySelector("#modal-non-form");
+                modalForm = document.querySelector("#modal-form");
+                modalTitle = document.querySelector("#myModalLabel");
+                modalNonForm.hidden = false;
+                modalForm.hidden = true;
+                modalTitle.innerHTML = "Current Time Slot";
+                modalStartTime = document.getElementById("start-time");
+                modalStartTime.innerHTML = `${startTime}`;
+                modalEndTime = document.getElementById("end-time");
+                modalEndTime.innerHTML = `${endTime}`;
+                modalButton = document.querySelector(".modal-submit");
+                modalButton.innerHTML = "Delete Time Slot";
+                modalButton.classList.remove("btn-success");
+                modalButton.classList.add("btn-danger");
+                myModal.show();
+                modalSubmitBtn = document.querySelector(".modal-submit");
+                modalSubmitBtn.id = `remove_${timeslotPk}`;
+            };
         }
-    } catch (e) {
-        Console.log(`The data you have requested is not available from the server. Error:${e}`)
-    }
-</script>
+
+        let submitModal = document.querySelectorAll(".modal-submit");
+
+        for (let i of submitModal) {
+            i.onclick = function (e) {
+                modalForm = document.querySelector("#modal-form");
+                if (modalForm.hidden == true) {
+                    let type = "non-form";
+                    fetchRequest(i.id, type);
+                } else {
+                    modalTitle = document.querySelector("#myModalLabel");
+                    let type;
+                    if (modalTitle.innerHTML == "Edit Time Slot") {
+                        type = "edit-form";
+                    } else {
+                        type = "add-form";
+                    }
+                    startTime = document.querySelector("#starttime").value;
+                    timeslotPk = i.id;
+                    let list = [startTime, timeslotPk];
+                    fetchRequest(list, type);
+                }
+            };
+        }
+
+        let addButton = document.querySelector("#add-button");
+        addButton.onclick = function (e) {
+            modalNonForm = document.querySelector("#modal-non-form");
+            modalForm = document.querySelector("#modal-form");
+            modalTitle = document.querySelector("#myModalLabel");
+            modalButton = document.querySelector(".modal-submit");
+            modalButton.innerHTML = "Add Time Slot";
+            modalButton.classList.remove("btn-danger");
+            modalButton.classList.add("btn-success");
+            modalNonForm.hidden = true;
+            modalForm.hidden = false;
+            modalTitle.innerHTML = "Add Time Slot";
+            myModal.show();
+        };
+
+        try {
+            function fetchRequest(data, type) {
+                let csrfToken = "{{ csrf_token }}";
+                let timeslotId;
+                let url;
+                if (type == "non-form") {
+                    timeslotId = data.split("remove_")[1];
+                    url = `/dashboard/times/remove/${timeslotId}`;
+                } else if (type == "add-form") {
+                    url = `/dashboard/times/add/`;
+                } else if (type == "edit-form") {
+                    url = `/dashboard/times/edit/`;
+                    timeslotPkValue = data[1].split("edit_")[1];
+                    data[1] = timeslotPkValue;
+                }
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": csrfToken,
+                    },
+                    body: JSON.stringify({
+                        post_data: [type, data]
+                    }),
+                }).then((res) => {
+                    location.reload();
+                });
+            }
+        } catch (e) {
+            Console.log(
+                `The data you have requested is not available from the server. Error:${e}`
+            );
+        }
+    </script>
 {% endblock %}
