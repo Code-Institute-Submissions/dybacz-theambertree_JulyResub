@@ -23,7 +23,11 @@ urlpatterns = [
     path('food/', views.DashboardFood.as_view(), name='dashboard_food'),
     path('food/remove/<item_id>', views.DashboardFood.as_view()),
     path('food/add/', views.DashboardFood.as_view()),
+    path('food/edit/', views.DashboardFood.as_view()),
     path('drinks/', views.DashboardDrinks.as_view(), name='dashboard_drinks'),
+    path('drinks/remove/<item_id>', views.DashboardDrinks.as_view()),
+    path('drinks/add/', views.DashboardDrinks.as_view()),
+    path('drinks/edit/', views.DashboardDrinks.as_view()),
     path('messages/', views.DashboardMessages.as_view(), name='dashboard_messages'),
     path('help/', views.DashboardHelp.as_view(), name='dashboard_help'),
 
