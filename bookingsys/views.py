@@ -117,7 +117,7 @@ class Bookings(View):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             user = request.user
-            bookings = models.Booking.objects.filter(account=user, status=0).order_by('timeslot')
+            bookings = models.Booking.objects.filter(timeslot__isnull=False, account=user, status=0).order_by('timeslot')
             return shortcuts.render(
                 request,
                 "bookingsys/my_bookings.html",
