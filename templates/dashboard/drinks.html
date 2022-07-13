@@ -65,109 +65,110 @@
         </div>
     </div>
     </div>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Delete Item</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Delete Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                    <div class="modal-body pb-1">
+                        <div id="modal-form" hidden>
+                            <div>
+                                <label for="itemname">Item Name</label>
+                                <input class="form-control" type="text" value="" id="itemname" name="itemname"
+                                    aria-label="Input Item Number" required>
+                            </div>
+                            <div>
+                                <label for="itemcategory">Category</label>
+                                <select class="form-select form-select-md" aria-label=".form-select-md Table Select"
+                                    id="itemcategory" required>
+                                    <option value="6">Wine</option>
+                                    <option value="7">Beer</option>
+                                    <option value="8">Cocktails</option>
+                                    <option value="9">Spirits</option>
+                                    <option value="10">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="itemdescription">Description</label>
+                                <textarea class="form-control" id="itemdescription" rows="4" name="itemdescription"
+                                    aria-label="Input Iem Description" required></textarea>
+    
+                            </div>
+                            <div>
+                                <label for="itemprice">Price</label>
+                                <input class="form-control" type="number" name="itemprice" step=".01" min="0" value=""
+                                    id="itemprice" aria-label="Input Item Price" required>
+                            </div>
+                        </div>
+                        <div id="modal-non-form">
+                            <p class="mb-1">Current Item:</p>
+                            <div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Id:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="item-id" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Name:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="item-name" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Group:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="item-group" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Category:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="item-category" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Description:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="item-description" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 pe-0">
+                                        <span class="mt-2 fw-bold">Price:</span>
+                                    </div>
+                                    <div class="col-9 ps-0">
+                                        <span id="item-price" class="mt-2 text-center"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this item?
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger modal-submit">Delete item</button>
+                        </div>
+                </form>
+    
             </div>
-            <form>
-                <div class="modal-body pb-1">
-                    <div id="modal-form" hidden>
-                        <div>
-                            <label for="itemname">Item Name</label>
-                            <input class="form-control" type="text" value="" id="itemname"
-                                name="itemname" aria-label="Input Item Number" required>
-                        </div>
-                        <div>
-                            <label for="itemcategory">Category</label>
-                            <select class="form-select form-select-md" aria-label=".form-select-md Table Select" id="itemcategory" required>
-                                <option value="1">Starter</option>
-                                <option value="2">Main</option>
-                                <option value="3">Dessert</option>
-                                <option value="4">Side</option>
-                                <option value="5">Extra</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="itemdescription">Description</label>
-                            <textarea class="form-control" id="itemdescription" rows="4"  name="itemdescription" 
-                            aria-label="Input Iem Description" required></textarea>
-
-                        </div>
-                        <div>
-                            <label for="itemprice">Price</label>
-                            <input class="form-control" type="number" name="itemprice" step=".01" value=""
-                                id="itemprice" aria-label="Input Item Price" required>
-                        </div>
-                    </div>
-                    <div id="modal-non-form">
-                        <p class="mb-1">Current Item:</p>
-                        <div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Id:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="item-id" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Name:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="item-name" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Group:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="item-group" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Category:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="item-category" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Description:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="item-description" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 pe-0">
-                                    <span class="mt-2 fw-bold">Price:</span>
-                                </div>
-                                <div class="col-9 ps-0">
-                                    <span id="item-price" class="mt-2 text-center"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-center my-2">Are you sure you want to <b id="areyousure">delete</b> this item?
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger modal-submit">Delete item</button>
-                    </div>
-            </form>
-
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block postload_js %}
@@ -180,29 +181,46 @@
 
     for (let i of editButtons) {
         i.onclick = function (e) {
-            // tableNumberValue = document.querySelector('#tablenumber')
-            // tableCapacityValue = document.querySelector('#tablecapacity')
-            // domStartPoint = i.parentNode.parentElement
-            // tableNumber = domStartPoint.children[0].innerHTML
-            // tableCapacity = domStartPoint.children[1].innerHTML
-            // tablePk = domStartPoint.children[2].innerHTML
+            modalItemName = document.querySelector('#itemname')
+            modalItemCategory = document.querySelector('#itemcategory')
+            modalItemDescription = document.querySelector('#itemdescription')
+            modalItemPrice = document.querySelector('#itemprice')
 
-            // tableNumberValue.value = tableNumber
-            // tableCapacityValue.value = tableCapacity
+            domStartPoint = i.parentNode.parentElement
+            itemId = domStartPoint.children[0].innerHTML
+            itemName = domStartPoint.children[1].innerHTML
+            itemCategory = domStartPoint.children[3].innerHTML
+            itemDescription = domStartPoint.children[4].innerHTML
+            itemPrice = domStartPoint.children[5].innerHTML
+            newItemPrice = itemPrice.split('£')[1]
+            console.log(newItemPrice)
+
+            newItemCategory = itemCategory.charAt(0).toUpperCase() + itemCategory.slice(1)
+
+            let options = document.querySelectorAll('option')
+            for (o of options) {
+                console.log(o.innerHTML, newItemCategory, o.selected)
+                if (o.innerHTML == itemCategory) {
+                    o.selected = true
+                }
+            }
+            modalItemName.value = itemName
+            modalItemDescription.value = itemDescription
+            modalItemPrice.value = newItemPrice
 
             modalNonForm = document.querySelector('#modal-non-form')
             modalForm = document.querySelector('#modal-form')
             modalTitle = document.querySelector('#myModalLabel')
             modalButton = document.querySelector('.modal-submit')
-            modalButton.innerHTML = "Edit Table"
+            modalButton.innerHTML = "Edit Item"
             modalButton.classList.remove("btn-danger")
             modalButton.classList.add("btn-success")
             modalNonForm.hidden = true
             modalForm.hidden = false
-            modalTitle.innerHTML = 'Edit Table'
+            modalTitle.innerHTML = 'Edit Item'
             myModal.show();
             modalSubmitBtn = document.querySelector('.modal-submit')
-            modalSubmitBtn.id = `edit_${tablePk}`
+            modalSubmitBtn.id = `edit_${itemId}`
         }
     }
 
@@ -236,10 +254,6 @@
             modalItemDescription.innerHTML = itemDescription
             modalItemPrice.innerHTML = itemPrice
 
-
-            // modalTableNumber.innerHTML = `${tableNumber}`
-            // modalTableCapacity = document.getElementById("table-capacity")
-            // modalTableCapacity.innerHTML = `${tableCapacity}`
             modalButton = document.querySelector('.modal-submit')
             modalButton.innerHTML = "Delete Item"
             modalButton.classList.remove("btn-success")
@@ -266,20 +280,13 @@
                 } else {
                     type = 'add-form'
                 }
+                itemId = i.id
                 itemName = document.querySelector('#itemname').value
                 itemCategory = document.querySelector('#itemcategory').value
                 itemDescription = document.querySelector('#itemdescription').value
                 itemPrice = parseFloat(document.querySelector('#itemprice').value)
-                let list = [itemName, itemCategory, itemDescription, itemPrice]
+                let list = [itemName, itemCategory, itemDescription, itemPrice, itemId]
                 fetchRequest(list, type)
-                // tablePk = i.id
-                // if (tableNum > 0 && tableCap > 0) {
-                //     let list = [tableNum, tableCap, tablePk]
-                //     fetchRequest(list, type)
-                // }
-                // else {
-                //     alert('Values entered must be greater than or equal to 1')
-                // }
             }
         }
     };
@@ -307,13 +314,13 @@
             let url
             if (type == 'non-form') {
                 itemId = data.split('remove_')[1];
-                url = `/dashboard/food/remove/${itemId}`
+                url = `/dashboard/drinks/remove/${itemId}`
             } else if (type == 'add-form') {
-                url = `/dashboard/food/add/`
+                url = `/dashboard/drinks/add/`
             } else if (type == 'edit-form') {
-                url = `/dashboard/tables/edit/`
-                tablePkValue = data[2].split('edit_')[1];
-                data[2] = tablePkValue
+                url = `/dashboard/drinks/edit/`
+                tablePkValue = data[4].split('edit_')[1];
+                data[4] = tablePkValue
             }
             fetch(url, {
                 method: "POST",
