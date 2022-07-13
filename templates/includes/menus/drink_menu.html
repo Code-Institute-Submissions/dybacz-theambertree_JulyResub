@@ -16,7 +16,7 @@
     </div>
     <div class="row px-0">
         {% for i in menu %}
-            {% if i.group.pk == 2 and i.category.pk == 1 %}
+            {% if i.group.pk == 2 and i.category.pk == 8 %}
                 <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
                     <h6 class="fw-bold">{{ i.name }}</h6>
                     <p class=" fst-italic">{{ i.description }}</p>
@@ -32,7 +32,7 @@
     </div>
     <div class="row px-0">
         {% for i in menu %}
-            {% if i.group.pk == 2 and i.category.pk == 2 %}
+            {% if i.group.pk == 2 and i.category.pk == 7 %}
                 <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
                     <h6 class="fw-bold">{{ i.name }}</h6>
                     <p class="fst-italic">{{ i.description }}</p>
@@ -48,7 +48,7 @@
     </div>
     <div class="row px-0">
         {% for i in menu %}
-            {% if i.group.pk == 2 and i.category.pk == 3 %}
+            {% if i.group.pk == 2 and i.category.pk == 6 %}
                 <div class="col-3 text-center menu-item d-flex flex-column justify-content-between">
                     <h6 class="fw-bold">{{ i.name }}</h6>
                     <p class="fst-italic">{{ i.description }}</p>
@@ -67,7 +67,7 @@
         </div>
         <div class="row">
             {% for i in menu %}
-                {% if i.group.pk == 2 and i.category.pk == 4 %}
+                {% if i.group.pk == 2 and i.category.pk == 9 %}
                     <div class="col-4 text-center menu-item d-flex flex-column justify-content-between">
                         <h6 class="fw-bold">{{ i.name }}</h6>
                         <p class="fst-italic">{{ i.description }}</p>
@@ -82,7 +82,7 @@
             <h5>Others</h5>
         </div>
             {% for i in menu %}
-                {% if i.group.pk == 2 and i.category.pk == 5 %}
+                {% if i.group.pk == 2 and i.category.pk == 10 %}
                 <div class="col text-center menu-item">
                     <h6 class="fw-bold mb-1">{{ i.name }}</h6>
                     <p class="mb-1">£{{ i.price }}</p>
