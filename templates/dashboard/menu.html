@@ -44,13 +44,12 @@
                                         <td class="align-middle">{{ item.category }}</td>
                                         <td class="align-middle">{{ item.description }}</td>
                                         <td class="align-middle">£{{ item.price }}</td>
-                                        <td hidden>{{table.pk}}</td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-success rounded-circle edit-btn"
+                                            <button type="button" class="btn btn-success rounded-circle edit-btn my-2"
                                                 style="height:30px; width: 30px; padding:0">
                                                 <i class="fa-regular fa-pen-to-square"></i>
                                             </button>
-                                            <button type="button" class="btn btn-danger cancel-btn rounded-circle"
+                                            <button type="button" class="btn btn-danger cancel-btn rounded-circle my-2"
                                                 style="height:30px; width: 30px; padding:0">
                                                 <i class="fa-solid fa-x mt-1 fs-6"></i>
                                             </button>
@@ -79,14 +78,30 @@
                 <div class="modal-body pb-1">
                     <div id="modal-form" hidden>
                         <div>
-                            <label for="tablenumber">Table Number</label>
-                            <input class="form-control" type="number" min="1" value="" id="tablenumber"
-                                name="tablenumber" aria-label="Input Table Number" required>
+                            <label for="itemname">Item Name</label>
+                            <input class="form-control" type="text" value="" id="itemname"
+                                name="itemname" aria-label="Input Item Number" required>
                         </div>
                         <div>
-                            <label for="tablecapcity">Table Capacity</label>
-                            <input class="form-control" type="number" min="1" name="tablecapacity" value=""
-                                id="tablecapacity" aria-label="Input Table Capacity" required>
+                            <label for="itemcategory">Category</label>
+                            <select class="form-select form-select-md" aria-label=".form-select-md Table Select" id="itemcategory" required>
+                                <option value="1">Starter</option>
+                                <option value="2">Main</option>
+                                <option value="3">Dessert</option>
+                                <option value="4">Side</option>
+                                <option value="5">Extra</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="itemdescription">Description</label>
+                            <textarea class="form-control" id="itemdescription" rows="4"  name="itemdescription" 
+                            aria-label="Input Iem Description" required></textarea>
+
+                        </div>
+                        <div>
+                            <label for="itemprice">Price</label>
+                            <input class="form-control" type="number" name="itemprice" step=".01" value=""
+                                id="itemprice" aria-label="Input Item Price" required>
                         </div>
                     </div>
                     <div id="modal-non-form">
@@ -146,7 +161,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger modal-submit">Delete item</button>
+                        <button type="button" class="btn btn-danger modal-submit">Delete item</button>
                     </div>
             </form>
 
@@ -165,15 +180,15 @@
 
     for (let i of editButtons) {
         i.onclick = function (e) {
-            tableNumberValue = document.querySelector('#tablenumber')
-            tableCapacityValue = document.querySelector('#tablecapacity')
-            domStartPoint = i.parentNode.parentElement
-            tableNumber = domStartPoint.children[0].innerHTML
-            tableCapacity = domStartPoint.children[1].innerHTML
-            tablePk = domStartPoint.children[2].innerHTML
+            // tableNumberValue = document.querySelector('#tablenumber')
+            // tableCapacityValue = document.querySelector('#tablecapacity')
+            // domStartPoint = i.parentNode.parentElement
+            // tableNumber = domStartPoint.children[0].innerHTML
+            // tableCapacity = domStartPoint.children[1].innerHTML
+            // tablePk = domStartPoint.children[2].innerHTML
 
-            tableNumberValue.value = tableNumber
-            tableCapacityValue.value = tableCapacity
+            // tableNumberValue.value = tableNumber
+            // tableCapacityValue.value = tableCapacity
 
             modalNonForm = document.querySelector('#modal-non-form')
             modalForm = document.querySelector('#modal-form')
@@ -225,13 +240,13 @@
             // modalTableNumber.innerHTML = `${tableNumber}`
             // modalTableCapacity = document.getElementById("table-capacity")
             // modalTableCapacity.innerHTML = `${tableCapacity}`
-            // modalButton = document.querySelector('.modal-submit')
-            // modalButton.innerHTML = "Delete Item"
-            // modalButton.classList.remove("btn-success")
-            // modalButton.classList.add("btn-danger")
+            modalButton = document.querySelector('.modal-submit')
+            modalButton.innerHTML = "Delete Item"
+            modalButton.classList.remove("btn-success")
+            modalButton.classList.add("btn-danger")
             myModal.show();
-            // modalSubmitBtn = document.querySelector('.modal-submit')
-            // modalSubmitBtn.id = `remove_${tablePk}`
+            modalSubmitBtn = document.querySelector('.modal-submit')
+            modalSubmitBtn.id = `remove_${itemId}`
         }
     }
 
@@ -246,21 +261,25 @@
             } else {
                 modalTitle = document.querySelector('#myModalLabel')
                 let type
-                if (modalTitle.innerHTML == 'Edit Table') {
+                if (modalTitle.innerHTML == 'Edit Item') {
                     type = 'edit-form'
                 } else {
                     type = 'add-form'
                 }
-                tableNum = parseInt(document.querySelector('#tablenumber').value)
-                tableCap = parseInt(document.querySelector('#tablecapacity').value)
-                tablePk = i.id
-                if (tableNum > 0 && tableCap > 0) {
-                    let list = [tableNum, tableCap, tablePk]
-                    fetchRequest(list, type)
-                }
-                else {
-                    alert('Values entered must be greater than or equal to 1')
-                }
+                itemName = document.querySelector('#itemname').value
+                itemCategory = document.querySelector('#itemcategory').value
+                itemDescription = document.querySelector('#itemdescription').value
+                itemPrice = parseFloat(document.querySelector('#itemprice').value)
+                let list = [itemName, itemCategory, itemDescription, itemPrice]
+                fetchRequest(list, type)
+                // tablePk = i.id
+                // if (tableNum > 0 && tableCap > 0) {
+                //     let list = [tableNum, tableCap, tablePk]
+                //     fetchRequest(list, type)
+                // }
+                // else {
+                //     alert('Values entered must be greater than or equal to 1')
+                // }
             }
         }
     };
@@ -287,10 +306,10 @@
             let tableId
             let url
             if (type == 'non-form') {
-                tableId = data.split('remove_')[1];
-                url = `/dashboard/tables/remove/${tableId}`
+                itemId = data.split('remove_')[1];
+                url = `/dashboard/food/remove/${itemId}`
             } else if (type == 'add-form') {
-                url = `/dashboard/tables/add/`
+                url = `/dashboard/food/add/`
             } else if (type == 'edit-form') {
                 url = `/dashboard/tables/edit/`
                 tablePkValue = data[2].split('edit_')[1];
