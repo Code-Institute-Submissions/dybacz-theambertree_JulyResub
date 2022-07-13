@@ -468,3 +468,23 @@ h5 {
 .nav-item a:active {
     color: var(--color4);
 }
+
+.contactlist p a:link{
+    text-decoration: none;
+    color: var(--color3);
+}
+
+.contactlist p a:visited{
+    text-decoration: none;
+    color: var(--color3);
+}
+
+.contactlist p a:hover{
+    text-decoration: none;
+    color: var(--color1);
+}
+
+.contactlist p a:active{
+    text-decoration: none;
+    color: var(--coloramber);
+}
