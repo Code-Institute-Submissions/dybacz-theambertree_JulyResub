@@ -46,7 +46,7 @@ class DashboardHome(View):
 class DashboardTables(View):
     """" """
     def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if request.user.is_staff:
             data_from_post = json.load(request)['post_data']
             post_type = data_from_post[0]
             post_data = data_from_post[1]
@@ -93,7 +93,7 @@ class DashboardTables(View):
 
 class DashboardTimes(View):
     def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if request.user.is_staff:
             data_from_post = json.load(request)['post_data']
             post_type = data_from_post[0]
             post_data = data_from_post[1]
@@ -148,7 +148,7 @@ class DashboardTimes(View):
 
 class DashboardSchedule(View):
     def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if request.user.is_staff:
             data_from_post = json.load(request)['post_data']
             post_type = data_from_post[0]
             post_data = data_from_post[1]
@@ -215,7 +215,7 @@ class DashboardSchedule(View):
 
 class DashboardBookings(View):
     def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if request.user.is_staff:
             data_from_post = json.load(request)['post_data']
             post_type = data_from_post[0]
             post_data = data_from_post[1]
@@ -295,7 +295,7 @@ class DashboardBookings(View):
 
 class DashboardFood(View):
     def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if request.user.is_staff:
             data_from_post = json.load(request)['post_data']
             post_type = data_from_post[0]
             post_data = data_from_post[1]
@@ -351,7 +351,7 @@ class DashboardFood(View):
 
 class DashboardDrinks(View):
     def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if request.user.is_staff:
             data_from_post = json.load(request)['post_data']
             post_type = data_from_post[0]
             post_data = data_from_post[1]
