@@ -282,7 +282,7 @@ class DashboardBookings(View):
         page_title = 'Bookings | Dashboard'
         page_type = 'dashboard'
 
-        booking_objects = bookingmodels.Booking.objects.all()
+        booking_objects = bookingmodels.Booking.objects.filter(timeslot__isnull=False)
         times = serialize('json', bookingmodels.TimeSlot.objects.all())
 
         if request.user.is_staff:
