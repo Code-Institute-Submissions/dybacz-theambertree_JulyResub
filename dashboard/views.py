@@ -315,14 +315,18 @@ class DashboardFood(View):
                     price = post_data[3],
                 )
                 return HttpResponse(status=200)
-            # elif post_type == 'edit-form':
-            #     table_pk = post_data[2]
-            #     table = shortcuts.get_object_or_404(bookingmodels.Table, pk=table_pk)
-            #     table.table_id = post_data[0]
-            #     table.table_capacity = post_data[1]
-            #     table.save()
+            elif post_type == 'edit-form':
+                print(post_data)
+                item_pk = post_data[4]
+                category = shortcuts.get_object_or_404(menumodels.Category, pk=post_data[1])
+                item = shortcuts.get_object_or_404(menumodels.Item, pk=item_pk)
+                item.category = category
+                item.name = post_data[0]
+                item.description = post_data[2]
+                item.price = post_data[3]
+                item.save()
 
-            #     return HttpResponse(status=200)
+                return HttpResponse(status=200)
             elif post_type == 'non-form':
                 itemId = kwargs['item_id']
                 item = shortcuts.get_object_or_404(menumodels.Item, pk=itemId)
@@ -340,7 +344,7 @@ class DashboardFood(View):
 
         if request.user.is_staff:
             return shortcuts.render(
-                request, "dashboard/menu.html", {
+                request, "dashboard/food.html", {
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
@@ -350,6 +354,44 @@ class DashboardFood(View):
             return shortcuts.redirect("account_login")
 
 class DashboardDrinks(View):
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            data_from_post = json.load(request)['post_data']
+            post_type = data_from_post[0]
+            post_data = data_from_post[1]
+            if post_type == 'add-form':
+                group = shortcuts.get_object_or_404(menumodels.Group, pk=2)
+                category = shortcuts.get_object_or_404(menumodels.Category, pk=post_data[1])
+                item = menumodels.Item.objects.create(
+                    group = group,
+                    name = post_data[0],
+                    category = category,
+                    description = post_data[2],
+                    price = post_data[3],
+                )
+                return HttpResponse(status=200)
+            elif post_type == 'edit-form':
+                print(post_data)
+                item_pk = post_data[4]
+                category = shortcuts.get_object_or_404(menumodels.Category, pk=post_data[1])
+                item = shortcuts.get_object_or_404(menumodels.Item, pk=item_pk)
+                item.category = category
+                item.name = post_data[0]
+                item.description = post_data[2]
+                item.price = post_data[3]
+                item.save()
+
+                return HttpResponse(status=200)
+            elif post_type == 'non-form':
+                itemId = kwargs['item_id']
+                item = shortcuts.get_object_or_404(menumodels.Item, pk=itemId)
+                item.delete()
+                return HttpResponse(status=200)
+        else:
+            return shortcuts.redirect("account_login")
+
+    
     def get(self, request, *args, **kwargs):
         page_title = 'Food Menu | Dashboard'
         page_type = 'dashboard'
@@ -359,7 +401,7 @@ class DashboardDrinks(View):
 
         if request.user.is_staff:
             return shortcuts.render(
-                request, "dashboard/menu.html", {
+                request, "dashboard/drinks.html", {
                     'page_title': page_title,
                     'page_type': page_type,
                     'current_date': current_date,
