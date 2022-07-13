@@ -21,6 +21,8 @@ urlpatterns = [
     path('bookings/add/', views.DashboardBookings.as_view()),
     path('bookings/edit/', views.DashboardBookings.as_view()),
     path('food/', views.DashboardFood.as_view(), name='dashboard_food'),
+    path('food/remove/<item_id>', views.DashboardFood.as_view()),
+    path('food/add/', views.DashboardFood.as_view()),
     path('drinks/', views.DashboardDrinks.as_view(), name='dashboard_drinks'),
     path('messages/', views.DashboardMessages.as_view(), name='dashboard_messages'),
     path('help/', views.DashboardHelp.as_view(), name='dashboard_help'),
