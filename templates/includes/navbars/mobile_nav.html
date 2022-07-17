@@ -40,7 +40,7 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             {% if user.is_authenticated %}
               <li><a class="dropdown-item" href="{% url 'my_bookings' %}">My Bookings</a></li>
-              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <!-- <li><a class="dropdown-item" href="#">Profile</a></li> -->
             {% endif %}
             {% if user.is_staff %}
               <li><a class="dropdown-item" href="{% url 'dashboard_home' %}">Admin</a></li>
