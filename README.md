@@ -264,7 +264,7 @@ Upon initialisation, It is recommended you create objects in this order:
 - N/A - Not Used
 
 ### Django Testing
-**Coverage**
+**Coverage** - Ran on local sqlite3 database.
 - Bookingsys coverage report found in /bookingsys_coverage/
 ![Bookingsys coverage report](/static/images/readme/bookingsys_coverage.png)
 - TheAmberTree coverage report found in /theambertree_coverage/
