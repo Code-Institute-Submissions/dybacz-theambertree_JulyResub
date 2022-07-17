@@ -48,7 +48,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 
 * Make a Booking - Booking Form
     * Accepts User Input
-    * User  can only intitally select a date.
+    * User can only intitially select a date.
     * Once a valid date has been selected, available times are then shown for that date.
     * After a date & time has been selected all available tables are then shown.
     * Once a table has been selected a User must then complete the required details form and select their slot.
@@ -66,15 +66,15 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 
 **Dashboard**
 
-* Home - Will include metrics and todays bookings and recently cancelled bookings etc.
+* Home - Will include metrics and todays bookings and recently canceled bookings etc.
     ![Dashboard Home](/static/images/readme/dashboard_home.png)
-* Tables - Staff users create, update and delete tables with capcities for each of the tables in the restaurant.
+* Tables - Staff users create, update and delete tables with capacities for each of the tables in the restaurant.
     ![Dashboard Tables](/static/images/readme/dashboard_tables.png)
 * Times - Staff users create, update and delete time slots, all is needed is a start time and the end time is auto generated as start time + 90 mins.
     ![Dashboard Times](/static/images/readme/dashboard_times.png)
 * Schedule - Staff users create, update and delete empty booking slots, these booking slots become available and can be booked through the booking form on the main site or through the booking tab in the dashboard.
     ![Dashboard Schedule](/static/images/readme/dashboard_schedule.png)
-* Bookings - Staff users create, update and cancel Bookings for the restaurant. ALl booking that have been booked or cancelled will show here.
+* Bookings - Staff users create, update and cancel Bookings for the restaurant. All booking that have been booked or canceled will show here.
     ![Dashboard Bookings](/static/images/readme/dashboard_bookings.png)
 * Food - Staff users create, update and delete items which are visible on front page food menu.
     ![Dashboard Food](/static/images/readme/dashboard_food.png)
@@ -118,7 +118,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 
 * __Custom Admin Panel__
 
-    - This feature is still in need of further devlopment
+    - This feature is still in need of further development
 
     - Booking Slots tab New Booking Slots button which will allow for the batch creation and processing of booking slots. This feature will also allow the users who are authenticated as staff or higher to quickly create and manage open time slots for future bookings in batch requests rather than having to create and manage each slot individually
 
@@ -131,7 +131,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 **Functionality**
 
 * __Django Messages__ 
-    - This feature will allow users to recieve confirmational messages from Django such as errors or success'.
+    - This feature will allow users to receive  confirmation messages from Django such as errors or success'.
 
 
 * __Multiple Table Booking__
@@ -156,7 +156,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 
 ## How To Use
 
-### Booking System -- outdated(New Staff Dashboard instead of django admin)
+### Booking System -- outdated: New Staff Dashboard instead of django admin but similar method (Tables > Time Slots > Booking slots > Bookings)
 
 This booking system uses multiple models available in the Django Admin Panel
 
