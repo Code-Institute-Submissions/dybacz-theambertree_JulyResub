@@ -12,24 +12,29 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 
 [Click here for the live version](https://theambertree.herokuapp.com/)
 
-## Features
-### Current Features
+# Features
+## Current Features
 
-**Guest Features**
-* Navigation
-    * About 
+### **User Features**
+* Main Navigation
+    * Home 
     * Menu
     * Drinks
     * Contact
     * Make a Booking 
     
+    #### Desktop Nav:
     ![Navigation](/static/images/readme/nav_large.png)
 
-<!-- ![Navigation Mobile](assets/images/readme/multiplayer.png) -->
+    #### Tablet / Medium Devices Nav:
+    ![Navigation](/static/images/readme/nav_medium.png)
+
+    #### Mobile / Small Devices Nav:
+    ![Navigation](/static/images/readme/nav_small.png)
 
 * Single Index Page for majority of the content
-    * About
-    ![About Page](/static/images/readme/about_page.png)
+    * Welcome
+    ![About Page](/static/images/readme/welcome_page.png)
 
     * Menu
     ![Menu Page](/static/images/readme/menu_page.png)
@@ -43,13 +48,43 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 
 * Make a Booking - Booking Form
     * Accepts User Input
-    * User selects a date and time then all available tables are show.
-    * User then must complete the required details form and select their slot.
-    * User then submits form and is redirected to a booking complete page with the booking details
-    * If the form is incorrect or booking unavailable the user is redirected to a booking failed page with the reason for failure 
+    * User  can only intitally select a date.
+    * Once a valid date has been selected, available times are then shown for that date.
+    * After a date & time has been selected all available tables are then shown.
+    * Once a table has been selected a User must then complete the required details form and select their slot.
+    * Users can switch between dates & available times and the form will update to the relevant available tables.
+    * User then submits the form and is redirected to a booking success page with a link to there bookings
+    * The user is unable to select dates or times that are not available and therefore should not result in any booking being unsuccessful<sup>**</sup>
+
+    <sub>** - Currently no check to see if a user has already booked that slot, this can only occur if multiple users are using the form at the same time and selecting the same date & time within the same short timescale as the form updates on date or time change.</sub>
+    
     ![Booking Form](/static/images/readme/booking_form.png)
 
-**Staff Features**
+* Login / Register - Accounts Authorisation
+
+### **Staff Features**
+
+**Dashboard**
+
+* Home -
+    ![Dashboard Home](/static/images/readme/dashboard_home.png)
+* Tables -
+    ![Dashboard Tables](/static/images/readme/dashboard_tables.png)
+* Times - 
+    ![Dashboard Times](/static/images/readme/dashboard_times.png)
+* Schedule - 
+    ![Dashboard Schedule](/static/images/readme/dashboard_schedule.png)
+* Bookings - 
+    ![Dashboard Bookings](/static/images/readme/dashboard_bookings.png)
+* Food - 
+    ![Dashboard Food](/static/images/readme/dashboard_food.png)
+* Drink - 
+    ![Dashboard Drinks](/static/images/readme/dashboard_drinks.png)
+* Messages - Currently not available
+* Help - Currently not available
+
+### **Dev Admin**
+
 * Django Admin - currently only accessible with superuser
     * Accessed via adding /admin to the root directory of the app in a browser.
     * Create, update and delete objects in all the models.
@@ -81,18 +116,11 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 
 **Guest Features**
 
-* __Booking Complete Page__
-    - This feature will allow users to know that there booking has been successful
-    
-    - This feature will allow users to view a summary of there booking
-
-* __Booking Failure Page__
-    - This feature will allow users to know that there booking has been unsuccessful
-
-    - This feature will allow users to know why there booking was unsuccessful
+* __Guest Booking__
+    - This feature will allow guest users to make bookings without the need to register for an account.
 
 * __Contact us Form__
-    - This feature will allow users to complete a form and send enquires such as party booking to the restaurant. 
+    - Front end of is complete, a back end needs to be sorted and linked up to the contact form on the contact us section of the homepage. 
 
 **Admin/Staff Features**
 
@@ -100,7 +128,7 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
     - This feature will all users who are authenticated as staff or higher to create, update and delete database entries for items to be displayed on both the menu page and drinks page. It will also allow for an image to be uploaded for each item which will can be rendered as part of the item in the menu/drinks page.
 
 * __Contact us Messages__
-    - This feature will all users who have access to the Django admin to view all enquires from the contact us form
+    - This feature will allow staff users with access to the Dashboard to view all messages sent from the contact us form on the main site.
 
 * __Custom Admin Panel__
     - This feature would allow users who are authenticated as staff or higher to create, update, and delete bookings without the need to access Django admin
@@ -249,7 +277,7 @@ While also creating two separate instances, one for each player to hold the name
 
 ### Javascript Testing
 **Jest**
-- N/A
+- N/A - Not approached yet, as not needed on syllabus.
 
 ### Django Testing
 **Coverage**
@@ -346,11 +374,11 @@ A form allowing the user to make a future booking at the restaurant. This form s
 - Django (3.2) - Web-Framework
 - gunicorn (20.1.0) - Python WSGI HTTP Server for UNIX
 - django-allauth (0.48) - Authentication
-- django-crispy-forms (1.14.0) - Bootstrap Form Tags
 - Cloudinary (1.29.0) - Static & Media file hosting
 - dj3-cloudinary-storage (0.0.6) - Cloudinary for Django
 - dj-database-url (0.5.0) - Allows connection to db
 - psycopg2 (2.9.3) - Interact with PostgreSQL
+- Pillow (9.2.0) - Not yet implemented, ready for menu images.
 
 **Front end:**
 
