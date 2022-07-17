@@ -488,3 +488,7 @@ h5 {
     text-decoration: none;
     color: var(--coloramber);
 }
+
+.dropdown-menu[data-bs-popper] {
+    left: -70px !important;
+}
