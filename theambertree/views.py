@@ -13,7 +13,6 @@ class Index(View):
                 request,
                 "index.html",
                 {
-                    # 'booking_form': BookingForm(),
                     'page_type': page_type,
                     'page_title': page_title,
                     'menu': menu,

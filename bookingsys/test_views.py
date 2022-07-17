@@ -20,8 +20,6 @@ class TestViews(TestCase):
     def test_get_my_bookings_page_as_user(self):
         user = User.objects.create_user(
             'testuser', 'testuser@test.com', 'testpassword')
-        # user.is_staff = True
-        # user.save()
         self.client.login(username='testuser', password='testpassword')
         response = self.client.get('/bookings/my-bookings')
         self.assertEqual(response.status_code, 200)

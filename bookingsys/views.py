@@ -70,13 +70,8 @@ class BookingSlot(View):
             status=0,
             comments=comments,
         )
-        # a1
-        # need a to check to see if booking has already been made then if so
-        # need to re render page with an error message.
         bookingObj.timeslot.add(bookingSlot)
-        # p1.booking_status(
-        #     booking_status=booked,
-        # )
+
         bookingSlot.booking_status = 0
         bookingSlot.save()
         return shortcuts.render(request, "bookingsys/success.html")

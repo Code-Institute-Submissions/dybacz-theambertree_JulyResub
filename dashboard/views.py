@@ -183,7 +183,6 @@ class DashboardSchedule(View):
                 return HttpResponse(status=200)
             elif post_type == 'non-form':
                 bookingSlotId = kwargs['bookingslot_id']
-                print('message', bookingSlotId)
                 bookingSlot = shortcuts.get_object_or_404(
                     bookingmodels.BookingSlot, pk=bookingSlotId)
                 bookingSlot.delete()
@@ -219,7 +218,6 @@ class DashboardBookings(View):
             data_from_post = json.load(request)['post_data']
             post_type = data_from_post[0]
             post_data = data_from_post[1]
-            print(post_type, post_data)
 
             if post_type == 'add-form':
                 booking_slot = shortcuts.get_object_or_404(
@@ -250,13 +248,11 @@ class DashboardBookings(View):
                 return HttpResponse(status=200)
             elif post_type == 'non-form':
                 bookingId = kwargs['booking_id']
-                print('message', bookingId)
                 booking = shortcuts.get_object_or_404(bookingmodels.Booking,
                                                       pk=bookingId)
                 booking.status = 1
                 booking.save()
                 bookingSlotId = booking.timeslot.all()[0].pk
-                print(bookingSlotId)
                 bookingSlot = shortcuts.get_object_or_404(
                     bookingmodels.BookingSlot, pk=bookingSlotId)
                 bookingSlot.booking_status = 1
@@ -312,7 +308,6 @@ class DashboardFood(View):
                 )
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
-                print(post_data)
                 item_pk = post_data[4]
                 category = shortcuts.get_object_or_404(menumodels.Category,
                                                        pk=post_data[1])
@@ -368,7 +363,6 @@ class DashboardDrinks(View):
                 )
                 return HttpResponse(status=200)
             elif post_type == 'edit-form':
-                print(post_data)
                 item_pk = post_data[4]
                 category = shortcuts.get_object_or_404(menumodels.Category,
                                                        pk=post_data[1])
