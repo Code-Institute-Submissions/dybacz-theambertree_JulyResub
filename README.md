@@ -66,22 +66,22 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 
 **Dashboard**
 
-* Home -
+* Home - Will include metrics and todays bookings and recently cancelled bookings etc.
     ![Dashboard Home](/static/images/readme/dashboard_home.png)
-* Tables -
+* Tables - Staff users create, update and delete tables with capcities for each of the tables in the restaurant.
     ![Dashboard Tables](/static/images/readme/dashboard_tables.png)
-* Times - 
+* Times - Staff users create, update and delete time slots, all is needed is a start time and the end time is auto generated as start time + 90 mins.
     ![Dashboard Times](/static/images/readme/dashboard_times.png)
-* Schedule - 
+* Schedule - Staff users create, update and delete empty booking slots, these booking slots become available and can be booked through the booking form on the main site or through the booking tab in the dashboard.
     ![Dashboard Schedule](/static/images/readme/dashboard_schedule.png)
-* Bookings - 
+* Bookings - Staff users create, update and cancel Bookings for the restaurant. ALl booking that have been booked or cancelled will show here.
     ![Dashboard Bookings](/static/images/readme/dashboard_bookings.png)
-* Food - 
+* Food - Staff users create, update and delete items which are visible on front page food menu.
     ![Dashboard Food](/static/images/readme/dashboard_food.png)
-* Drink - 
+* Drink - Staff users create, update and delete items which are visible on front page drinks menu.
     ![Dashboard Drinks](/static/images/readme/dashboard_drinks.png)
-* Messages - Currently not available
-* Help - Currently not available
+* Messages - Currently not available - Will contain all messages sent using the contact form on the main site contact section. (See Current Features & Functionality Left to Implement below)
+* Help - Currently not available - General FAQ's and how to's with regards to using the system.
 
 ### **Dev Admin**
 
@@ -92,17 +92,6 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
     ![Django Admin](/static/images/readme/django_admin_page1.png)
     ![Django Admin](/static/images/readme/django_admin_page3.png)
 
-
-<!-- * Menu
-    * Create, Update & Delete menu items
-
-    ![Menu]() -->
-
-<!-- * Drinks
-    * Create, Update & Delete drink items
-    * Images for drinks can be uploaded and rendered with the drink item to the drinks Page
-
-    ![Drinks]() -->
 
 * User Management - currently only accessible with superuser 
     * Accessed via Django Admin panel
@@ -120,35 +109,30 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
     - This feature will allow guest users to make bookings without the need to register for an account.
 
 * __Contact us Form__
-    - Front end of is complete, a back end needs to be sorted and linked up to the contact form on the contact us section of the homepage. 
+    - Front end is complete, a back end needs to be sorted and piped up to the contact form on the contact us section of the homepage. 
 
 **Admin/Staff Features**
-
-* __Menu & Drinks menu management system__
-    - This feature will all users who are authenticated as staff or higher to create, update and delete database entries for items to be displayed on both the menu page and drinks page. It will also allow for an image to be uploaded for each item which will can be rendered as part of the item in the menu/drinks page.
 
 * __Contact us Messages__
     - This feature will allow staff users with access to the Dashboard to view all messages sent from the contact us form on the main site.
 
 * __Custom Admin Panel__
-    - This feature would allow users who are authenticated as staff or higher to create, update, and delete bookings without the need to access Django admin
 
-    - This feature will also allow the users who are authenticated as staff or higher to quickly create and manage open time slots for future bookings in batch requests rather than having to create and manage each slot individually in the Django admin
+    - This feature is still in need of further devlopment
+
+    - Booking Slots tab New Booking Slots button which will allow for the batch creation and processing of booking slots. This feature will also allow the users who are authenticated as staff or higher to quickly create and manage open time slots for future bookings in batch requests rather than having to create and manage each slot individually
+
+    - UI & UX improvement needed
+
+    - Few Bugs left to iron out (See Manual Testing Below)
 
     - This feature will also allow the users who are authenticated as staff or higher to quickly manage any received contact us forms
 
 **Functionality**
 
-* __Ajax requests__ (Fetch API)
-    - This feature will allow the booking form to dynamically update the available timeslots based on the user input for the date
-
-    - This feature will then allow the booking form to dynamically update the available tables based on the user input for the time
-
 * __Django Messages__ 
-    - This feature will allow the user to recieve messages from Django such as error or success.
+    - This feature will allow users to recieve confirmational messages from Django such as errors or success'.
 
-* __Mobile Version of Site / Site Dynamics__ (CSS media queries/set bootstrap classes)
-    - This feature would allow users to access the webapp via medium and small devices and have a pleasant experience with the UI
 
 * __Multiple Table Booking__
     - This feature will allow the user to add more than one table to the booking form before submission
@@ -158,19 +142,21 @@ This WebApp is hosted on Heroku with all static & media files hosted on Cloudina
 
 ### Future Features
 * Customer accounts.
-    * Attach bookings to accounts when logged in
-    * Allow customer accounts to amend or cancel bookings
+    * Allow customer accounts to amend bookings
     * Set up email verification
     * Autonomous booking confirmation email
-* Allow guest bookings to amend and cancel bookings
+* Guest Bookings
+    * Allow guest bookings to amend and cancel bookings
     * Autonomous guest booking confirmation email
     * Unique URLs based on booking reference number attached to booking confirmation email for easy amend or cancel
-* Customer reviews
+* Food menu Items Pictures & Customer reviews
+* Customer user reviews of Establishment
+* Customer user reviews of Food & Drink Menu items.
 * Sign in with Social Account
 
 ## How To Use
 
-### Booking System
+### Booking System -- outdated(New Staff Dashboard instead of django admin)
 
 This booking system uses multiple models available in the Django Admin Panel
 
@@ -259,62 +245,50 @@ Upon initialisation, It is recommended you create objects in this order:
     **Please Note:** *Creating a manual booking is **not** advised. If you have to then you must make sure the timeslot selected in the booking has its status manually changed to booked before making the booking as to not allow a site guest to double book.*
 
 ## Data Model
-<!-- I decided to use class and Player classes as my models.  -->
 
-<!-- The game creates an instance for the game board to hold the board size, VS title, layout, counter positions and also has a board `print` function.
+- I confirmed the name entry input works; requires an entry into the field, accepts only characters (Desktop). Start button works and user name is added to the DOM.
 
-While also creating two separate instances, one for each player to hold the name, counter color data and player type (Human or Computer). -->
 
 ## Testing 
 
 ### General Testing
-- N/A
-<!-- - I tested this webapp works in different browsers: Chrome, Firefox, Edge.
-- I confirmed that the ... results are always correct.
+- I tested this webapp works in different browsers: Chrome, Firefox, Edge.
 - I confirmed that the project is responsive, looks good and functions on all standard screen sizes using the devtools device toolbar.
-- I confirmed the name entry input works; requires an entry into the field, accepts only characters (Desktop). Start button works and user name is added to the DOM.
-- I confirmed the colours and fonts chosen are easy to read and accessible by running it through lighthouse in devtools. -->
+- I confirmed the colours and fonts chosen are easy to read and accessible by running it through lighthouse in devtools.
 
 ### Javascript Testing
+**Manual Testing**
+- Manual tests spreadsheet can be found in /manual_testing/TheAmberTree - Manual Testing.ods
+
 **Jest**
-- N/A - Not approached yet, as not needed on syllabus.
+- N/A - Not Used
 
 ### Django Testing
 **Coverage**
-- N/A
+- Bookingsys coverage report found in /bookingsys_coverage/
+![Bookingsys coverage report](/static/images/readme/bookingsys_coverage.png)
+- TheAmberTree coverage report found in /theambertree_coverage/
+![TheAmberTree coverage report](/static/images/readme/theambertree_coverage.png)
+-Dashboard coverage report found in /dashboard_coverage/
+![Dashboard coverage report](/static/images/readme/dashboard_coverage.png)
 
 ### User Testing
 
 **Guest**
-- N/A
+- Manual tests spreadsheet can be found in /manual_testing/TheAmberTree - Manual Testing.ods
 
 **Staff**
-- N/A
+- - Manual tests spreadsheet can be found in /manual_testing/TheAmberTree - Manual Testing.ods
 
 ### Browser Testing
 **Lighthouse**
-- N/A
+- Mobile Results
+![Mobile Lighthouse Report](/static/images/readme/mobile_lighthouse_report.png)
+
+- Desktop Results
+![Desktop Lighthouse Report](/static/images/readme/desktop_lighthouse_report.png)
 <!-- ![Lighthouse Results]()
 - I confirmed that ... are all readable and easy to understand. -->
-
-### Validator Testing 
-
-**HTML**
-- N/A
-    <!-- - No errors were returned when passing through the official [W3C validator]
-    () -->
-**CSS**
-- N/A
-    <!-- - No errors were found when passing through the official [(Jigsaw) validator]() -->
-**JavaScript**
-- N/A
-    <!-- - No errors were found when passing through the official [Jshint validator]
-    ()
-      - The following metrics were returned: 
-      - There are 30 functions in this file.
-      - Function with the largest signature takes 3 arguments, while the median is 0.
-      - Largest function has 13 statements in it, while the median is 6.
-      - The most complex function has a cyclomatic complexity value of 7 while the median is 2. -->
 
 ## Deployment
 
@@ -352,7 +326,6 @@ The live link can be found here - [TheAmberTree](https://theambertree.herokuapp.
 ![Initial Slot Model](/static/images/readme/InitialSlotModel.png)
 ![Initial Booking Model](/static/images/readme/InitialBookingModel.png)
 
-**Current Models:**
 
 ### Initial Wireframes & Design Features
 
