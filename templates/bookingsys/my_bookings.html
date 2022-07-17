@@ -170,8 +170,7 @@
             'Accept': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
             'X-CSRFToken': csrfToken
-          },
-          body: JSON.stringify(data)
+          }
         }).then(res => {
           location.reload();
         });
